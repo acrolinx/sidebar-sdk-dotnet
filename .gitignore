@@ -1,0 +1,8 @@
+**/*.suo
+**/obj
+**/bin
+**/TestResults
+**/*.userprefs
+packages
+/.idea
+/acrolinx-sidebar-demo-dotnet.userprefs

@@ -1,0 +1,78 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="Acrolinx.Demo.Sidebar.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="topspin" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">Topspin 360 Quick Start
+
+This document will describe the basic steps required to install and configure the Topspin 360 system.
+Requirements
+To install the Topspin 360 into a rack, you require the following:
+
+ - one #1 and one #2 Phillips-head screwdriver for fitting
+ - one managment workstation, such as a PC running terminal-emulation software
+ - the chasis cable kit (included)
+ - two people to safely lift the unit into the rack
+- TEST_CONTAINER
+
+Topspin 360 Package Contents
+
+You will find the following items in your Topspin package:
+
+ - 1 Topspin 360 Server Switch
+ - 1 or 2 12-port InfiniBand switch blades
+ - 1 or 2 power supplies
+ - 1 or 2 fan trays 
+ - 1 or 2 system controllers 
+ - 2 rack-mount brackets and mounting screws
+ - 1 power-supply blanking panel
+ - 1 expansion card blanking panel
+ - 1 console-cable kit, which includes a DB-9 M/F serial cable
+ - 1 or 2 6-foot (1.8-meter) AC power cables
+ - 1 CD-ROM containing software and user documentation
+ - 1 Quick Start Guide
+ - 1 warranty card
+
+Preparing the Site
+
+To prepare the site for the Topspin 360, perform the following steps:
+
+1.	Read the cautionary statements in "Safety Information" on page 5.
+2.	Fill the Topspin registration form out online. Go to http://www.topspin.com/support/prodreg.cfm.
+3.	Verify that the rack environment provides sufficient ventilation. 
+4.	Unpack the Topspin 360 package.
+5.	Verify that you have all of the items on the Requirements list. Refer to "Requirements" on page 1.
+
+Install Topspin 360 FRUs
+
+Install gateways and switch cards to increase the port count of your switch.
+Note: whenever possible install all FRUs before you rack your Topspin 360. You can continue to add or replace FRUs after you rack your device.
+
+To install field replaceable units (FRUs), perform the following steps:
+
+1.	Install any expansion modules (Fibre Channel gateways or Ethernet gateways):
+a.	Remove any filler panels from slots that will have a card installed. Begin by filling the first gateway slot (slot 2).
+b.	Install Ethernet and/or Fibre Channel gateways, as appropriate to your Topspin system. For more information, see "Install an Ethernet or Fibre Channel Gateway" in the Topspin 360 Hardware Guide.
+2.	Install a additional InfiniBand switch card:
+	a.	Remove the blanking panel from the slot.
+	b.	Slide the IB switch card firmly into place. 
+	c.	Tighten the screws to the on the left and right-hand sides of the IB switch card.
+
+Rack the Topspin 360
+
+To mount the Topspin 360 in a rack, perform the following steps:
+
+1.	Open the Topspin box.
+2.	Remove the chassis, rack brackets, CD-ROM, parts bag, and documentation.
+
+CAUTION: Don't lift the 360 chassis by the front (bezel end) and back (service end). Lift the unit by the sides to prevent damage.
+
+1.	Place the chassis on a secure, clean surface.
+2.	Open the plastic bag that contains the mounting hardware.
+3.	Verify that the rack will provide sufficient clearance for the Topspin 360.
+4.	Loosen the nuts on the sides of the rack brackets, then adjust the length of your brackets to fit your rack. Tighten the bracket screws when the brackets fit the rack. Extend the brackets to 29 inches or contract them to 24 inches.
+5.	Attach the side flanges to the sides of the chassis with the screws provided, as shown in Figure 1-1 and Figure 1-2.
+</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>
