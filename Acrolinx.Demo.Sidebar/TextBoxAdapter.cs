@@ -36,6 +36,7 @@ namespace Acrolinx.Demo.Sidebar
         protected override void SelectRawRange(IRange range, Format format)
         {
             TextBox.Select(range.Start, range.Length);
+            TextBox.ScrollToCaret();
             TextBox.Focus();
         }
 
