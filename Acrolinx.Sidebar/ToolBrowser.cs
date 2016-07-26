@@ -35,7 +35,7 @@ namespace Acrolinx.Sdk.Sidebar
             {
                 this.StartPosition = FormStartPosition.Manual;
 
-                if(parent.MdiParent != null)
+                if(parent != null && parent.MdiParent != null)
                 {
                     this.Location = CalculateCenterOfParent(parent.MdiParent);
                 }
