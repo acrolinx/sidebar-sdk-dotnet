@@ -20,17 +20,33 @@ namespace Acrolinx.Demo.Sidebar
     /// </summary>
     public partial class SimpleSample : Form
     {
-        public SimpleSample()
+        private string documentReference;
+
+        public SimpleSample() : this(Format.HTML, "your_file_name.txt", "<body>" +Environment.NewLine + "   <h1> This is a header without dot </h1>" + Environment.NewLine + "    <div>This is an simple sample tesst</div>" + Environment.NewLine + "</body>")
+        {
+            
+        }
+
+        public SimpleSample(Format format, string documentReference, string text)
         {
             InitializeComponent();
 
-            foreach (Format format in Enum.GetValues(typeof(Format)))
-            {
-                formatComboBox.Items.Add(format);
-            }
-            formatComboBox.SelectedItem = Format.HTML;
+            FillFormatList();
+
+            formatComboBox.SelectedItem = format;
+            this.documentReference = documentReference;
+            this.textBox.Text = text;
+            this.Text += " - " + documentReference;
 
             acrolinxSidebar.Start();
+        }
+
+        private void FillFormatList()
+        {
+            foreach (Format f in Enum.GetValues(typeof(Format)))
+            {
+                formatComboBox.Items.Add(f);
+            }
         }
 
         private void acrolinxSidebar_RequestCheck(object sender, EventArgs e)
@@ -40,7 +56,7 @@ namespace Acrolinx.Demo.Sidebar
             var document = new Document();
             document.Content = textBox.Text;
             document.Format = (Format)formatComboBox.SelectedItem;
-            document.Reference = "your_file_name.txt";
+            document.Reference = documentReference;
             acrolinxSidebar.Check(document);
         }
 

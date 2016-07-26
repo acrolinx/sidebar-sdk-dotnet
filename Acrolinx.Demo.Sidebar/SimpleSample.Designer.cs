@@ -49,8 +49,6 @@ namespace Acrolinx.Demo.Sidebar
             this.textBox.ScrollBars = System.Windows.Forms.ScrollBars.Both;
             this.textBox.Size = new System.Drawing.Size(576, 415);
             this.textBox.TabIndex = 1;
-            this.textBox.Text = "<body>\r\n    <h1>This is a header without dot</h1>\r\n    <div>This is an simple sam" +
-    "ple tesst</div>\r\n</body>";
             // 
             // panel1
             // 
@@ -82,6 +80,7 @@ namespace Acrolinx.Demo.Sidebar
             // 
             // acrolinxSidebar
             // 
+            this.acrolinxSidebar.ClientSignature = null;
             this.acrolinxSidebar.Dock = System.Windows.Forms.DockStyle.Right;
             this.acrolinxSidebar.Location = new System.Drawing.Point(576, 0);
             this.acrolinxSidebar.MaximumSize = new System.Drawing.Size(300, 0);
