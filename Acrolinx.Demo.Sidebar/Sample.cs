@@ -5,10 +5,12 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Acrolinx.Sdk.Sidebar.Documents;
 
 namespace Acrolinx.Demo.Sidebar
 {
@@ -108,6 +110,42 @@ namespace Acrolinx.Demo.Sidebar
             var multi = new MultiSample();
             multi.MdiParent = this;
             multi.Show();
+        }
+
+        private void openToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var result = openFileDialog.ShowDialog(this);
+
+            if (result == DialogResult.OK)
+            {
+                foreach (var fileName in openFileDialog.FileNames)
+                {
+                    try
+                    {
+                        var simple = new SimpleSample(getFormat(fileName), fileName, File.ReadAllText(fileName));
+                        simple.MdiParent = this;
+                        simple.Show();
+                    }
+                    catch (Exception err)
+                    {
+                        MessageBox.Show(this, "Failed to load '" + fileName + "':" + Environment.NewLine + err.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+
+                }
+            }
+        }
+
+        private Format getFormat(string fileName)
+        {
+            if (fileName.ToLower().EndsWith(".htm") || fileName.ToLower().EndsWith(".html"))
+            {
+                return Format.HTML;
+            }
+            if (fileName.ToLower().EndsWith(".xml") || fileName.ToLower().EndsWith(".xhtml"))
+            {
+                return Format.XML;
+            }
+            return Format.Text;
         }
     }
 }
