@@ -43,8 +43,10 @@ namespace Acrolinx.Demo.Sidebar
             // 
             this.textBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.textBox.Location = new System.Drawing.Point(0, 26);
+            this.textBox.MaxLength = 0;
             this.textBox.Multiline = true;
             this.textBox.Name = "textBox";
+            this.textBox.ScrollBars = System.Windows.Forms.ScrollBars.Both;
             this.textBox.Size = new System.Drawing.Size(576, 415);
             this.textBox.TabIndex = 1;
             this.textBox.Text = "<body>\r\n    <h1>This is a header without dot</h1>\r\n    <div>This is an simple sam" +

@@ -74,6 +74,7 @@ namespace Acrolinx.Demo.Sidebar
             {
                 var range = new Range(matches[0].Range.Start, matches[matches.Count - 1].Range.End);
                 textBox.Select(range.Start, range.Length);
+                textBox.ScrollToCaret();
                 textBox.Focus();
                 if (!(textBox.SelectedText.StartsWith(matches[0].Content) && textBox.SelectedText.EndsWith(matches[matches.Count - 1].Content)))
                 {
