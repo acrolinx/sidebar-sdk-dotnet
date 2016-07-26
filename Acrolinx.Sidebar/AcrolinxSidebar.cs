@@ -172,9 +172,14 @@ namespace Acrolinx.Sdk.Sidebar
             DETAIL
         }
 
-        public void RegisterClientComponent(Assembly assembly, string humanReadableName, SoftwareComponentCategory category){
+        public void RegisterClientComponent(Assembly assembly, string humanReadableName, SoftwareComponentCategory category)
+        {
             Contract.Requires(assembly != null);
             Contract.Requires(humanReadableName != null);
+            if (assembly == null)
+            {
+                return;
+            }
 
             var name = assembly.GetName();
             RegisterClientComponent(name.Name, humanReadableName, name.Version.ToString(), category);
