@@ -80,13 +80,11 @@ namespace Acrolinx.Demo.Sidebar
             // 
             // acrolinxSidebar
             // 
-            this.acrolinxSidebar.ClientSignature = null;
             this.acrolinxSidebar.Dock = System.Windows.Forms.DockStyle.Right;
             this.acrolinxSidebar.Location = new System.Drawing.Point(576, 0);
             this.acrolinxSidebar.MaximumSize = new System.Drawing.Size(300, 0);
             this.acrolinxSidebar.MinimumSize = new System.Drawing.Size(300, 0);
             this.acrolinxSidebar.Name = "acrolinxSidebar";
-            this.acrolinxSidebar.SidebarSourceLocation = null;
             this.acrolinxSidebar.Size = new System.Drawing.Size(300, 441);
             this.acrolinxSidebar.TabIndex = 0;
             this.acrolinxSidebar.InitFinished += new Acrolinx.Sdk.Sidebar.SidebarInitFinishedEventHandler(this.acrolinxSidebar_InitFinished);
