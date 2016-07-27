@@ -16,6 +16,8 @@ using System.Reflection;
 using Microsoft.CSharp.RuntimeBinder;
 using System.Linq.Expressions;
 using Newtonsoft.Json.Linq;
+using System.Globalization;
+
 namespace Acrolinx.Sdk.Sidebar
 {
     [ToolboxBitmap( typeof(AcrolinxSidebar) , "toolbox.bmp")]
@@ -48,6 +50,7 @@ namespace Acrolinx.Sdk.Sidebar
             InitParameters.Add("showServerSelector", true);
             InitParameters.Add("serverAddress", "");
             InitParameters.Add("clientSignature", "");
+            InitParameters.Add("clientLocale", "");
             InitParameters.Add("clientComponents", new JArray());
 
             InitializeComponent();
@@ -79,7 +82,12 @@ namespace Acrolinx.Sdk.Sidebar
                 this.SidebarSourceLocation = defaultSidebarUrl;
                 this.ShowServerSelector = true;
             }
-            
+
+            if (string.IsNullOrWhiteSpace(this.ClientLocale) && CultureInfo.CurrentUICulture != null && CultureInfo.CurrentUICulture.TwoLetterISOLanguageName != null)
+            {
+                this.ClientLocale = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
+            }
+
             RegisterComponents(Assembly.GetCallingAssembly());
 
             webBrowser.Navigate(this.SidebarSourceLocation);
@@ -143,6 +151,27 @@ namespace Acrolinx.Sdk.Sidebar
                 InitParameters["showServerSelector"] = value;
             }
         }
+
+        [Description("Enables user to manually set the localization of the sidebar. Use two letter language codes like 'en' or 'de'. If nothing is set the code of CultureInfo.CurrentUICulture.TwoLetterISOLanguageName will be used."), Category("Sidebar")]
+        [DefaultValue(true)]
+        public string ClientLocale
+        {
+            get
+            {
+                return InitParameters["clientLocale"].Value<string>();
+            }
+            set
+            {
+                if (value == null)
+                {
+                    InitParameters["clientLocale"] = "";
+                    return;
+                }
+                InitParameters["clientLocale"] = value.Trim().ToLower();
+            }
+        }
+        
+
         [Description("The URL where the sidebar loads its HTML from."), Category("Sidebar")]
         [DefaultValue("")]
         public string SidebarSourceLocation

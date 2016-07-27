@@ -2,7 +2,9 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -18,7 +20,8 @@ namespace Acrolinx.Demo.Sidebar
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            //Application.Run(new SidebarChecker());
+
+            System.Globalization.CultureInfo.DefaultThreadCurrentCulture = CultureInfo.InstalledUICulture; //Set the Ui language of the system
             Application.Run(new Sample());
         }
     }
