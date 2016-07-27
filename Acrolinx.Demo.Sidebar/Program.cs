@@ -21,7 +21,8 @@ namespace Acrolinx.Demo.Sidebar
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            System.Globalization.CultureInfo.DefaultThreadCurrentCulture = CultureInfo.InstalledUICulture; //Set the Ui language of the system
+            System.Globalization.CultureInfo.DefaultThreadCurrentUICulture = CultureInfo.InstalledUICulture; //Set the Ui language of the system
+            
             Application.Run(new Sample());
         }
     }

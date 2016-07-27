@@ -83,7 +83,7 @@ namespace Acrolinx.Sdk.Sidebar
                 this.ShowServerSelector = true;
             }
 
-            if (string.IsNullOrWhiteSpace(this.ClientLocale) && CultureInfo.CurrentUICulture != null && CultureInfo.CurrentUICulture.TwoLetterISOLanguageName != null)
+            if (string.IsNullOrWhiteSpace(ClientLocale))
             {
                 this.ClientLocale = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
             }
