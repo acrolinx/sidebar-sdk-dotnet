@@ -37,6 +37,7 @@ namespace Acrolinx.Sdk.Sidebar
         public event SidebarReplaceRangesEventHandler ReplaceRanges;
 
         private readonly string defaultSidebarUrl = "https://acrolinx-sidebar-classic.s3.amazonaws.com/v14/prod/index.html?" + System.DateTime.Now.Ticks;
+        private readonly string defaultSidebarServerLocation = "/sidebar/v14/index.html?" + System.DateTime.Now.Ticks;
 
         public JObject InitParameters
         {
@@ -70,12 +71,24 @@ namespace Acrolinx.Sdk.Sidebar
 
         public void Start()
         {
+            this.Start(null);
+        }
+
+        public void Start(string serverAddress)
+        {
             if (this.DesignMode)
             {
                 return; //no start in design mode
             }
 
             System.Diagnostics.Trace.Assert(!string.IsNullOrWhiteSpace(ClientSignature), "You do not have specified a client signature. Please ask Acrolinx for a client signature and set the client signature via acrolinxSidebar.ClientSignature or use the .NET-UI-designer.");
+
+            if(!string.IsNullOrWhiteSpace(serverAddress))
+            {
+                this.ServerAddress = getServerAddress(serverAddress);
+                this.SidebarSourceLocation = this.ServerAddress + defaultSidebarServerLocation;
+                this.ShowServerSelector = false;
+            }
 
             if(string.IsNullOrWhiteSpace(this.SidebarSourceLocation))
             {
@@ -91,6 +104,24 @@ namespace Acrolinx.Sdk.Sidebar
             RegisterComponents(Assembly.GetCallingAssembly());
 
             webBrowser.Navigate(this.SidebarSourceLocation);
+        }
+
+        private string getServerAddress(string serverAddress)
+        {
+            if (serverAddress.Contains("/sidebar/v"))
+            {
+                serverAddress.Remove(serverAddress.IndexOf("/sidebar/v"));
+            }
+            serverAddress = serverAddress.Replace("http://", "");
+            if (!serverAddress.Contains(":"))
+            {
+                serverAddress += ":8031";
+            }
+            if (!serverAddress.StartsWith("http"))
+            {
+                serverAddress = "http://" + serverAddress;
+            }
+            return serverAddress;
         }
 
         private void GuessMainComponentAndHostApplication(Assembly callingAssembly)
