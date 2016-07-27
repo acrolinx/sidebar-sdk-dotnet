@@ -152,7 +152,7 @@ namespace Acrolinx.Sdk.Sidebar
             }
         }
 
-        [Description("Enables user to manually set the localization of the sidebar. Use two letter language codes like 'en' or 'de'. If nothing is set the code of CultureInfo.CurrentUICulture.TwoLetterISOLanguageName will be used."), Category("Sidebar")]
+        [Description("Sets the localization language of the sidebar. Use two letter language codes like 'en' or 'de'. If nothing is set CultureInfo.CurrentUICulture.TwoLetterISOLanguageName will be used."), Category("Sidebar")]
         [DefaultValue(true)]
         public string ClientLocale
         {
