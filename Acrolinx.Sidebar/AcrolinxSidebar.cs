@@ -83,27 +83,59 @@ namespace Acrolinx.Sdk.Sidebar
 
             System.Diagnostics.Trace.Assert(!string.IsNullOrWhiteSpace(ClientSignature), "You do not have specified a client signature. Please ask Acrolinx for a client signature and set the client signature via acrolinxSidebar.ClientSignature or use the .NET-UI-designer.");
 
-            if(!string.IsNullOrWhiteSpace(serverAddress))
-            {
-                this.ServerAddress = getServerAddress(serverAddress);
-                this.SidebarSourceLocation = this.ServerAddress + defaultSidebarServerLocation;
-                this.ShowServerSelector = false;
-            }
-
-            if(string.IsNullOrWhiteSpace(this.SidebarSourceLocation))
-            {
-                this.SidebarSourceLocation = defaultSidebarUrl;
-                this.ShowServerSelector = true;
-            }
-
-            if (string.IsNullOrWhiteSpace(ClientLocale))
-            {
-                this.ClientLocale = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
-            }
+            SetDefaults(serverAddress);
 
             RegisterComponents(Assembly.GetCallingAssembly());
 
             webBrowser.Navigate(this.SidebarSourceLocation);
+        }
+
+        private void SetDefaults(string serverAddress)
+        {
+            SetServerAddressAndHideServerSelectorIfParameterSet(serverAddress);
+            SetDefaultForSidebarLocationAndShowServerSelectorIfLocationNotSet(serverAddress);
+            SetDefaultClientLocaleIfNotSet();
+        }
+
+        private void SetDefaultClientLocaleIfNotSet()
+        {
+            if (string.IsNullOrWhiteSpace(ClientLocale))
+            {
+                this.ClientLocale = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
+            }
+        }
+
+        private void ShowServerSelectorIfServerAddressNotSet()
+        {
+            if (!string.IsNullOrWhiteSpace(this.ServerAddress))
+            {
+                this.ShowServerSelector = true;
+            }
+        }
+
+        private void SetServerAddressAndHideServerSelectorIfParameterSet(string serverAddress)
+        {
+            if (!string.IsNullOrWhiteSpace(serverAddress))
+            {
+                this.ServerAddress = getServerAddress(serverAddress);
+                this.ShowServerSelector = false;
+            }
+        }
+
+        private void SetDefaultForSidebarLocationAndShowServerSelectorIfLocationNotSet(string serverAddress)
+        {
+            if (string.IsNullOrWhiteSpace(this.SidebarSourceLocation))
+            {
+                if (!string.IsNullOrWhiteSpace(serverAddress))
+                {
+                    this.SidebarSourceLocation = getServerAddress(serverAddress) + defaultSidebarServerLocation;
+                }
+                else
+                {
+                    this.SidebarSourceLocation = defaultSidebarUrl;
+                    ShowServerSelectorIfServerAddressNotSet();
+                }
+            }
         }
 
         private string getServerAddress(string serverAddress)
