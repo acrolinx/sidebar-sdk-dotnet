@@ -21,7 +21,7 @@ namespace Acrolinx.Demo.Sidebar
         private readonly List<UniversalAdapter> adapterList = new List<UniversalAdapter>();
         private AcrolinxSidebar sidebar;
 
-        public Integration(AcrolinxSidebar sidebar)
+        public Integration(AcrolinxSidebar sidebar, string serverAddress)
         {
             this.sidebar = sidebar;
 
@@ -38,6 +38,7 @@ namespace Acrolinx.Demo.Sidebar
             //sidebar.SidebarSourceLocation = "http://yourlocalserver:8031/sidebar/v14/index.html";
             //sidebar.ServerAddress = "http://yourlocalserver:8031";
             //sidebar.ShowServerSelector = false;
+            //Make sure to call sidebar.Start() instead of sidebar.Start(serverAddress), if you uncomment one of these options.
 
             //sidebar.ClientSignature = "ASK_ACROLINX_FOR_A_CLIENT_SIGNATURE";
 
@@ -53,7 +54,7 @@ namespace Acrolinx.Demo.Sidebar
             //sidebar.RegisterClientComponent(Assembly.GetEntryAssembly(), Application.ProductName, AcrolinxSidebar.SoftwareComponentCategory.DEFAULT);
 
             //Start the sidebar, which connects to an Acrolinx Server.
-            sidebar.Start();
+            sidebar.Start(serverAddress);
         }
 
         void SidebarSourceNotReachable(object sender, EventArgs e)

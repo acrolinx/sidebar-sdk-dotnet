@@ -17,6 +17,7 @@ namespace Acrolinx.Demo.Sidebar
     public partial class Sample : Form
     {
         private int childFormNumber = 0;
+        private string serverAddress = null;
 
         public Sample()
         {
@@ -100,14 +101,14 @@ namespace Acrolinx.Demo.Sidebar
 
         private void simpleSampleToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var simple = new SimpleSample();
+            var simple = new SimpleSample(serverAddress);
             simple.MdiParent = this;
             simple.Show();
         }
 
         private void multiSampleToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var multi = new MultiSample();
+            var multi = new MultiSample(serverAddress);
             multi.MdiParent = this;
             multi.Show();
         }
@@ -118,19 +119,23 @@ namespace Acrolinx.Demo.Sidebar
 
             if (result == DialogResult.OK)
             {
-                foreach (var fileName in openFileDialog.FileNames)
-                {
-                    try
-                    {
-                        var simple = new SimpleSample(getFormat(fileName), fileName, File.ReadAllText(fileName));
-                        simple.MdiParent = this;
-                        simple.Show();
-                    }
-                    catch (Exception err)
-                    {
-                        MessageBox.Show(this, "Failed to load '" + fileName + "':" + Environment.NewLine + err.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
+                LoadFiles(openFileDialog.FileNames);
+            }
+        }
 
+        private void LoadFiles(ICollection<string> files)
+        {
+            foreach (var fileName in files)
+            {
+                try
+                {
+                    var simple = new SimpleSample(serverAddress, getFormat(fileName), fileName, File.ReadAllText(fileName));
+                    simple.MdiParent = this;
+                    simple.Show();
+                }
+                catch (Exception err)
+                {
+                    MessageBox.Show(this, "Failed to load '" + fileName + "':" + Environment.NewLine + err.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
@@ -146,6 +151,37 @@ namespace Acrolinx.Demo.Sidebar
                 return Format.XML;
             }
             return Format.Text;
+        }
+
+        private void optionsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var options = new Options(serverAddress);
+
+            if (options.ShowDialog() != DialogResult.OK)
+            {
+                return;
+            }
+            serverAddress = options.ServerAddress;
+        }
+
+         private void Sample_DragDrop(object sender, DragEventArgs e)
+        {
+            if (!e.Data.GetDataPresent(DataFormats.FileDrop))
+            {
+                return;
+            }
+
+            var dropped = ((string[])e.Data.GetData(DataFormats.FileDrop));
+            var files = dropped.ToList();
+            LoadFiles(files);
+        }
+
+        private void Sample_DragEnter(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+            {
+                e.Effect = DragDropEffects.Copy;
+            }
         }
     }
 }

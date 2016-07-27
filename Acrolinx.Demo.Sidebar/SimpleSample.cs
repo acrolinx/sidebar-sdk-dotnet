@@ -22,12 +22,12 @@ namespace Acrolinx.Demo.Sidebar
     {
         private string documentReference;
 
-        public SimpleSample() : this(Format.HTML, "your_file_name.txt", "<body>" +Environment.NewLine + "   <h1> This is a header without dot </h1>" + Environment.NewLine + "    <div>This is an simple sample tesst</div>" + Environment.NewLine + "</body>")
+        public SimpleSample(string serverAddress) : this(serverAddress, Format.HTML, "your_file_name.txt", "<body>" +Environment.NewLine + "   <h1> This is a header without dot </h1>" + Environment.NewLine + "    <div>This is an simple sample tesst</div>" + Environment.NewLine + "</body>")
         {
             
         }
 
-        public SimpleSample(Format format, string documentReference, string text)
+        public SimpleSample(string serverAddress, Format format, string documentReference, string text)
         {
             InitializeComponent();
 
@@ -38,7 +38,7 @@ namespace Acrolinx.Demo.Sidebar
             this.textBox.Text = text;
             this.Text += " - " + documentReference;
 
-            acrolinxSidebar.Start();
+            acrolinxSidebar.Start(serverAddress);
         }
 
         private void FillFormatList()
