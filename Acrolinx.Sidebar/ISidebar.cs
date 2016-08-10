@@ -12,6 +12,7 @@ namespace Acrolinx.Sdk.Sidebar
     [ContractClass(typeof(ISidebarContract))]
     public interface ISidebar
     {
+        event SidebarLoadedEventHandler SidebarLoaded;
         event SidebarInitFinishedEventHandler InitFinished;
         event SidebarSourceNotReachableEventHandler SidebarSourceNotReachable;
         event SidebarCheckedEventHandler Checked;
@@ -159,6 +160,7 @@ namespace Acrolinx.Sdk.Sidebar
     }
 
     public delegate void SidebarInitFinishedEventHandler(object sender, EventArgs e);
+    public delegate void SidebarLoadedEventHandler(object sender, EventArgs e); 
     public delegate void SidebarSourceNotReachableEventHandler(object sender, EventArgs e);
     public delegate void SidebarCheckRequestedEventHandler(object sender, EventArgs e);
     public delegate void SidebarCheckedEventHandler(object sender, CheckedEventArgs e);

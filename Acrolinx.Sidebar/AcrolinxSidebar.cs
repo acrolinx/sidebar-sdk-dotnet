@@ -23,6 +23,8 @@ namespace Acrolinx.Sdk.Sidebar
     [ToolboxBitmap( typeof(AcrolinxSidebar) , "toolbox.bmp")]
     public partial class AcrolinxSidebar : UserControl, ISidebar
     {
+        [Description("Called when the sidebar source was downloaded successfully."), Category("Sidebar")]
+        public event SidebarLoadedEventHandler SidebarLoaded;
         [Description("Called when the sidebar has been loaded and is ready to check."), Category("Sidebar")]
         public event SidebarInitFinishedEventHandler InitFinished;
         [Description("Called when the sidebar was not able to download its source. Maybe the URL is wrong or the user is offline..."), Category("Sidebar")]
@@ -381,6 +383,7 @@ namespace Acrolinx.Sdk.Sidebar
             }
 
             labelImage.Visible = false;
+            SidebarLoaded?.Invoke(this, new EventArgs());
         }
 
         public void InvalidateRanges(String checkId, IReadOnlyList<Match> matches)

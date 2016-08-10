@@ -35,6 +35,8 @@
             this.errorProvider = new System.Windows.Forms.ErrorProvider(this.components);
             this.buttonCancel = new System.Windows.Forms.Button();
             this.selectInSidebar = new System.Windows.Forms.CheckBox();
+            this.serverAddressValidationTimer = new System.Windows.Forms.Timer(this.components);
+            this.validationSidebar = new Acrolinx.Sdk.Sidebar.AcrolinxSidebar();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).BeginInit();
             this.SuspendLayout();
             // 
@@ -57,7 +59,7 @@
             this.serverAddress.Enabled = false;
             this.serverAddress.Location = new System.Drawing.Point(12, 12);
             this.serverAddress.Name = "serverAddress";
-            this.serverAddress.Size = new System.Drawing.Size(498, 20);
+            this.serverAddress.Size = new System.Drawing.Size(473, 20);
             this.serverAddress.TabIndex = 2;
             // 
             // errorProvider
@@ -87,6 +89,26 @@
             this.selectInSidebar.UseVisualStyleBackColor = true;
             this.selectInSidebar.CheckedChanged += new System.EventHandler(this.selectInSidebar_CheckedChanged);
             // 
+            // serverAddressValidationTimer
+            // 
+            this.serverAddressValidationTimer.Enabled = true;
+            this.serverAddressValidationTimer.Interval = 70;
+            this.serverAddressValidationTimer.Tick += new System.EventHandler(this.serverAddressValidationTimer_Tick);
+            // 
+            // validationSidebar
+            // 
+            this.validationSidebar.ClientLocale = "";
+            this.validationSidebar.ClientSignature = "123";
+            this.validationSidebar.Location = new System.Drawing.Point(12, 58);
+            this.validationSidebar.MaximumSize = new System.Drawing.Size(300, 0);
+            this.validationSidebar.MinimumSize = new System.Drawing.Size(300, 450);
+            this.validationSidebar.Name = "validationSidebar";
+            this.validationSidebar.ShowServerSelector = false;
+            this.validationSidebar.SidebarSourceLocation = null;
+            this.validationSidebar.Size = new System.Drawing.Size(300, 450);
+            this.validationSidebar.TabIndex = 5;
+            this.validationSidebar.Visible = false;
+            // 
             // Options
             // 
             this.AcceptButton = this.buttonOk;
@@ -94,6 +116,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.buttonCancel;
             this.ClientSize = new System.Drawing.Size(522, 76);
+            this.Controls.Add(this.validationSidebar);
             this.Controls.Add(this.selectInSidebar);
             this.Controls.Add(this.buttonCancel);
             this.Controls.Add(this.serverAddress);
@@ -116,5 +139,7 @@
         private System.Windows.Forms.ErrorProvider errorProvider;
         private System.Windows.Forms.Button buttonCancel;
         private System.Windows.Forms.CheckBox selectInSidebar;
+        private System.Windows.Forms.Timer serverAddressValidationTimer;
+        private Sdk.Sidebar.AcrolinxSidebar validationSidebar;
     }
 }
