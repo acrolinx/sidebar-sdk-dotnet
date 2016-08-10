@@ -97,15 +97,15 @@ namespace Acrolinx.Demo.Sidebar
             validateOptionsAndAdjustControlStates();
         }
 
-        private string lastserverAddress;
+        private string lastEnteredServerAddress;
         private string lastCheckedServerAddress;
         private void serverAddressValidationTimer_Tick(object sender, EventArgs e)
         {
             if (!selectInSidebar.Checked)
             {
-                if (lastserverAddress != serverAddress.Text)
+                if (lastEnteredServerAddress != serverAddress.Text)
                 {
-                    lastserverAddress = serverAddress.Text;
+                    lastEnteredServerAddress = serverAddress.Text;
                     return; //Wait for changes
                 }
                 if (lastCheckedServerAddress != serverAddress.Text)
