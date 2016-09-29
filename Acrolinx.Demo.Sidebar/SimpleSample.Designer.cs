@@ -80,6 +80,7 @@ namespace Acrolinx.Demo.Sidebar
             // 
             // acrolinxSidebar
             // 
+            this.acrolinxSidebar.ClientSignature = "SW50ZWdyYXRpb25EZXZlbG9wbWVudERlbW9Pbmx5";
             this.acrolinxSidebar.Dock = System.Windows.Forms.DockStyle.Right;
             this.acrolinxSidebar.Location = new System.Drawing.Point(576, 0);
             this.acrolinxSidebar.MaximumSize = new System.Drawing.Size(300, 0);
