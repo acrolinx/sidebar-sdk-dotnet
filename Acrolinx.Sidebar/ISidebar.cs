@@ -65,6 +65,8 @@ namespace Acrolinx.Sdk.Sidebar
 
         public event SidebarReplaceRangesEventHandler ReplaceRanges;
 
+        public event SidebarLoadedEventHandler SidebarLoaded;
+
         public string ClientSignature
         {
             get
