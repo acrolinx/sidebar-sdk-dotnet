@@ -40,7 +40,7 @@ namespace Acrolinx.Sdk.Sidebar
             sidebar.Eval("if (!window.console) { window.console = {} }; window.console.logOld = window.console.log; window.console.log = function(msg) { window.external.Log(msg); }" );
             sidebar.Eval( "window.onerror = function(msg, url, line, col, error) { window.external.OnError(msg, url, line, col, error); }" );
             //The next line would have the effect that the sidebar exchanges objects instead of strings. This seem to fail in case of .NET internet explorer web control...
-            //webBrowser.Document.InvokeScript("eval", new object[] { "window.acrolinxPlugin = window.external" });
+            webBrowser.Document.InvokeScript("eval", new object[] { "window.acrolinxPlugin =   {requestInit: function(){ window.external.requestInit()}, onInitFinished: function(finishResult) {window.external.onInitFinished(JSON.stringify(finishResult))}, configure: function(configuration) { window.external.configure(JSON.stringify(configuration)) }, requestGlobalCheck: function() { window.external.requestGlobalCheck() }, onCheckResult: function(checkResult) {window.external.onCheckResult(JSON.stringify(checkResult)) }, selectRanges: function(checkId, matches) { window.external.selectRanges(checkId, JSON.stringify(matches))}, replaceRanges: function(checkId, matchesWithReplacements) { window.external.replaceRanges(checkId, JSON.stringify(matchesWithReplacements)) }, download: function(downloadInfo) { window.external.download(JSON.stringify(downloadInfo))}, openWindow: function(openWindowParameters) { window.external.openWindow(JSON.stringify(openWindowParameters)) }}; "});
         }
 
         public void Log(params dynamic[] o)
@@ -94,9 +94,10 @@ namespace Acrolinx.Sdk.Sidebar
             System.Diagnostics.Trace.WriteLine("request init");
 
             var initParams = sidebar.InitParameters.ToString();
-            
-            sidebar.Eval( "acrolinxSidebar.init(" + initParams + ")");
+
+            sidebar.Eval("acrolinxSidebar.init(" + initParams + ")");
         }
+
         public void onInitFinished(params object[] o)
         {
             sidebar.FireInitFinished();
