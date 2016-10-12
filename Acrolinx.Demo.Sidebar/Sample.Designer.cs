@@ -194,9 +194,7 @@ namespace Acrolinx.Demo.Sidebar
             // 
             // openFileDialog
             // 
-            this.openFileDialog.Filter = "Sample File Types(*.xml, *.txt, *.html)|*.txt;*.xml;*.html;*.htm;*.xhtml|Text Fil" +
-    "es(*.txt)|*.txt|XML Files (*.xml)|*.xml|Html Files(*.html)|*.html|All File Types" +
-    "(*.*)|*.*";
+            this.openFileDialog.Filter = resources.GetString("openFileDialog.Filter");
             this.openFileDialog.Multiselect = true;
             // 
             // Sample

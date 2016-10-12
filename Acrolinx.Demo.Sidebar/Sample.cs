@@ -146,9 +146,13 @@ namespace Acrolinx.Demo.Sidebar
             {
                 return Format.HTML;
             }
-            if (fileName.ToLower().EndsWith(".xml") || fileName.ToLower().EndsWith(".xhtml"))
+            if (fileName.ToLower().EndsWith(".xml") || fileName.ToLower().EndsWith(".xhtml") || fileName.ToLower().EndsWith(".ditamap") || fileName.ToLower().EndsWith(".dita"))
             {
                 return Format.XML;
+            }
+            if (fileName.ToLower().EndsWith(".md") || fileName.ToLower().EndsWith(".markdown"))
+            {
+                return Format.MARKDOWN;
             }
             return Format.Text;
         }
