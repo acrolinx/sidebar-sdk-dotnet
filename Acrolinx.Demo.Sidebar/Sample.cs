@@ -152,7 +152,7 @@ namespace Acrolinx.Demo.Sidebar
             }
             if (fileName.ToLower().EndsWith(".md") || fileName.ToLower().EndsWith(".markdown"))
             {
-                return Format.MARKDOWN;
+                return Format.Markdown;
             }
             return Format.Text;
         }

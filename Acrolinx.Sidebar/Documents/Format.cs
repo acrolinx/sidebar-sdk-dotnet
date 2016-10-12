@@ -10,6 +10,6 @@ namespace Acrolinx.Sdk.Sidebar.Documents
     public enum Format
     {
         XML, Text, HTML, Word_XML,
-        MARKDOWN
+        Markdown
     }
 }
