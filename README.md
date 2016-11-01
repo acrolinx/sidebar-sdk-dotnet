@@ -30,7 +30,7 @@ with the signature provided by Acrolinx.
 
 ## How to Start
 
-First make sure that you have installed at least Microsoft Visual Studio 2013 with C# support.
+First make sure that you have installed at least Microsoft Visual Studio 2015 with C# support.
 
 As the Acrolinx Sidebar performs static code analysis to improve quality, you also have to install Code Contracts for .NET:
 
