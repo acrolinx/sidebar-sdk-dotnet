@@ -24,7 +24,7 @@ namespace Acrolinx.Demo.Sidebar
             }
 
             validationSidebar.SidebarSourceNotReachable += Validation_SidebarSourceNotReachable;
-            validationSidebar.SidebarLoaded += Validation_SidebarLoaded;
+            validationSidebar.DocumentLoaded += Validation_SidebarLoaded;
 
             validateOptionsAndAdjustControlStates();
         }
@@ -85,7 +85,7 @@ namespace Acrolinx.Demo.Sidebar
             validateOptionsAndAdjustControlStates();
         }
 
-        private void Validation_SidebarLoaded(object sender, EventArgs e)
+        private void Validation_SidebarLoaded(object sender, SidebarDocumentLoadedEvenArgs e)
         {
             status = ValidationStatus.Success;
             validateOptionsAndAdjustControlStates();

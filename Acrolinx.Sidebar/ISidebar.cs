@@ -15,6 +15,7 @@ namespace Acrolinx.Sdk.Sidebar
         event SidebarLoadedEventHandler SidebarLoaded;
         event SidebarInitFinishedEventHandler InitFinished;
         event SidebarSourceNotReachableEventHandler SidebarSourceNotReachable;
+        event SidebarDocumentLoadedEventHandler DocumentLoaded;
         event SidebarCheckedEventHandler Checked;
         event SidebarCheckRequestedEventHandler RequestCheck;
         event SidebarSelectRangesEventHandler SelectRanges;
@@ -56,6 +57,8 @@ namespace Acrolinx.Sdk.Sidebar
         public event SidebarInitFinishedEventHandler InitFinished;
 
         public event SidebarSourceNotReachableEventHandler SidebarSourceNotReachable;
+
+        public event SidebarDocumentLoadedEventHandler DocumentLoaded;
 
         public event SidebarCheckedEventHandler Checked;
 
@@ -161,9 +164,29 @@ namespace Acrolinx.Sdk.Sidebar
         public IReadOnlyList<MatchWithReplacement> Matches { get; private set; }
     }
 
+    public class SidebarUrlEvenArgs : EventArgs
+    {
+        public SidebarUrlEvenArgs(Uri url)
+        {
+            Contract.Requires(url != null);
+            this.Url = url;
+        }
+        public Uri Url { get; private set; }
+    }
+    public class SidebarDocumentLoadedEvenArgs : SidebarUrlEvenArgs
+    {
+        public SidebarDocumentLoadedEvenArgs(bool isValidSidebar, Uri url) : base(url)
+        {
+            Contract.Requires(url != null);
+            this.ValidSidebar = isValidSidebar;
+        }
+        public bool ValidSidebar { get; private set; }
+    }
+
     public delegate void SidebarInitFinishedEventHandler(object sender, EventArgs e);
-    public delegate void SidebarLoadedEventHandler(object sender, EventArgs e); 
-    public delegate void SidebarSourceNotReachableEventHandler(object sender, EventArgs e);
+    public delegate void SidebarLoadedEventHandler(object sender, SidebarUrlEvenArgs e);
+    public delegate void SidebarSourceNotReachableEventHandler(object sender, SidebarUrlEvenArgs e);
+    public delegate void SidebarDocumentLoadedEventHandler(object sender, SidebarDocumentLoadedEvenArgs e);
     public delegate void SidebarCheckRequestedEventHandler(object sender, EventArgs e);
     public delegate void SidebarCheckedEventHandler(object sender, CheckedEventArgs e);
     public delegate void SidebarSelectRangesEventHandler(object sender, MatchesEventArgs e);

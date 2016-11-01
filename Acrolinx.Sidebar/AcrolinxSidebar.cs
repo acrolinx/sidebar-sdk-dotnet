@@ -29,6 +29,8 @@ namespace Acrolinx.Sdk.Sidebar
         public event SidebarInitFinishedEventHandler InitFinished;
         [Description("Called when the sidebar was not able to download its source. Maybe the URL is wrong or the user is offline..."), Category("Sidebar")]
         public event SidebarSourceNotReachableEventHandler SidebarSourceNotReachable;
+        [Description("Called when any kind of html was download. See Eventargs is the downloaded HTML was a valid Acrolinx Sidebar."), Category("Sidebar")]
+        public event SidebarDocumentLoadedEventHandler DocumentLoaded;
         [Description("Called when the sidebar has finished a check."), Category("Sidebar")]
         public event SidebarCheckedEventHandler Checked;
         [Description("Called when sidebar.Check() should be called with extracted document."), Category("Sidebar")]
@@ -69,6 +71,7 @@ namespace Acrolinx.Sdk.Sidebar
             RegisterClientComponent(typeof(String).Assembly, ".NET Framework", AcrolinxSidebar.SoftwareComponentCategory.DETAIL);
             RegisterClientComponent(typeof(JObject).Assembly, "Json.NET", AcrolinxSidebar.SoftwareComponentCategory.DETAIL);
             RegisterClientComponent(typeof(WebBrowser).Assembly, "WebBrowser Control", AcrolinxSidebar.SoftwareComponentCategory.DETAIL);
+            RegisterClientComponent(typeof(WebBrowser).Assembly.GetName().Name + ".browser", "WebBrowser Control Browser", webBrowser.Version.Major + "." + webBrowser.Version.MajorRevision + "." + webBrowser.Version.Minor + "." + webBrowser.Version.MinorRevision,  AcrolinxSidebar.SoftwareComponentCategory.DETAIL);
         }
 
         public void Start()
@@ -94,7 +97,7 @@ namespace Acrolinx.Sdk.Sidebar
 
         private void SetDefaults(string serverAddress)
         {
-            SetServerAddressAndHideServerSelectorIfParameterSet(serverAddress);
+            HideServerSelectorIfServerAddressParameterSet(serverAddress);
             SetDefaultForSidebarLocationAndShowServerSelectorIfLocationNotSet(serverAddress);
             SetDefaultClientLocaleIfNotSet();
         }
@@ -115,11 +118,10 @@ namespace Acrolinx.Sdk.Sidebar
             }
         }
 
-        private void SetServerAddressAndHideServerSelectorIfParameterSet(string serverAddress)
+        private void HideServerSelectorIfServerAddressParameterSet(string serverAddress)
         {
             if (!string.IsNullOrWhiteSpace(serverAddress))
             {
-                this.ServerAddress = getServerAddress(serverAddress);
                 this.ShowServerSelector = false;
             }
         }
@@ -361,17 +363,34 @@ namespace Acrolinx.Sdk.Sidebar
             System.Diagnostics.Trace.WriteLine("Sidebar navigated to: " + e.Url);
 
             bool sidebarRevisionFound = false;
-            foreach(HtmlElement element in webBrowser.Document.GetElementsByTagName("meta")){
+            foreach (HtmlElement element in webBrowser.Document.GetElementsByTagName("meta"))
+            {
                 if ("sidebar-revision".Equals(("" + element.GetAttribute("name")).ToLower()))
                 {
                     sidebarRevisionFound = true;
                     break;
                 }
             }
+
             if (!sidebarRevisionFound)
             {
-                System.Diagnostics.Trace.WriteLine("Connection problem: could not load the sidebar: " + e.Url);
-                SidebarSourceNotReachable?.Invoke(this, new EventArgs());
+                System.Diagnostics.Trace.WriteLine("Could not find sidebar at URL: " + e.Url);
+
+                string internalUrl = GetInternalUrl();
+                
+                if (internalUrl.StartsWith("res://ieframe.dll/"))
+                {
+                    System.Diagnostics.Trace.WriteLine("Loaded page seems to be an IE error page. URL: " + e.Url + " / " + internalUrl);
+
+                    SidebarSourceNotReachable?.Invoke(this, new SidebarUrlEvenArgs(e.Url));
+                    return;
+                }
+            }
+
+            labelImage.Visible = false;
+            DocumentLoaded?.Invoke(this, new SidebarDocumentLoadedEvenArgs(sidebarRevisionFound, e.Url));
+            if (!sidebarRevisionFound)
+            {
                 return;
             }
 
@@ -382,8 +401,12 @@ namespace Acrolinx.Sdk.Sidebar
                 acrolinxPlugin.OnAfterObjectSet();
             }
 
-            labelImage.Visible = false;
-            SidebarLoaded?.Invoke(this, new EventArgs());
+            SidebarLoaded?.Invoke(this, new SidebarUrlEvenArgs(e.Url));
+        }
+
+        private string GetInternalUrl()
+        {
+            return "" + webBrowser?.Document?.Window?.Url?.AbsoluteUri;
         }
 
         public void InvalidateRanges(String checkId, IReadOnlyList<Match> matches)
