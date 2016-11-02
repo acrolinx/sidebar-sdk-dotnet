@@ -26,7 +26,7 @@ namespace Acrolinx.Sdk.Sidebar.Util.Adapter
 
         public MultiAdapter(IAdapter adapter, Format format) : this("", new IAdapter[] { adapter }, format)
         {
-
+            Contract.Requires(adapter != null);
         }
         public MultiAdapter(string documentTag, IEnumerable<IAdapter> adapterList, Format format)
         {
