@@ -24,6 +24,10 @@ namespace Acrolinx.Sdk.Sidebar.Util.Adapter
         private DocumentMap<IAdapter> documentMap = new DocumentMap<IAdapter>();
         private Dictionary<IAdapter, DocumentModel> documentModels = new Dictionary<IAdapter, DocumentModel>();
 
+        public MultiAdapter(IAdapter adapter, Format format) : this("", new IAdapter[] { adapter }, format)
+        {
+
+        }
         public MultiAdapter(string documentTag, IEnumerable<IAdapter> adapterList, Format format)
         {
             Contract.Requires(documentTag != null);
@@ -54,7 +58,7 @@ namespace Acrolinx.Sdk.Sidebar.Util.Adapter
 
         private void AddTagStart(string tagName)
         {
-            if (format != Format.Text)
+            if (format != Format.Text && !String.IsNullOrWhiteSpace(tagName))
             {
                 extraction.Append("<");
                 extraction.Append(tagName);
@@ -64,7 +68,7 @@ namespace Acrolinx.Sdk.Sidebar.Util.Adapter
 
         private void AddTagEnd(string tagName)
         {
-            if (format != Format.Text)
+            if (format != Format.Text && !String.IsNullOrWhiteSpace(tagName))
             {
                 extraction.Append("</");
                 extraction.Append(tagName);
