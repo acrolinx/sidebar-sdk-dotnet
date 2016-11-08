@@ -9,15 +9,22 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Acrolinx.Demo.Sidebar
+namespace Acrolinx.Sdk.Sidebar.Util.Configuration
 {
     public partial class Options : Form
     {
-        public Options(string serverAddress)
+        public Options(string serverAddress, bool defaultSidebar = true)
         {
             InitializeComponent();
-
-            selectInSidebar.Checked = serverAddress == null;
+            selectInSidebar.Visible = defaultSidebar;
+            if (defaultSidebar)
+            {
+                selectInSidebar.Checked = serverAddress == null;
+            }
+            else
+            {
+                selectInSidebar.Checked = false;
+            }
             if (serverAddress != null)
             {
                 this.serverAddress.Text = serverAddress;

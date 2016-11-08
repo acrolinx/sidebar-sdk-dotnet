@@ -11,6 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Acrolinx.Sdk.Sidebar.Documents;
+using Acrolinx.Sdk.Sidebar.Util.Configuration;
 
 namespace Acrolinx.Demo.Sidebar
 {

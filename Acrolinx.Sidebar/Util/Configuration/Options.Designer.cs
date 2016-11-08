@@ -1,4 +1,4 @@
-﻿namespace Acrolinx.Demo.Sidebar
+﻿namespace Acrolinx.Sdk.Sidebar.Util.Configuration
 {
     partial class Options
     {
@@ -92,7 +92,7 @@
             // serverAddressValidationTimer
             // 
             this.serverAddressValidationTimer.Enabled = true;
-            this.serverAddressValidationTimer.Interval = 70;
+            this.serverAddressValidationTimer.Interval = 1000;
             this.serverAddressValidationTimer.Tick += new System.EventHandler(this.serverAddressValidationTimer_Tick);
             // 
             // validationSidebar
