@@ -20,8 +20,8 @@ namespace Acrolinx.Sdk.Sidebar.Util.Configuration
         {
             InitializeComponent();
 
-            LoggingGroupBox.Text = Properties.Resources.SDK_OPTION_GROUP_SERVERADDRESS;
-            ServerAddrGroupBox.Text = Properties.Resources.SDK_OPTION_GROUP_LOGGING;
+            LoggingGroupBox.Text = Properties.Resources.SDK_OPTION_GROUP_LOGGING;
+            ServerAddrGroupBox.Text = Properties.Resources.SDK_OPTION_GROUP_SERVERADDRESS;
             ValidateButton.Text = Properties.Resources.SDK_OPTION_BUTTON_VALIDATE;
             DirectoryLabel.Text = Properties.Resources.SDK_OPTION_GROUP_LOGGING;
             selectInSidebar.Text = Properties.Resources.SDK_OPTION_LABEL_SELECTINSIDEBAR;
@@ -82,12 +82,9 @@ namespace Acrolinx.Sdk.Sidebar.Util.Configuration
 
         public string ServerAddress { get; private set; }
 
-        public string LogDirectoryPath { get; private set; }
-
         private void buttonOk_Click(object sender, EventArgs e)
         {
             ServerAddress = serverAddress.Text;
-            LogDirectoryPath = LogDirectory.Text;
         }
 
         private void selectInSidebar_CheckedChanged(object sender, EventArgs e)
