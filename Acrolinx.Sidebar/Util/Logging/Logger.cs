@@ -11,7 +11,11 @@ namespace Acrolinx.Sdk.Sidebar.Util.Logging
 {
     public static class Logger
     {
-        public static string DirPath   { get; private set; }
+        public static string DirPath {
+            get {
+                return Path.GetTempPath() + "Acrolinx\\logs";
+            }
+        }
 
         public static void LogToConsole()
         {
@@ -25,8 +29,6 @@ namespace Acrolinx.Sdk.Sidebar.Util.Logging
         {
             try
             {
-                DirPath = Path.GetTempPath() + "Acrolinx\\logs";
-
                 System.IO.Directory.CreateDirectory(Logging.Logger.DirPath);
                 Stream fileStream = System.IO.File.Create(DirPath + "\\" + DateTime.Now.ToString("yyyy-MM-dd") + "-" + Assembly.GetCallingAssembly().GetName().Name + ".log");
 
