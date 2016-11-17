@@ -181,6 +181,14 @@
     <EmbeddedResource Include="loading.png" />
   </ItemGroup>
   <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Images\iconConnected.png" />
+    <Content Include="Resources\Images\iconConnected_20x20.png" />
+    <EmbeddedResource Include="Resources\Images\iconConnecting.png" />
+    <Content Include="Resources\Images\iconConnecting_20x20.png" />
+    <EmbeddedResource Include="Resources\Images\iconDisconnected.png" />
+    <Content Include="Resources\Images\iconDisconnected_20x20.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

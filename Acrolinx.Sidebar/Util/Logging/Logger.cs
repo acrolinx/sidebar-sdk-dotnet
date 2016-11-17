@@ -11,7 +11,7 @@ namespace Acrolinx.Sdk.Sidebar.Util.Logging
 {
     public static class Logger
     {
-        public static string DirPath {
+        public static string Directory {
             get {
                 return Path.GetTempPath() + "Acrolinx\\logs";
             }
@@ -29,8 +29,8 @@ namespace Acrolinx.Sdk.Sidebar.Util.Logging
         {
             try
             {
-                System.IO.Directory.CreateDirectory(Logging.Logger.DirPath);
-                Stream fileStream = System.IO.File.Create(DirPath + "\\" + DateTime.Now.ToString("yyyy-MM-dd") + "-" + Assembly.GetCallingAssembly().GetName().Name + ".log");
+                System.IO.Directory.CreateDirectory(Logging.Logger.Directory);
+                Stream fileStream = System.IO.File.Create(Directory + "\\" + DateTime.Now.ToString("yyyy-MM-dd") + "-" + Assembly.GetCallingAssembly().GetName().Name + ".log");
 
                 /* Create a new text writer using the output stream, and add it to
                  * the trace listeners. */

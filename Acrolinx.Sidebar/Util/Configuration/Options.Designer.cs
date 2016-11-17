@@ -28,143 +28,182 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Options));
             this.buttonOk = new System.Windows.Forms.Button();
-            this.serverAddress = new System.Windows.Forms.TextBox();
-            this.errorProvider = new System.Windows.Forms.ErrorProvider(this.components);
+            this.textServerAddress = new System.Windows.Forms.TextBox();
             this.buttonCancel = new System.Windows.Forms.Button();
-            this.selectInSidebar = new System.Windows.Forms.CheckBox();
-            this.LoggingGroupBox = new System.Windows.Forms.GroupBox();
-            this.BrowsButton = new System.Windows.Forms.Button();
-            this.LogDirectory = new System.Windows.Forms.TextBox();
-            this.DirectoryLabel = new System.Windows.Forms.Label();
-            this.ServerAddrGroupBox = new System.Windows.Forms.GroupBox();
-            this.ValidateButton = new System.Windows.Forms.Button();
+            this.checkSelectInSidebar = new System.Windows.Forms.CheckBox();
+            this.groupLogging = new System.Windows.Forms.GroupBox();
+            this.buttonBrowse = new System.Windows.Forms.Button();
+            this.textLogDirectory = new System.Windows.Forms.TextBox();
+            this.labelDirectory = new System.Windows.Forms.Label();
+            this.buttonConnect = new System.Windows.Forms.Button();
+            this.labelServerAddress = new System.Windows.Forms.Label();
+            this.labelStatus = new System.Windows.Forms.Label();
+            this.textStatus = new System.Windows.Forms.TextBox();
+            this.pictureStatus = new System.Windows.Forms.PictureBox();
             this.validationSidebar = new Acrolinx.Sdk.Sidebar.AcrolinxSidebar();
-            ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).BeginInit();
-            this.LoggingGroupBox.SuspendLayout();
-            this.ServerAddrGroupBox.SuspendLayout();
+            this.groupLogging.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureStatus)).BeginInit();
             this.SuspendLayout();
             // 
             // buttonOk
             // 
             this.buttonOk.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonOk.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.buttonOk.Location = new System.Drawing.Point(353, 267);
+            this.buttonOk.Location = new System.Drawing.Point(356, 173);
             this.buttonOk.Name = "buttonOk";
             this.buttonOk.Size = new System.Drawing.Size(75, 23);
-            this.buttonOk.TabIndex = 6;
-            this.buttonOk.Text = "&OK";
+            this.buttonOk.TabIndex = 10;
+            this.buttonOk.Text = "<OK>";
             this.buttonOk.UseVisualStyleBackColor = true;
             this.buttonOk.Click += new System.EventHandler(this.buttonOk_Click);
             // 
-            // serverAddress
+            // textServerAddress
             // 
-            this.serverAddress.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.textServerAddress.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.serverAddress.Enabled = false;
-            this.serverAddress.Location = new System.Drawing.Point(25, 32);
-            this.serverAddress.Name = "serverAddress";
-            this.serverAddress.Size = new System.Drawing.Size(442, 20);
-            this.serverAddress.TabIndex = 1;
-            // 
-            // errorProvider
-            // 
-            this.errorProvider.ContainerControl = this;
+            this.textServerAddress.Enabled = false;
+            this.textServerAddress.Location = new System.Drawing.Point(12, 25);
+            this.textServerAddress.Name = "textServerAddress";
+            this.textServerAddress.Size = new System.Drawing.Size(416, 20);
+            this.textServerAddress.TabIndex = 1;
+            this.textServerAddress.TextChanged += new System.EventHandler(this.textServerAddress_TextChanged);
+            this.textServerAddress.Enter += new System.EventHandler(this.textServerAddress_Enter);
             // 
             // buttonCancel
             // 
+            this.buttonCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.buttonCancel.Location = new System.Drawing.Point(435, 267);
+            this.buttonCancel.Location = new System.Drawing.Point(435, 173);
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new System.Drawing.Size(75, 23);
-            this.buttonCancel.TabIndex = 7;
-            this.buttonCancel.Text = "&Cancel";
+            this.buttonCancel.TabIndex = 11;
+            this.buttonCancel.Text = "<Cancel>";
             this.buttonCancel.UseVisualStyleBackColor = true;
             // 
-            // selectInSidebar
+            // checkSelectInSidebar
             // 
-            this.selectInSidebar.AutoSize = true;
-            this.selectInSidebar.Checked = true;
-            this.selectInSidebar.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.selectInSidebar.Location = new System.Drawing.Point(25, 68);
-            this.selectInSidebar.Name = "selectInSidebar";
-            this.selectInSidebar.Size = new System.Drawing.Size(106, 17);
-            this.selectInSidebar.TabIndex = 2;
-            this.selectInSidebar.Text = global::Acrolinx.Sdk.Sidebar.Properties.Resources.SDK_OPTION_LABEL_SELECTINSIDEBAR;
-            this.selectInSidebar.UseVisualStyleBackColor = true;
-            this.selectInSidebar.CheckedChanged += new System.EventHandler(this.selectInSidebar_CheckedChanged);
+            this.checkSelectInSidebar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.checkSelectInSidebar.AutoSize = true;
+            this.checkSelectInSidebar.Checked = true;
+            this.checkSelectInSidebar.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkSelectInSidebar.Location = new System.Drawing.Point(310, 51);
+            this.checkSelectInSidebar.Name = "checkSelectInSidebar";
+            this.checkSelectInSidebar.Size = new System.Drawing.Size(118, 17);
+            this.checkSelectInSidebar.TabIndex = 2;
+            this.checkSelectInSidebar.Text = "<Select in Sidebar>";
+            this.checkSelectInSidebar.UseVisualStyleBackColor = true;
+            this.checkSelectInSidebar.CheckedChanged += new System.EventHandler(this.selectInSidebar_CheckedChanged);
             // 
-            // LoggingGroupBox
+            // groupLogging
             // 
-            this.LoggingGroupBox.Controls.Add(this.BrowsButton);
-            this.LoggingGroupBox.Controls.Add(this.LogDirectory);
-            this.LoggingGroupBox.Controls.Add(this.DirectoryLabel);
-            this.LoggingGroupBox.Location = new System.Drawing.Point(19, 139);
-            this.LoggingGroupBox.Name = "LoggingGroupBox";
-            this.LoggingGroupBox.Size = new System.Drawing.Size(491, 117);
-            this.LoggingGroupBox.TabIndex = 0;
-            this.LoggingGroupBox.TabStop = false;
+            this.groupLogging.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupLogging.Controls.Add(this.buttonBrowse);
+            this.groupLogging.Controls.Add(this.textLogDirectory);
+            this.groupLogging.Controls.Add(this.labelDirectory);
+            this.groupLogging.Location = new System.Drawing.Point(12, 100);
+            this.groupLogging.Name = "groupLogging";
+            this.groupLogging.Size = new System.Drawing.Size(498, 67);
+            this.groupLogging.TabIndex = 7;
+            this.groupLogging.TabStop = false;
+            this.groupLogging.Text = "<Logging>";
             // 
-            // BrowsButton
+            // buttonBrowse
             // 
-            this.BrowsButton.Location = new System.Drawing.Point(434, 66);
-            this.BrowsButton.Name = "BrowsButton";
-            this.BrowsButton.Size = new System.Drawing.Size(33, 20);
-            this.BrowsButton.TabIndex = 5;
-            this.BrowsButton.Text = "...";
-            this.BrowsButton.UseVisualStyleBackColor = true;
-            this.BrowsButton.Click += new System.EventHandler(this.BrowsButton_Click);
+            this.buttonBrowse.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonBrowse.Location = new System.Drawing.Point(459, 32);
+            this.buttonBrowse.Name = "buttonBrowse";
+            this.buttonBrowse.Size = new System.Drawing.Size(33, 20);
+            this.buttonBrowse.TabIndex = 9;
+            this.buttonBrowse.Text = "...";
+            this.buttonBrowse.UseVisualStyleBackColor = true;
+            this.buttonBrowse.Click += new System.EventHandler(this.BrowsButton_Click);
             // 
-            // LogDirectory
+            // textLogDirectory
             // 
-            this.LogDirectory.Location = new System.Drawing.Point(25, 66);
-            this.LogDirectory.Name = "LogDirectory";
-            this.LogDirectory.ReadOnly = true;
-            this.LogDirectory.Size = new System.Drawing.Size(387, 20);
-            this.LogDirectory.TabIndex = 4;
+            this.textLogDirectory.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.textLogDirectory.Location = new System.Drawing.Point(6, 32);
+            this.textLogDirectory.Name = "textLogDirectory";
+            this.textLogDirectory.ReadOnly = true;
+            this.textLogDirectory.Size = new System.Drawing.Size(447, 20);
+            this.textLogDirectory.TabIndex = 9;
             // 
-            // DirectoryLabel
+            // labelDirectory
             // 
-            this.DirectoryLabel.AutoSize = true;
-            this.DirectoryLabel.Location = new System.Drawing.Point(25, 36);
-            this.DirectoryLabel.Name = "DirectoryLabel";
-            this.DirectoryLabel.Size = new System.Drawing.Size(0, 13);
-            this.DirectoryLabel.TabIndex = 0;
+            this.labelDirectory.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.labelDirectory.AutoSize = true;
+            this.labelDirectory.Location = new System.Drawing.Point(6, 17);
+            this.labelDirectory.Name = "labelDirectory";
+            this.labelDirectory.Size = new System.Drawing.Size(61, 13);
+            this.labelDirectory.TabIndex = 8;
+            this.labelDirectory.Text = "<Directory>";
             // 
-            // ServerAddrGroupBox
+            // buttonConnect
             // 
-            this.ServerAddrGroupBox.Controls.Add(this.ValidateButton);
-            this.ServerAddrGroupBox.Controls.Add(this.serverAddress);
-            this.ServerAddrGroupBox.Controls.Add(this.selectInSidebar);
-            this.ServerAddrGroupBox.Location = new System.Drawing.Point(19, 17);
-            this.ServerAddrGroupBox.Name = "ServerAddrGroupBox";
-            this.ServerAddrGroupBox.Size = new System.Drawing.Size(491, 117);
-            this.ServerAddrGroupBox.TabIndex = 0;
-            this.ServerAddrGroupBox.TabStop = false;
+            this.buttonConnect.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonConnect.Location = new System.Drawing.Point(435, 25);
+            this.buttonConnect.Name = "buttonConnect";
+            this.buttonConnect.Size = new System.Drawing.Size(75, 23);
+            this.buttonConnect.TabIndex = 3;
+            this.buttonConnect.Text = "<Connect>";
+            this.buttonConnect.UseVisualStyleBackColor = true;
+            this.buttonConnect.Click += new System.EventHandler(this.buttonConnect_Click);
             // 
-            // ValidateButton
+            // labelServerAddress
             // 
-            this.ValidateButton.Location = new System.Drawing.Point(392, 64);
-            this.ValidateButton.Name = "ValidateButton";
-            this.ValidateButton.Size = new System.Drawing.Size(75, 23);
-            this.ValidateButton.TabIndex = 3;
-            this.ValidateButton.Text = "Validate";
-            this.ValidateButton.UseVisualStyleBackColor = true;
+            this.labelServerAddress.AutoSize = true;
+            this.labelServerAddress.Location = new System.Drawing.Point(12, 9);
+            this.labelServerAddress.Name = "labelServerAddress";
+            this.labelServerAddress.Size = new System.Drawing.Size(88, 13);
+            this.labelServerAddress.TabIndex = 0;
+            this.labelServerAddress.Text = "<ServerAddress>";
+            // 
+            // labelStatus
+            // 
+            this.labelStatus.AutoSize = true;
+            this.labelStatus.Location = new System.Drawing.Point(12, 58);
+            this.labelStatus.Name = "labelStatus";
+            this.labelStatus.Size = new System.Drawing.Size(49, 13);
+            this.labelStatus.TabIndex = 4;
+            this.labelStatus.Text = "<Status>";
+            // 
+            // textStatus
+            // 
+            this.textStatus.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.textStatus.Location = new System.Drawing.Point(12, 74);
+            this.textStatus.Name = "textStatus";
+            this.textStatus.ReadOnly = true;
+            this.textStatus.Size = new System.Drawing.Size(416, 20);
+            this.textStatus.TabIndex = 5;
+            // 
+            // pictureStatus
+            // 
+            this.pictureStatus.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.pictureStatus.Location = new System.Drawing.Point(435, 74);
+            this.pictureStatus.Name = "pictureStatus";
+            this.pictureStatus.Size = new System.Drawing.Size(20, 20);
+            this.pictureStatus.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureStatus.TabIndex = 11;
+            this.pictureStatus.TabStop = false;
             // 
             // validationSidebar
             // 
+            this.validationSidebar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.validationSidebar.ClientLocale = "";
             this.validationSidebar.ClientSignature = "123";
-            this.validationSidebar.Location = new System.Drawing.Point(21, 277);
+            this.validationSidebar.Location = new System.Drawing.Point(12, 183);
             this.validationSidebar.MaximumSize = new System.Drawing.Size(300, 0);
             this.validationSidebar.MinimumSize = new System.Drawing.Size(300, 450);
             this.validationSidebar.Name = "validationSidebar";
             this.validationSidebar.ShowServerSelector = false;
             this.validationSidebar.SidebarSourceLocation = null;
             this.validationSidebar.Size = new System.Drawing.Size(300, 450);
-            this.validationSidebar.TabIndex = 5;
+            this.validationSidebar.TabIndex = 12;
             this.validationSidebar.Visible = false;
             // 
             // Options
@@ -173,39 +212,48 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.buttonCancel;
-            this.ClientSize = new System.Drawing.Size(522, 298);
-            this.Controls.Add(this.ServerAddrGroupBox);
-            this.Controls.Add(this.LoggingGroupBox);
+            this.ClientSize = new System.Drawing.Size(522, 206);
+            this.Controls.Add(this.pictureStatus);
+            this.Controls.Add(this.textStatus);
+            this.Controls.Add(this.labelStatus);
+            this.Controls.Add(this.buttonConnect);
+            this.Controls.Add(this.textServerAddress);
+            this.Controls.Add(this.labelServerAddress);
+            this.Controls.Add(this.checkSelectInSidebar);
+            this.Controls.Add(this.groupLogging);
             this.Controls.Add(this.validationSidebar);
             this.Controls.Add(this.buttonCancel);
             this.Controls.Add(this.buttonOk);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MaximumSize = new System.Drawing.Size(1200, 240);
+            this.MinimumSize = new System.Drawing.Size(538, 240);
             this.Name = "Options";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "Options";
-            ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).EndInit();
-            this.LoggingGroupBox.ResumeLayout(false);
-            this.LoggingGroupBox.PerformLayout();
-            this.ServerAddrGroupBox.ResumeLayout(false);
-            this.ServerAddrGroupBox.PerformLayout();
+            this.Text = "<Options>";
+            this.groupLogging.ResumeLayout(false);
+            this.groupLogging.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureStatus)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
         #endregion
 
         private System.Windows.Forms.Button buttonOk;
-        private System.Windows.Forms.TextBox serverAddress;
-        private System.Windows.Forms.ErrorProvider errorProvider;
+        private System.Windows.Forms.TextBox textServerAddress;
         private System.Windows.Forms.Button buttonCancel;
-        private System.Windows.Forms.CheckBox selectInSidebar;
+        private System.Windows.Forms.CheckBox checkSelectInSidebar;
         private Sdk.Sidebar.AcrolinxSidebar validationSidebar;
-        private System.Windows.Forms.GroupBox LoggingGroupBox;
-        private System.Windows.Forms.Button BrowsButton;
-        private System.Windows.Forms.TextBox LogDirectory;
-        private System.Windows.Forms.Label DirectoryLabel;
-        private System.Windows.Forms.GroupBox ServerAddrGroupBox;
-        private System.Windows.Forms.Button ValidateButton;
+        private System.Windows.Forms.GroupBox groupLogging;
+        private System.Windows.Forms.Button buttonBrowse;
+        private System.Windows.Forms.TextBox textLogDirectory;
+        private System.Windows.Forms.Label labelDirectory;
+        private System.Windows.Forms.Button buttonConnect;
+        private System.Windows.Forms.Label labelServerAddress;
+        private System.Windows.Forms.TextBox textStatus;
+        private System.Windows.Forms.Label labelStatus;
+        private System.Windows.Forms.PictureBox pictureStatus;
     }
 }
