@@ -161,7 +161,8 @@ namespace Acrolinx.Demo.Sidebar
 
         private void optionsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var options = new Options(serverAddress);
+            var options = new Options(serverAddress, true);
+            //Standard in integrations should be showSelectInSidebarOption = false instead of true
 
             if (options.ShowDialog() != DialogResult.OK)
             {
