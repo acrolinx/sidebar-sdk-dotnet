@@ -59,5 +59,50 @@ namespace Acrolinx.Sdk.Sidebar.Properties {
                 resourceCulture = value;
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Validate.
+        /// </summary>
+        internal static string SDK_OPTION_BUTTON_VALIDATE {
+            get {
+                return ResourceManager.GetString("SDK_OPTION_BUTTON_VALIDATE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Logging.
+        /// </summary>
+        internal static string SDK_OPTION_GROUP_LOGGING {
+            get {
+                return ResourceManager.GetString("SDK_OPTION_GROUP_LOGGING", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Server Address.
+        /// </summary>
+        internal static string SDK_OPTION_GROUP_SERVERADDRESS {
+            get {
+                return ResourceManager.GetString("SDK_OPTION_GROUP_SERVERADDRESS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Directory:.
+        /// </summary>
+        internal static string SDK_OPTION_LABEL_DIRECTORY {
+            get {
+                return ResourceManager.GetString("SDK_OPTION_LABEL_DIRECTORY", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select in Sidebar.
+        /// </summary>
+        internal static string SDK_OPTION_LABEL_SELECTINSIDEBAR {
+            get {
+                return ResourceManager.GetString("SDK_OPTION_LABEL_SELECTINSIDEBAR", resourceCulture);
+            }
+        }
     }
 }

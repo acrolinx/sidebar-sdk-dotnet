@@ -117,5 +117,19 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="SDK_OPTION_BUTTON_VALIDATE" xml:space="preserve">
+    <value>Validate</value>
+  </data>
+  <data name="SDK_OPTION_GROUP_LOGGING" xml:space="preserve">
+    <value>Logging</value>
+  </data>
+  <data name="SDK_OPTION_GROUP_SERVERADDRESS" xml:space="preserve">
+    <value>Server Address</value>
+  </data>
+  <data name="SDK_OPTION_LABEL_DIRECTORY" xml:space="preserve">
+    <value>Directory:</value>
+  </data>
+  <data name="SDK_OPTION_LABEL_SELECTINSIDEBAR" xml:space="preserve">
+    <value>Select in Sidebar</value>
+  </data>
 </root>

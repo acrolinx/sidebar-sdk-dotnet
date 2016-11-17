@@ -3,9 +3,12 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -16,7 +19,18 @@ namespace Acrolinx.Sdk.Sidebar.Util.Configuration
         public Options(string serverAddress, bool defaultSidebar = true)
         {
             InitializeComponent();
+
+            LoggingGroupBox.Text = Properties.Resources.SDK_OPTION_GROUP_SERVERADDRESS;
+            ServerAddrGroupBox.Text = Properties.Resources.SDK_OPTION_GROUP_LOGGING;
+            ValidateButton.Text = Properties.Resources.SDK_OPTION_BUTTON_VALIDATE;
+            DirectoryLabel.Text = Properties.Resources.SDK_OPTION_GROUP_LOGGING;
+            selectInSidebar.Text = Properties.Resources.SDK_OPTION_LABEL_SELECTINSIDEBAR;
+
             selectInSidebar.Visible = defaultSidebar;
+
+            LogDirectory.Text = Logging.Logger.DirPath;
+            BrowsButton.Enabled = !(String.IsNullOrWhiteSpace(LogDirectory.Text));
+
             if (defaultSidebar)
             {
                 selectInSidebar.Checked = serverAddress == null;
@@ -32,20 +46,48 @@ namespace Acrolinx.Sdk.Sidebar.Util.Configuration
 
             validationSidebar.SidebarSourceNotReachable += Validation_SidebarSourceNotReachable;
             validationSidebar.DocumentLoaded += Validation_SidebarLoaded;
+            ValidateButton.Click += ValidateButton_Click;
+            this.serverAddress.TextChanged += ServerAddressText_TextChanged;
 
             validateOptionsAndAdjustControlStates();
         }
 
-        public string ServerAddress { get; private set; }
+        private void ServerAddressText_TextChanged(object sender, EventArgs e)
+        {
+            buttonOk.Enabled = false;
+        }
 
-        private void buttonOk_Click(object sender, EventArgs e)
+        private void ValidateButton_Click(object sender, EventArgs e)
         {
             if (selectInSidebar.Checked)
             {
                 ServerAddress = null;
                 return;
             }
+            else
+            {
+                if (lastCheckedServerAddress != serverAddress.Text)
+                {
+                    lastCheckedServerAddress = serverAddress.Text;
+                    validate(serverAddress.Text);
+                }
+                else
+                {
+                    status = ValidationStatus.Success;
+                }
+            }
+
+            validateOptionsAndAdjustControlStates();
+        }
+
+        public string ServerAddress { get; private set; }
+
+        public string LogDirectoryPath { get; private set; }
+
+        private void buttonOk_Click(object sender, EventArgs e)
+        {
             ServerAddress = serverAddress.Text;
+            LogDirectoryPath = LogDirectory.Text;
         }
 
         private void selectInSidebar_CheckedChanged(object sender, EventArgs e)
@@ -54,6 +96,10 @@ namespace Acrolinx.Sdk.Sidebar.Util.Configuration
             if(!selectInSidebar.Checked)
             {
                 serverAddress.Focus();
+            }
+            else
+            {
+                this.serverAddress.Text = "";
             }
         }
 
@@ -104,22 +150,17 @@ namespace Acrolinx.Sdk.Sidebar.Util.Configuration
             validateOptionsAndAdjustControlStates();
         }
 
-        private string lastEnteredServerAddress;
         private string lastCheckedServerAddress;
-        private void serverAddressValidationTimer_Tick(object sender, EventArgs e)
+ 
+        private void BrowsButton_Click(object sender, EventArgs e)
         {
-            if (!selectInSidebar.Checked)
+            try
             {
-                if (lastEnteredServerAddress != serverAddress.Text)
-                {
-                    lastEnteredServerAddress = serverAddress.Text;
-                    return; //Wait for changes
-                }
-                if (lastCheckedServerAddress != serverAddress.Text)
-                {
-                    lastCheckedServerAddress = serverAddress.Text;
-                    validate(serverAddress.Text);
-                }
+                System.IO.Directory.CreateDirectory(Logging.Logger.DirPath);
+                Process proc = Process.Start(Logging.Logger.DirPath);
+            }catch(Exception exce)
+            {
+                Trace.WriteLine(exce.Message);
             }
         }
     }

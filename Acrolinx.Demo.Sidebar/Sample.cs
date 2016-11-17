@@ -23,6 +23,7 @@ namespace Acrolinx.Demo.Sidebar
         public Sample()
         {
             InitializeComponent();
+            Acrolinx.Sdk.Sidebar.Util.Logging.Logger.LogToConsole();
         }
 
         private void ShowNewForm(object sender, EventArgs e)
