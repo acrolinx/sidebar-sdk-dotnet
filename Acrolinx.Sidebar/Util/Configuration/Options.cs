@@ -75,10 +75,6 @@ namespace Acrolinx.Sdk.Sidebar.Util.Configuration
                     lastCheckedServerAddress = textServerAddress.Text;
                     validate(textServerAddress.Text);
                 }
-                else
-                {
-                    status = ValidationStatus.Success;
-                }
             }
 
             validateOptionsAndAdjustControlStates();
