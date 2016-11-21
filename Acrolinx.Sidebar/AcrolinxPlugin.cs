@@ -82,9 +82,14 @@ namespace Acrolinx.Sdk.Sidebar
 
             dynamic ow = JObject.Parse(o[0]);
 
-            var url = ow.url.Value;
-            var parent = webBrowser.FindForm();
-            new ToolBrowser(parent).navigateAndShow(url);
+            string url = ow.url.Value;
+
+            if(!(url.ToLower().StartsWith("http") || url.ToLower().StartsWith("mailto:") || url.ToLower().StartsWith("www")))
+            {
+                System.Diagnostics.Trace.TraceWarning("Ignoring URL: '" + url + "'. It seems not to be a valid URL.");
+                return false;
+            }
+            System.Diagnostics.Process.Start(url);
 
             return true;
         }

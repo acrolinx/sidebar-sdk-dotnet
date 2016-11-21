@@ -131,12 +131,6 @@
     <Compile Include="AcrolinxSidebar.Designer.cs">
       <DependentUpon>AcrolinxSidebar.cs</DependentUpon>
     </Compile>
-    <Compile Include="ToolBrowser.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="ToolBrowser.Designer.cs">
-      <DependentUpon>ToolBrowser.cs</DependentUpon>
-    </Compile>
     <Compile Include="Util\Configuration\Options.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -151,9 +145,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="AcrolinxSidebar.resx">
       <DependentUpon>AcrolinxSidebar.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ToolBrowser.resx">
-      <DependentUpon>ToolBrowser.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Util\Configuration\Options.resx">
       <DependentUpon>Options.cs</DependentUpon>
