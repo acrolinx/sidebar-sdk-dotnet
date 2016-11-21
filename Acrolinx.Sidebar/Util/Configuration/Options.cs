@@ -70,11 +70,8 @@ namespace Acrolinx.Sdk.Sidebar.Util.Configuration
             }
             else
             {
-                if (lastCheckedServerAddress != textServerAddress.Text)
-                {
-                    lastCheckedServerAddress = textServerAddress.Text;
-                    validate(textServerAddress.Text);
-                }
+                lastCheckedServerAddress = textServerAddress.Text;
+                validate(textServerAddress.Text);
             }
 
             validateOptionsAndAdjustControlStates();
@@ -105,12 +102,9 @@ namespace Acrolinx.Sdk.Sidebar.Util.Configuration
             textServerAddress.Enabled = !checkSelectInSidebar.Checked && status != ValidationStatus.Validating;
 
             buttonConnect.Enabled = !string.IsNullOrWhiteSpace(textServerAddress.Text) && status != ValidationStatus.Validating;
-            bool isValid = checkSelectInSidebar.Checked || (!string.IsNullOrWhiteSpace(textServerAddress.Text) && status == ValidationStatus.Success);
+            bool isValid = checkSelectInSidebar.Checked || (!string.IsNullOrWhiteSpace(textServerAddress.Text) && lastCheckedServerAddress == textServerAddress.Text && status == ValidationStatus.Success);
             buttonOk.Enabled = isValid;
-            ResourceManager rm = Resources.ResourceManager;
-            Bitmap myImage = (Bitmap)rm.GetObject("iconConnected.png");
 
-            this.pictureStatus.Image = myImage;
             if (isValid)
             {
                 textStatus.Text = Properties.Resources.SDK_OPTION_LABEL_STATUS_SUCCESS;
