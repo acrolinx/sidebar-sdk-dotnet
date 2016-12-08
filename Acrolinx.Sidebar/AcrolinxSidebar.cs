@@ -40,7 +40,7 @@ namespace Acrolinx.Sdk.Sidebar
         [Description(""), Category("Sidebar")]
         public event SidebarReplaceRangesEventHandler ReplaceRanges;
 
-        private readonly string defaultSidebarUrl = "https://acrolinx-sidebar-classic.s3.amazonaws.com/v14/prod/index.html?" + System.DateTime.Now.Ticks;
+        private readonly string defaultSidebarUrl = "https://sidebar-classic.acrolinx-cloud.com/v14/prod/index.html?" + System.DateTime.Now.Ticks;
         private readonly string defaultSidebarServerLocation = "/sidebar/v14/index.html?" + System.DateTime.Now.Ticks;
 
         public JObject InitParameters
