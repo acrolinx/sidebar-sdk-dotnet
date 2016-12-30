@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>$id$</id>
+    <version>$version$</version>
+    <authors>$author$</authors>
+    <owners>Acrolinx</owners>
+    <licenseUrl>https://github.com/acrolinx/acrolinx-sidebar-dotnet-sdk/blob/master/LICENSE</licenseUrl>
+    <projectUrl>https://github.com/acrolinx/acrolinx-sidebar-dotnet-sdk</projectUrl>
+    <iconUrl>https://github.com/acrolinx/acrolinx-sidebar-dotnet-sdk/icon.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Acrolinx .NET SDK for Sidebar Integration</description>
+    <releaseNotes>Proting to NuGet</releaseNotes>
+    <copyright>$copyright$</copyright>
+    <tags>Acrolinx Sidebar SDK</tags>
+    <dependencies>
+      <dependency id ="Newtonsoft.Json" version="9.0.1"/>
+    </dependencies>
+  </metadata>
+</package>
