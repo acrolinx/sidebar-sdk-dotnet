@@ -1,32 +1,12 @@
-# Acrolinx .NET Sidebar Demo
+# Acrolinx Sidebar .NET SDK
 
-Demo code for an integration of the Acrolinx sidebar into a .NET application
+Acrolinx sidebar .NET SDK code which integrator uses into a .NET application
 
 ## Prerequisites
 
 Please contact Acrolinx SDK support (sdk-support@acrolinx.com) for initial consulting. 
 We like to schedule a kickoff meeting to answer any questions about your integration project. 
 After the meeting, we provide you with test server credentials and configuration settings you need to get started.
-
-## Configuration of the Sample
-
-The Acrolinx Server checks if a connecting client is allowed to connect.  To enable this you must provide a valid client signature. 
-This can be done either by using the Visual Studio Designer (described in [How to use the Sidebar in Your Integration]) or by editing the code:
-
-In the two files:
-
-* `Acrolinx.Demo.Sidebar\MultiSample.Designer.cs`
-* `Acrolinx.Demo.Sidebar\SimpleSample.Designer.cs`
-
-find the line:
-
-	// acrolinxSidebar
-
-and add the following line:
-
-	this.acrolinxSidebar.ClientSignature = "";
-
-with the signature provided by Acrolinx.
 
 ## How to Start
 
@@ -43,39 +23,9 @@ Run the solution.
 Visual Studio downloads the required dependencies and compiles the Acrolinx .NET Sidebar solution using nuget (https://www.nuget.org/).
 (Note: The dependency download may fail the on the first build. This problem can usually be solved by building a second time.)
 
-![Screen Shot of .NET Sidebar Example](/doc/sample.png)
-
 ## How to Use the Sidebar in Your Integration
 
-After the Acrolinx .NET Sidebar has been compiled, you can start using it in your project: In the Designer View of your form, reference the file `Acrolinx.Sidebar.dll` using the "Choose Items" function of the Toolbox:
-
-![Choose Items](/doc/chooseitems.png)
-
-You should be able to drag and drop the Acrolinx sidebar to your form:
-
-![Toolbox](/doc/toolbox.png)
-
-Usually you dock (Properties->Layout->Dock->Right) the Acrolinx sidebar to the right side of your form or some child panel:
-
-![Form1](/doc/form1.png)
-
-Set the client signature which you got from Acrolinx. Scroll to the Sidebar section in the properties window:
-
-![Signature](/doc/signature.png)
-
-Somewhere in your initialization code, tell the sidebar to start:
-
-	acrolinxSidebar1.Start();
-
-![Start Sidebar](/doc/start.png)
-
-Run the application. If you see the Acrolinx Sidebar everything went well.
-
-The next step is implementing the extraction and the events of the sidebar:
-
-![Events](/doc/events.png)
-
-Have a look at the sample source code provided in the sample project. 
+Refer https://github.com/acrolinx/acrolinx-sidebar-demo-dotnet#how-to-use-the-sidebar-in-your-integration
 
 ## CORS, HTTPS, Servers and Sidebar Updates
 
