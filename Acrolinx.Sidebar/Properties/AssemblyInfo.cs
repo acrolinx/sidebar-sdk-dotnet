@@ -8,7 +8,7 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("Acrolinx.Sidebar")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("Acrolinx .NET SDK for Sidebar Integration")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Acrolinx")]
 [assembly: AssemblyProduct("Sidebar .NET")]
