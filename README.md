@@ -25,36 +25,15 @@ Visual Studio downloads the required dependencies and compiles the Acrolinx .NET
 
 ## How to Use the Sidebar in Your Integration
 
-Refer https://github.com/acrolinx/acrolinx-sidebar-demo-dotnet#how-to-use-the-sidebar-in-your-integration
+Refer https://github.com/acrolinx/acrolinx-sidebar-demo-dotnet/blob/master/README.md
 
-## CORS, HTTPS, Servers and Sidebar Updates
+## Server Dependency
 
-By default, a publicly available Acrolinx Sidebar is loaded.
-
-This deploy method has several benefits:
-* It is easy set up.
-* If Acrolinx provides a bugfix you and your users benefit immediately.
-* Older Acrolinx servers do not ship with an Acrolinx Sidebar.
-
-As you know there is no free lunch ;-).
-
-The disadvantages of the public Acrolinx Sidebar are:
-* By default this sample will only connect to Acrolinx Servers using HTTPS.
-* The Acrolinx Server must have CORS enabled (https://en.wikipedia.org/wiki/Cross-origin_resource_sharing),
-* The client computer must be connected to the internet and must be able to download the public Acrolinx Sidebar.
-
-If you have been granted access to an Acrolinx test server, the public Acrolinx Sidebar works.
-
-If you use an Acrolinx server version 4.7 or above or if you have installed the sidebar manually, you can change the `SidebarSourceLocation` property of the Acrolinx sidebar control.
-The address follows the pattern `http(s)://<hostname>:port/sidebar/v14/index.html`
-
-To check for availability of the Acrolinx Sidebar in your Acrolinx Server installation, search for it in the `www` directory. For example on Windows:
- 
-`C:\Program Files\Acrolinx\AcrolinxIQ\server\www\sidebar\v14`
+To use the Acrolinx Sidebar, you need to connect to an Acrolinx server. If you've already received your Acrolinx server address, you're good to go. If your company has installed an Acrolinx server, but you don't have an address yet, ask your server administrator first.  
 
 ## License
 
-Copyright 2015-2016 Acrolinx GmbH
+Copyright 2016-2017 Acrolinx GmbH
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
