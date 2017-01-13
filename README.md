@@ -1,12 +1,12 @@
 # Acrolinx Sidebar .NET SDK
 
-Acrolinx sidebar .NET SDK code which integrator uses into a .NET application
+Acrolinx sidebar .NET SDK [nuget package](https://www.nuget.org/packages/Acrolinx.Sidebar/) which integrator will use with the .NET application. As an integrator, if you would like to take a deep dive into SDK you’ll find the code in this repository.
 
 ## Prerequisites
 
 Please contact Acrolinx SDK support (sdk-support@acrolinx.com) for initial consulting. 
 We like to schedule a kickoff meeting to answer any questions about your integration project. 
-After the meeting, we provide you with test server credentials and configuration settings you need to get started.
+After the meeting, we provide you with test server credentials and configuration settings you would need to get started.
 
 ## How to Start
 
@@ -20,16 +20,16 @@ Open the solution file `Acrolinx.Sidebar.Net.sln` with Visual Studio.
 
 Run the solution.
  
-Visual Studio downloads the required dependencies and compiles the Acrolinx .NET Sidebar solution using nuget (https://www.nuget.org/).
-(Note: The dependency download may fail the on the first build. This problem can usually be solved by building a second time.)
+Visual Studio downloads the required dependencies and compiles the Acrolinx .NET Sidebar solution using [nuget] (https://www.nuget.org/).
+(Note: The dependency download may fail on the first build. This problem can usually be solved by building a second time).
 
 ## How to Use the Sidebar in Your Integration
 
-Refer https://github.com/acrolinx/acrolinx-sidebar-demo-dotnet/blob/master/README.md
+Refer [sidebar demo] (https://github.com/acrolinx/acrolinx-sidebar-demo-dotnet/blob/master/README.md)
 
 ## Server Dependency
 
-To use the Acrolinx Sidebar, you need to connect to an Acrolinx server. If you've already received your Acrolinx server address, you're good to go. If your company has installed an Acrolinx server, but you don't have an address yet, ask your server administrator first.  
+To use the Acrolinx Sidebar, you need to connect to an Acrolinx server. If you've already received your Acrolinx server address, you’re good to go. If your company has installed an Acrolinx server, but you don't have an address yet, ask your server administrator first.
 
 ## License
 
