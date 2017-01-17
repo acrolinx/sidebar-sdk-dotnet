@@ -1,6 +1,6 @@
 # Acrolinx Sidebar .NET SDK
 
-Acrolinx sidebar .NET SDK [nuget package](https://www.nuget.org/packages/Acrolinx.Sidebar/) which integrator will use with the .NET application. As an integrator, if you would like to take a deep dive into SDK you’ll find the code in this repository.
+You can use the Acrolinx sidebar .NET SDK [NuGet package](https://www.nuget.org/packages/Acrolinx.Sidebar/) to integrate Acrolinx in your .NET application. You can take deeper look into the SDK code in this repository.
 
 ## Prerequisites
 
@@ -10,9 +10,9 @@ After the meeting, we provide you with test server credentials and configuration
 
 ## How to Start
 
-First make sure that you have installed at least Microsoft Visual Studio 2015 with C# support.
+Make sure that you have installed Microsoft Visual Studio with C# support version 2015 or later.
 
-As the Acrolinx Sidebar performs static code analysis to improve quality, you also have to install Code Contracts for .NET:
+Since the Acrolinx Sidebar performs static code analysis to improve quality, you also have to install Code Contracts for .NET:
 
 https://visualstudiogallery.msdn.microsoft.com/1ec7db13-3363-46c9-851f-1ce455f66970
 
@@ -20,12 +20,12 @@ Open the solution file `Acrolinx.Sidebar.Net.sln` with Visual Studio.
 
 Run the solution.
  
-Visual Studio downloads the required dependencies and compiles the Acrolinx .NET Sidebar solution using [nuget] (https://www.nuget.org/).
+Visual Studio downloads the required dependencies and compiles the Acrolinx .NET Sidebar solution using [NuGet] (https://www.nuget.org/).
 (Note: The dependency download may fail on the first build. This problem can usually be solved by building a second time).
 
 ## How to Use the Sidebar in Your Integration
 
-Refer [sidebar demo] (https://github.com/acrolinx/acrolinx-sidebar-demo-dotnet/blob/master/README.md)
+Refer to [sidebar demo] (https://github.com/acrolinx/acrolinx-sidebar-demo-dotnet/blob/master/README.md)
 
 ## Server Dependency
 
