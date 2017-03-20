@@ -5,8 +5,8 @@
     <version>$version$</version>
     <authors>$author$</authors>
     <owners>Acrolinx</owners>
-    <licenseUrl>https://github.com/acrolinx/acrolinx-sidebar-dotnet-sdk/blob/master/LICENSE</licenseUrl>
-    <projectUrl>https://github.com/acrolinx/acrolinx-sidebar-dotnet-sdk</projectUrl>
+    <licenseUrl>https://github.com/acrolinx/sidebar-sdk-dotnet/blob/master/LICENSE</licenseUrl>
+    <projectUrl>https://github.com/acrolinx/sidebar-sdk-dotnet</projectUrl>
     <iconUrl>file://icon.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Acrolinx .NET SDK for Sidebar Integration</description>
