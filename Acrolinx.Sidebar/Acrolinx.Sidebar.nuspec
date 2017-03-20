@@ -7,7 +7,7 @@
     <owners>Acrolinx</owners>
     <licenseUrl>https://github.com/acrolinx/sidebar-sdk-dotnet/blob/master/LICENSE</licenseUrl>
     <projectUrl>https://github.com/acrolinx/sidebar-sdk-dotnet</projectUrl>
-    <iconUrl>file://icon.png</iconUrl>
+    <iconUrl>https://github.com/acrolinx/sidebar-sdk-dotnet/raw/master/Acrolinx.Sidebar/icon.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Acrolinx .NET SDK for Sidebar Integration</description>
     <releaseNotes>Proting to NuGet</releaseNotes>
