@@ -170,7 +170,7 @@ namespace Acrolinx.Sdk.Sidebar
 
             RegisterClientComponent(callingAssembly, "Acrolinx for " + Application.ProductName, SoftwareComponentCategory.MAIN);
 
-            if (callingAssembly != Assembly.GetEntryAssembly())
+            if (Assembly.GetEntryAssembly() != null && callingAssembly != Assembly.GetEntryAssembly())
             {
                 RegisterClientComponent(Assembly.GetEntryAssembly(), Application.ProductName, SoftwareComponentCategory.DEFAULT);
             }
