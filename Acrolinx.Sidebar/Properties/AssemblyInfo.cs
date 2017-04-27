@@ -12,7 +12,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Acrolinx")]
 [assembly: AssemblyProduct("Sidebar .NET")]
-[assembly: AssemblyCopyright("Copyright © Acrolinx 2016")]
+[assembly: AssemblyCopyright("Copyright © Acrolinx 2016-2017")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
