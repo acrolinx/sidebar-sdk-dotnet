@@ -41,7 +41,12 @@ namespace Acrolinx.Sdk.Sidebar
             get;
             set;
         }
-
+        bool FixFocusWorkaround
+        {
+            get;
+            set;
+        }
+        
         string Check(IDocument document);
     }
 
@@ -109,6 +114,18 @@ namespace Acrolinx.Sdk.Sidebar
         }
 
         public string SidebarSourceLocation
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public bool FixFocusWorkaround
         {
             get
             {

@@ -30,9 +30,11 @@ namespace Acrolinx.Sdk.Sidebar
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AcrolinxSidebar));
             this.webBrowser = new System.Windows.Forms.WebBrowser();
             this.labelImage = new System.Windows.Forms.Label();
+            this.FixFocusTimer = new System.Windows.Forms.Timer(this.components);
             this.SuspendLayout();
             // 
             // webBrowser
@@ -46,15 +48,19 @@ namespace Acrolinx.Sdk.Sidebar
             this.webBrowser.DocumentCompleted += new System.Windows.Forms.WebBrowserDocumentCompletedEventHandler(this.webBrowser_DocumentCompleted);
             this.webBrowser.Navigated += new System.Windows.Forms.WebBrowserNavigatedEventHandler(this.webBrowser_Navigated);
             // 
-            // lblImage
+            // labelImage
             // 
             this.labelImage.BackColor = System.Drawing.Color.White;
             this.labelImage.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.labelImage.Image = ((System.Drawing.Image)(resources.GetObject("lblImage.Image")));
+            this.labelImage.Image = ((System.Drawing.Image)(resources.GetObject("labelImage.Image")));
             this.labelImage.Location = new System.Drawing.Point(0, 0);
-            this.labelImage.Name = "lblImage";
+            this.labelImage.Name = "labelImage";
             this.labelImage.Size = new System.Drawing.Size(300, 450);
             this.labelImage.TabIndex = 1;
+            // 
+            // fixFocusTimer
+            // 
+            this.FixFocusTimer.Tick += new System.EventHandler(this.OnFixFocusTimerTick);
             // 
             // AcrolinxSidebar
             // 
@@ -74,5 +80,6 @@ namespace Acrolinx.Sdk.Sidebar
 
         private System.Windows.Forms.WebBrowser webBrowser;
         private System.Windows.Forms.Label labelImage;
+        private System.Windows.Forms.Timer FixFocusTimer;
     }
 }

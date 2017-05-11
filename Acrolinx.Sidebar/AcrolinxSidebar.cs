@@ -247,6 +247,14 @@ namespace Acrolinx.Sdk.Sidebar
             set;
         }
 
+        [Description("Experimental: In case you face focus problems, turn this on."), Category("Sidebar")]
+        [DefaultValue(false)]
+        public bool FixFocusWorkaround
+        {
+            get;
+            set;
+        }
+
         public enum SoftwareComponentCategory
         {
 
@@ -388,6 +396,12 @@ namespace Acrolinx.Sdk.Sidebar
             }
 
             labelImage.Visible = false;
+
+            if (FixFocusWorkaround)
+            {
+                webBrowser.Document.Body.Click += StartFocusFixTimer;
+            }
+
             DocumentLoaded?.Invoke(this, new SidebarDocumentLoadedEvenArgs(sidebarRevisionFound, e.Url));
             if (!sidebarRevisionFound)
             {
@@ -402,6 +416,11 @@ namespace Acrolinx.Sdk.Sidebar
             }
 
             SidebarLoaded?.Invoke(this, new SidebarUrlEvenArgs(e.Url));
+        }
+
+        private void StartFocusFixTimer(object sender, HtmlElementEventArgs e)
+        {
+            FixFocusTimer.Enabled = true;
         }
 
         private string GetInternalUrl()
@@ -430,5 +449,11 @@ namespace Acrolinx.Sdk.Sidebar
 
         }
 
+        private void OnFixFocusTimerTick(object sender, EventArgs e)
+        {
+            webBrowser.Focus();
+            webBrowser.Document.ActiveElement.Focus();
+            FixFocusTimer.Enabled = false;
+        }
     }
 }
