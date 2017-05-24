@@ -37,7 +37,8 @@ namespace Acrolinx.Sdk.Sidebar.Util.Configuration
             }
 
             validationSidebar.SidebarSourceNotReachable += Validation_SidebarSourceNotReachable;
-            validationSidebar.DocumentLoaded += Validation_SidebarLoaded;
+            validationSidebar.DocumentLoaded += Validation_DocumentLoaded;
+            validationSidebar.SidebarLoaded += Validation_SidebarLoaded;
             this.textServerAddress.TextChanged += ServerAddressText_TextChanged;
 
             validateOptionsAndAdjustControlStates();
@@ -125,6 +126,12 @@ namespace Acrolinx.Sdk.Sidebar.Util.Configuration
                     pictureStatus.Image = Resources.iconConnecting;
                     this.AcceptButton = buttonCancel;
                 }
+                else if (status == ValidationStatus.SidebarFailure)
+                {
+                    textStatus.Text = Properties.Resources.SDK_OPTION_LABEL_STATUS_SIDEBAR_FAILURE;
+                    pictureStatus.Image = Resources.iconDisconnected;
+                    this.AcceptButton = buttonConnect;
+                }
                 else if (status == ValidationStatus.Failure)
                 {
                     textStatus.Text = Properties.Resources.SDK_OPTION_LABEL_STATUS_FAILURE;
@@ -139,6 +146,7 @@ namespace Acrolinx.Sdk.Sidebar.Util.Configuration
             NotStarted,
             Validating,
             Success,
+            SidebarFailure,
             Failure
         }
         private ValidationStatus status = ValidationStatus.NotStarted;
@@ -151,7 +159,18 @@ namespace Acrolinx.Sdk.Sidebar.Util.Configuration
             validateOptionsAndAdjustControlStates();
         }
 
-        private void Validation_SidebarLoaded(object sender, SidebarDocumentLoadedEvenArgs e)
+        private void Validation_DocumentLoaded(object sender, SidebarDocumentLoadedEvenArgs e)
+        {
+            if (!e.ValidSidebar)
+            {
+                status = ValidationStatus.SidebarFailure;
+                System.Diagnostics.Trace.WriteLine("Loaded page seems to be an IE error page. May be sidebar is not present on server. URL: " + e.Url );
+                validateOptionsAndAdjustControlStates();
+                textServerAddress.Focus();
+            }
+        }
+
+        private void Validation_SidebarLoaded(object sender, SidebarUrlEvenArgs e)
         {
             status = ValidationStatus.Success;
             validateOptionsAndAdjustControlStates();

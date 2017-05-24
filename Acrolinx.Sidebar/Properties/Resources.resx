@@ -184,4 +184,7 @@
   <data name="SDK_ABOUT_LABEL_PRODUCTNAME" xml:space="preserve">
     <value>Acrolinx for </value>
   </data>
+  <data name="SDK_OPTION_LABEL_STATUS_SIDEBAR_FAILURE" xml:space="preserve">
+    <value>The server is online, but it doesn't support the sidebar feature.</value>
+  </data>
 </root>

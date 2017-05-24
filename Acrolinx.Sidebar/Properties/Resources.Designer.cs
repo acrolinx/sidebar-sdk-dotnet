@@ -253,6 +253,15 @@ namespace Acrolinx.Sdk.Sidebar.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The server is online, but it doesn&apos;t support the sidebar feature..
+        /// </summary>
+        internal static string SDK_OPTION_LABEL_STATUS_SIDEBAR_FAILURE {
+            get {
+                return ResourceManager.GetString("SDK_OPTION_LABEL_STATUS_SIDEBAR_FAILURE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The server is online and everything loads properly..
         /// </summary>
         internal static string SDK_OPTION_LABEL_STATUS_SUCCESS {
