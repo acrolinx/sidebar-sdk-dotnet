@@ -100,6 +100,15 @@ namespace Acrolinx.Sdk.Sidebar.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Application.
+        /// </summary>
+        internal static string SDK_ABOUT_LABEL_APPLICATION {
+            get {
+                return ResourceManager.GetString("SDK_ABOUT_LABEL_APPLICATION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Name.
         /// </summary>
         internal static string SDK_ABOUT_LABEL_ASSEMBLYNAME {
@@ -114,6 +123,15 @@ namespace Acrolinx.Sdk.Sidebar.Properties {
         internal static string SDK_ABOUT_LABEL_COPYTOCLIPBOARD {
             get {
                 return ResourceManager.GetString("SDK_ABOUT_LABEL_COPYTOCLIPBOARD", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to OS:.
+        /// </summary>
+        internal static string SDK_ABOUT_LABEL_OS {
+            get {
+                return ResourceManager.GetString("SDK_ABOUT_LABEL_OS", resourceCulture);
             }
         }
         

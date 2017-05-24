@@ -72,6 +72,7 @@ namespace Acrolinx.Sdk.Sidebar
             RegisterClientComponent(typeof(JObject).Assembly, "Json.NET", AcrolinxSidebar.SoftwareComponentCategory.DETAIL);
             RegisterClientComponent(typeof(WebBrowser).Assembly, "WebBrowser Control", AcrolinxSidebar.SoftwareComponentCategory.DETAIL);
             RegisterClientComponent(typeof(WebBrowser).Assembly.GetName().Name + ".browser", "WebBrowser Control Browser", webBrowser.Version.Major + "." + webBrowser.Version.MajorRevision + "." + webBrowser.Version.Minor + "." + webBrowser.Version.MinorRevision,  AcrolinxSidebar.SoftwareComponentCategory.DETAIL);
+            RegisterClientComponent("Windows.os", "Operating System", Util.AssemblyUtil.OSName(), AcrolinxSidebar.SoftwareComponentCategory.DEFAULT);
         }
 
         public void Start()

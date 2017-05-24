@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Management;
 using System.Reflection;
 using System.Windows.Forms;
 
@@ -10,14 +9,41 @@ namespace Acrolinx.Sdk.Sidebar.Util.About
 {
     public partial class AboutBox : Form
     {
-        public EventHandler<EventArgs> CallBack;
-        private List<string[]> clientComponents;
+        public event EventHandler ComponentValueExtractor;
+        private List<Componenets> clientComponents = new List<Componenets>();
+
+        public class Componenets
+        {
+            public string name;
+            public string version;
+            public string path;
+
+            public Componenets(string name, string version, string path)
+            {
+                this.name = name;
+                this.version = version;
+                this.path = path;
+            }
+        }
+
+        public List<Componenets> ClientComponents
+        {
+            get
+            {
+                return clientComponents;
+            }
+
+            set
+            {
+                clientComponents = value;
+            }
+        }
+
         public AboutBox()
         {
             InitializeComponent();
             SetLocalizations();
             SetProductInfo();
-            
         }
 
         private void AddAssemblyInfo()
@@ -28,16 +54,15 @@ namespace Acrolinx.Sdk.Sidebar.Util.About
             AssemblyUtil abtNewtonsoft = new AssemblyUtil(Assembly.Load("Newtonsoft.Json"));
             this.dataGridView.Rows.Add(abtNewtonsoft.AssemblyProduct, abtNewtonsoft.AssemblyVersion, abtNewtonsoft.AssemblyPath);
 
-            foreach (var item in clientComponents)
+            foreach (var item in ClientComponents)
             {
-                this.dataGridView.Rows.Add(item[0], item[1], item[2]);
+                dataGridView.Rows.Add(item.name, item.version, item.path);
             }
         }
 
         private void SetProductInfo()
         {
-            var name = (from t in new ManagementObjectSearcher("SELECT Caption FROM Win32_OperatingSystem").Get().Cast<ManagementObject>() select t.GetPropertyValue("Caption")).FirstOrDefault();
-            this.os.Text = name != null ? name.ToString() : "Unknown";
+            this.osEdition.Text = Util.AssemblyUtil.OSName();
 
             var str = Assembly.GetExecutingAssembly().GetName().ProcessorArchitecture;
             FileVersionInfo fvi = FileVersionInfo.GetVersionInfo(System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName);
@@ -54,7 +79,9 @@ namespace Acrolinx.Sdk.Sidebar.Util.About
             this.Text = Properties.Resources.SDK_ABOUT_DIALOG_TITLE;
             AssemblyName.HeaderText = Properties.Resources.SDK_ABOUT_LABEL_ASSEMBLYNAME;
             Path.HeaderText = Properties.Resources.SDK_ABOUT_LABEL_PATH;
-            Version.HeaderText = Properties.Resources.SDK_ABOUT_LABEL_VERSION;            
+            Version.HeaderText = Properties.Resources.SDK_ABOUT_LABEL_VERSION;
+            application.Text = Properties.Resources.SDK_ABOUT_LABEL_APPLICATION;
+            os.Text = Properties.Resources.SDK_ABOUT_LABEL_OS;
         }
 
         private void copyClipBoard_Click(object sender, EventArgs e)
@@ -73,8 +100,8 @@ namespace Acrolinx.Sdk.Sidebar.Util.About
 
         private void AboutBox_Load(object sender, EventArgs e)
         {
-            clientComponents = new List<string[]>();
-            CallBack?.Invoke(this.clientComponents, new EventArgs());
+            //ClientComponents = new List<string[]>();
+            ComponentValueExtractor?.Invoke(sender, e);
             AddAssemblyInfo();
         }
     }

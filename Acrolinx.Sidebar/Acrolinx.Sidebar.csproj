@@ -116,7 +116,7 @@
     <Compile Include="Util\About\AboutBox.Designer.cs">
       <DependentUpon>AboutBox.cs</DependentUpon>
     </Compile>
-    <Compile Include="Util\About\AssemblyUtil.cs" />
+    <Compile Include="Util\AssemblyUtil.cs" />
     <Compile Include="Util\Adapter\UniversalAdapter.cs" />
     <Compile Include="Util\Adapter\IAdapter.cs" />
     <Compile Include="Documents\Document.cs" />

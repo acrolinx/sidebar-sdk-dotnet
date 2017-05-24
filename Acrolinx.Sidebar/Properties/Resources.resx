@@ -187,4 +187,10 @@
   <data name="SDK_OPTION_LABEL_STATUS_SIDEBAR_FAILURE" xml:space="preserve">
     <value>The server is online, but it doesn't support the sidebar feature.</value>
   </data>
+  <data name="SDK_ABOUT_LABEL_APPLICATION" xml:space="preserve">
+    <value>Application</value>
+  </data>
+  <data name="SDK_ABOUT_LABEL_OS" xml:space="preserve">
+    <value>OS:</value>
+  </data>
 </root>

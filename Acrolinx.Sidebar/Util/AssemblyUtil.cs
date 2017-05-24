@@ -1,18 +1,16 @@
 ﻿using System;
 using System.Reflection;
-using System.Collections.Generic;
+using System.Management;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Acrolinx.Sdk.Sidebar.Util.About
+namespace Acrolinx.Sdk.Sidebar.Util
 {
     public class AssemblyUtil
     {
-        private Assembly m_asm;
+        private Assembly asm;
         public AssemblyUtil(Assembly asm)
         {
-            m_asm = asm;
+            this.asm = asm;
         }
         #region Assembly Attribute Accessors
 
@@ -20,7 +18,7 @@ namespace Acrolinx.Sdk.Sidebar.Util.About
         {
             get
             {
-                return new Uri(m_asm.CodeBase).LocalPath;
+                return new Uri(this.asm.CodeBase).LocalPath;
             }
         }
 
@@ -28,7 +26,7 @@ namespace Acrolinx.Sdk.Sidebar.Util.About
         {
             get
             {
-                return m_asm.GetName().Version.ToString();
+                return this.asm.GetName().Version.ToString();
             }
         }
 
@@ -36,7 +34,7 @@ namespace Acrolinx.Sdk.Sidebar.Util.About
         {
             get
             {
-                object[] attributes = m_asm.GetCustomAttributes(typeof(AssemblyDescriptionAttribute), false);
+                object[] attributes = this.asm.GetCustomAttributes(typeof(AssemblyDescriptionAttribute), false);
                 if (attributes.Length == 0)
                 {
                     return "";
@@ -49,7 +47,7 @@ namespace Acrolinx.Sdk.Sidebar.Util.About
         {
             get
             {
-                object[] attributes = m_asm.GetCustomAttributes(typeof(AssemblyProductAttribute), false);
+                object[] attributes = this.asm.GetCustomAttributes(typeof(AssemblyProductAttribute), false);
                 if (attributes.Length == 0)
                 {
                     return "";
@@ -62,7 +60,7 @@ namespace Acrolinx.Sdk.Sidebar.Util.About
         {
             get
             {
-                object[] attributes = m_asm.GetCustomAttributes(typeof(AssemblyCopyrightAttribute), false);
+                object[] attributes = this.asm.GetCustomAttributes(typeof(AssemblyCopyrightAttribute), false);
                 if (attributes.Length == 0)
                 {
                     return "";
@@ -75,7 +73,7 @@ namespace Acrolinx.Sdk.Sidebar.Util.About
         {
             get
             {
-                object[] attributes = m_asm.GetCustomAttributes(typeof(AssemblyCompanyAttribute), false);
+                object[] attributes = this.asm.GetCustomAttributes(typeof(AssemblyCompanyAttribute), false);
                 if (attributes.Length == 0)
                 {
                     return "";
@@ -85,6 +83,14 @@ namespace Acrolinx.Sdk.Sidebar.Util.About
         }
         #endregion
 
-    }
+        public static string OSName()
+        {
+            bool is64bit = Environment.Is64BitOperatingSystem;
+            var name = (from t in new ManagementObjectSearcher("SELECT Caption FROM Win32_OperatingSystem").Get().Cast<ManagementObject>() select t.GetPropertyValue("Caption")).FirstOrDefault();
+            var osName = name != null ? name.ToString() : "Unknown";
+            var version = is64bit ? " 64 bit" : " 32 bit";
 
+            return osName + version;
+        }
+    }
 }

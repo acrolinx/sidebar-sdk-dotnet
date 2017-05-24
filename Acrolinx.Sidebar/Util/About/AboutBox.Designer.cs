@@ -36,8 +36,10 @@
             this.Path = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.copyClipBoard = new System.Windows.Forms.Button();
             this.productName = new System.Windows.Forms.Label();
-            this.os = new System.Windows.Forms.Label();
+            this.osEdition = new System.Windows.Forms.Label();
             this.editor = new System.Windows.Forms.Label();
+            this.application = new System.Windows.Forms.Label();
+            this.os = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
             this.SuspendLayout();
             // 
@@ -117,29 +119,56 @@
             // productName
             // 
             this.productName.AutoSize = true;
+            this.productName.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.productName.Location = new System.Drawing.Point(12, 9);
             this.productName.Name = "productName";
             this.productName.Size = new System.Drawing.Size(84, 13);
             this.productName.TabIndex = 3;
             this.productName.Text = "<ProductName>";
             // 
-            // os
+            // osEdition
             // 
-            this.os.AutoSize = true;
-            this.os.Location = new System.Drawing.Point(393, 39);
-            this.os.Name = "os";
-            this.os.Size = new System.Drawing.Size(34, 13);
-            this.os.TabIndex = 4;
-            this.os.Text = "<OS>";
+            this.osEdition.AutoSize = true;
+            this.osEdition.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.osEdition.Location = new System.Drawing.Point(371, 39);
+            this.osEdition.Margin = new System.Windows.Forms.Padding(0, 0, 3, 0);
+            this.osEdition.Name = "osEdition";
+            this.osEdition.Size = new System.Drawing.Size(66, 13);
+            this.osEdition.TabIndex = 4;
+            this.osEdition.Text = "<OSEdition>";
             // 
             // editor
             // 
             this.editor.AutoSize = true;
-            this.editor.Location = new System.Drawing.Point(12, 39);
+            this.editor.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.editor.Location = new System.Drawing.Point(83, 39);
+            this.editor.Margin = new System.Windows.Forms.Padding(0, 0, 3, 0);
             this.editor.Name = "editor";
             this.editor.Size = new System.Drawing.Size(46, 13);
             this.editor.TabIndex = 5;
             this.editor.Text = "<Editor>";
+            // 
+            // application
+            // 
+            this.application.AutoSize = true;
+            this.application.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.application.Location = new System.Drawing.Point(12, 39);
+            this.application.Margin = new System.Windows.Forms.Padding(3, 0, 0, 0);
+            this.application.Name = "application";
+            this.application.Size = new System.Drawing.Size(71, 13);
+            this.application.TabIndex = 6;
+            this.application.Text = "<Application>";
+            // 
+            // os
+            // 
+            this.os.AutoSize = true;
+            this.os.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.os.Location = new System.Drawing.Point(337, 39);
+            this.os.Margin = new System.Windows.Forms.Padding(3, 0, 0, 0);
+            this.os.Name = "os";
+            this.os.Size = new System.Drawing.Size(34, 13);
+            this.os.TabIndex = 7;
+            this.os.Text = "<OS>";
             // 
             // AboutBox
             // 
@@ -147,8 +176,10 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.ClientSize = new System.Drawing.Size(596, 285);
-            this.Controls.Add(this.editor);
             this.Controls.Add(this.os);
+            this.Controls.Add(this.application);
+            this.Controls.Add(this.editor);
+            this.Controls.Add(this.osEdition);
             this.Controls.Add(this.productName);
             this.Controls.Add(this.copyClipBoard);
             this.Controls.Add(this.dataGridView);
@@ -175,7 +206,9 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Path;
         private System.Windows.Forms.Button copyClipBoard;
         private System.Windows.Forms.Label productName;
-        private System.Windows.Forms.Label os;
+        private System.Windows.Forms.Label osEdition;
         private System.Windows.Forms.Label editor;
+        private System.Windows.Forms.Label application;
+        private System.Windows.Forms.Label os;
     }
 }
