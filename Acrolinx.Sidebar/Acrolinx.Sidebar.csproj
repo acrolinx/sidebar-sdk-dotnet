@@ -90,6 +90,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Management" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -109,6 +110,13 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Util\About\AboutBox.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Util\About\AboutBox.Designer.cs">
+      <DependentUpon>AboutBox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Util\About\AssemblyUtil.cs" />
     <Compile Include="Util\Adapter\UniversalAdapter.cs" />
     <Compile Include="Util\Adapter\IAdapter.cs" />
     <Compile Include="Documents\Document.cs" />
@@ -146,6 +154,9 @@
     <EmbeddedResource Include="AcrolinxSidebar.resx">
       <DependentUpon>AcrolinxSidebar.cs</DependentUpon>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Util\About\AboutBox.resx">
+      <DependentUpon>AboutBox.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Util\Configuration\Options.resx">
       <DependentUpon>Options.cs</DependentUpon>

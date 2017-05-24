@@ -166,4 +166,22 @@
   <data name="SDK_OPTION_LABEL_STATUS_SUCCESS" xml:space="preserve">
     <value>The server is online and everything loads properly.</value>
   </data>
+  <data name="SDK_ABOUT_DIALOG_TITLE" xml:space="preserve">
+    <value>About</value>
+  </data>
+  <data name="SDK_ABOUT_LABEL_COPYTOCLIPBOARD" xml:space="preserve">
+    <value>Copy to Clipboard</value>
+  </data>
+  <data name="SDK_ABOUT_LABEL_ASSEMBLYNAME" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="SDK_ABOUT_LABEL_PATH" xml:space="preserve">
+    <value>Path</value>
+  </data>
+  <data name="SDK_ABOUT_LABEL_VERSION" xml:space="preserve">
+    <value>Version</value>
+  </data>
+  <data name="SDK_ABOUT_LABEL_PRODUCTNAME" xml:space="preserve">
+    <value>Acrolinx for </value>
+  </data>
 </root>
