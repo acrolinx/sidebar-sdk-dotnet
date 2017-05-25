@@ -100,7 +100,7 @@ namespace Acrolinx.Sdk.Sidebar.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Application.
+        ///   Looks up a localized string similar to Application:.
         /// </summary>
         internal static string SDK_ABOUT_LABEL_APPLICATION {
             get {

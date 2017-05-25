@@ -131,7 +131,7 @@
             this.osEdition.AutoSize = true;
             this.osEdition.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.osEdition.Location = new System.Drawing.Point(371, 39);
-            this.osEdition.Margin = new System.Windows.Forms.Padding(0, 0, 3, 0);
+            this.osEdition.Margin = new System.Windows.Forms.Padding(0);
             this.osEdition.Name = "osEdition";
             this.osEdition.Size = new System.Drawing.Size(66, 13);
             this.osEdition.TabIndex = 4;
@@ -142,7 +142,7 @@
             this.editor.AutoSize = true;
             this.editor.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.editor.Location = new System.Drawing.Point(83, 39);
-            this.editor.Margin = new System.Windows.Forms.Padding(0, 0, 3, 0);
+            this.editor.Margin = new System.Windows.Forms.Padding(0);
             this.editor.Name = "editor";
             this.editor.Size = new System.Drawing.Size(46, 13);
             this.editor.TabIndex = 5;
@@ -153,7 +153,7 @@
             this.application.AutoSize = true;
             this.application.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.application.Location = new System.Drawing.Point(12, 39);
-            this.application.Margin = new System.Windows.Forms.Padding(3, 0, 0, 0);
+            this.application.Margin = new System.Windows.Forms.Padding(0);
             this.application.Name = "application";
             this.application.Size = new System.Drawing.Size(71, 13);
             this.application.TabIndex = 6;
@@ -164,7 +164,7 @@
             this.os.AutoSize = true;
             this.os.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.os.Location = new System.Drawing.Point(337, 39);
-            this.os.Margin = new System.Windows.Forms.Padding(3, 0, 0, 0);
+            this.os.Margin = new System.Windows.Forms.Padding(0);
             this.os.Name = "os";
             this.os.Size = new System.Drawing.Size(34, 13);
             this.os.TabIndex = 7;

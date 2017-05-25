@@ -188,7 +188,7 @@
     <value>The server is online, but it doesn't support the sidebar feature.</value>
   </data>
   <data name="SDK_ABOUT_LABEL_APPLICATION" xml:space="preserve">
-    <value>Application</value>
+    <value>Application:</value>
   </data>
   <data name="SDK_ABOUT_LABEL_OS" xml:space="preserve">
     <value>OS:</value>
