@@ -2,12 +2,14 @@
 using System.Reflection;
 using System.Management;
 using System.Linq;
+using System.Diagnostics;
+using System.Collections.Generic;
 
 namespace Acrolinx.Sdk.Sidebar.Util
 {
     public class AssemblyUtil
     {
-        private Assembly asm;
+        private readonly Assembly asm;
         public AssemblyUtil(Assembly asm)
         {
             this.asm = asm;
@@ -83,14 +85,32 @@ namespace Acrolinx.Sdk.Sidebar.Util
         }
         #endregion
 
-        public static string OSName()
+        public static Dictionary<string, string> OSInfo()
         {
+            var osInfo = new Dictionary<string, string>();
+
             bool is64bit = Environment.Is64BitOperatingSystem;
             var name = (from t in new ManagementObjectSearcher("SELECT Caption FROM Win32_OperatingSystem").Get().Cast<ManagementObject>() select t.GetPropertyValue("Caption")).FirstOrDefault();
             var osName = name != null ? name.ToString() : "Unknown";
-            var version = is64bit ? " 64 bit" : " 32 bit";
+            osInfo.Add("osName", osName);
 
-            return osName + version;
+            var architecture = is64bit ? " 64 bit" : " 32 bit";
+            var osVersion = Environment.OSVersion.ToString() + architecture;
+            osInfo.Add("version", osVersion);
+
+            return osInfo;
+        }
+
+        public static Dictionary<string, string> AppInfo()
+        {
+            var appInfo = new Dictionary<string, string>();
+            FileVersionInfo fvi = FileVersionInfo.GetVersionInfo(System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName);
+            var architecture = (IntPtr.Size * 8).ToString() + " bit";
+            appInfo.Add("applicationName", fvi.FileDescription.Split(' ').Last());
+            appInfo.Add("productName", fvi.FileDescription);
+            appInfo.Add("version", fvi.FileVersion + " " + architecture);
+
+            return appInfo;
         }
     }
 }

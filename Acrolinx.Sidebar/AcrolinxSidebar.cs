@@ -71,8 +71,9 @@ namespace Acrolinx.Sdk.Sidebar
             RegisterClientComponent(typeof(String).Assembly, ".NET Framework", AcrolinxSidebar.SoftwareComponentCategory.DETAIL);
             RegisterClientComponent(typeof(JObject).Assembly, "Json.NET", AcrolinxSidebar.SoftwareComponentCategory.DETAIL);
             RegisterClientComponent(typeof(WebBrowser).Assembly, "WebBrowser Control", AcrolinxSidebar.SoftwareComponentCategory.DETAIL);
-            RegisterClientComponent(typeof(WebBrowser).Assembly.GetName().Name + ".browser", "WebBrowser Control Browser", webBrowser.Version.Major + "." + webBrowser.Version.MajorRevision + "." + webBrowser.Version.Minor + "." + webBrowser.Version.MinorRevision,  AcrolinxSidebar.SoftwareComponentCategory.DETAIL);
-            RegisterClientComponent("Windows.os", "Operating System", Util.AssemblyUtil.OSName(), AcrolinxSidebar.SoftwareComponentCategory.DEFAULT);
+            RegisterClientComponent(typeof(WebBrowser).Assembly.GetName().Name + ".browser", "WebBrowser Control Browser", webBrowser.Version.Major + "." + webBrowser.Version.MajorRevision + "." + webBrowser.Version.Minor + "." + webBrowser.Version.MinorRevision, AcrolinxSidebar.SoftwareComponentCategory.DETAIL);
+            RegisterClientComponent("osInfo", Util.AssemblyUtil.OSInfo()["osName"], Util.AssemblyUtil.OSInfo()["version"], AcrolinxSidebar.SoftwareComponentCategory.DEFAULT);
+            RegisterClientComponent("editor", Util.AssemblyUtil.AppInfo()["productName"], Util.AssemblyUtil.AppInfo()["version"], AcrolinxSidebar.SoftwareComponentCategory.DEFAULT);
         }
 
         public void Start()

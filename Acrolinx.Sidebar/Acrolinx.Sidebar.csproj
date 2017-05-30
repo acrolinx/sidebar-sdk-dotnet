@@ -158,6 +158,9 @@
     <EmbeddedResource Include="Util\About\AboutBox.resx">
       <DependentUpon>AboutBox.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Util\About\AboutBox.yo.resx">
+      <DependentUpon>AboutBox.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Util\Configuration\Options.resx">
       <DependentUpon>Options.cs</DependentUpon>
       <SubType>Designer</SubType>

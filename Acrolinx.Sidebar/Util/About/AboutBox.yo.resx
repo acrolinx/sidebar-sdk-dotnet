@@ -117,16 +117,16 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="&gt;&gt;AssemblyName.Type" xml:space="preserve">
-    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;productName.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;Path.Name" xml:space="preserve">
-    <value>Path</value>
-  </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="dataGridView.Size" type="System.Drawing.Size, System.Drawing">
+    <value>581, 133</value>
+  </data>
+  <data name="copyClipBoard.Location" type="System.Drawing.Point, System.Drawing">
+    <value>487, 216</value>
+  </data>
+  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
+    <value>620, 265</value>
+  </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         AAABAAwAEBAAAAEAIAAoBQAAxgAAABQUAAABACAA+AcAAO4FAAAYGAAAAQAgAGgLAADmDQAAICAAAAEA
@@ -6533,141 +6533,4 @@
         ACOAEcAIYAQwAhgBjABGACOAEcAIYAQwAhgBjIB9CPw/KsuilmYyFYMAAAAASUVORK5CYII=
 </value>
   </data>
-  <data name="&gt;&gt;copyClipBoard.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="Version.HeaderText" xml:space="preserve">
-    <value>&lt;Version&gt;</value>
-  </data>
-  <data name="&gt;&gt;dataGridView.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;Version.Name" xml:space="preserve">
-    <value>Version</value>
-  </data>
-  <data name="&gt;&gt;$this.Name" xml:space="preserve">
-    <value>AboutBox</value>
-  </data>
-  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="productName.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="&gt;&gt;Version.Type" xml:space="preserve">
-    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="Path.HeaderText" xml:space="preserve">
-    <value>&lt;Path&gt;</value>
-  </data>
-  <data name="&gt;&gt;copyClipBoard.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="productName.Text" xml:space="preserve">
-    <value>&lt;ProductName&gt;</value>
-  </data>
-  <data name="productName.TabIndex" type="System.Int32, mscorlib">
-    <value>3</value>
-  </data>
-  <data name="&gt;&gt;productName.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>620, 281</value>
-  </data>
-  <data name="&gt;&gt;Path.Type" xml:space="preserve">
-    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="$this.StartPosition" type="System.Windows.Forms.FormStartPosition, System.Windows.Forms">
-    <value>CenterParent</value>
-  </data>
-  <data name="productName.Size" type="System.Drawing.Size, System.Drawing">
-    <value>84, 13</value>
-  </data>
-  <data name="productName.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft Sans Serif, 8.25pt</value>
-  </data>
-  <data name="&gt;&gt;$this.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Form, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="$this.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="$this.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>9, 9, 9, 9</value>
-  </data>
-  <data name="copyClipBoard.Text" xml:space="preserve">
-    <value>&lt;COPYTOCLIPBOARD&gt;</value>
-  </data>
-  <data name="&gt;&gt;productName.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="dataGridView.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="&gt;&gt;AssemblyName.Name" xml:space="preserve">
-    <value>AssemblyName</value>
-  </data>
-  <data name="copyClipBoard.Size" type="System.Drawing.Size, System.Drawing">
-    <value>114, 29</value>
-  </data>
-  <data name="&gt;&gt;dataGridView.Type" xml:space="preserve">
-    <value>System.Windows.Forms.DataGridView, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;dataGridView.Name" xml:space="preserve">
-    <value>dataGridView</value>
-  </data>
-  <data name="AssemblyName.HeaderText" xml:space="preserve">
-    <value>&lt;Name&gt;</value>
-  </data>
-  <data name="&gt;&gt;copyClipBoard.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="copyClipBoard.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Bottom, Right</value>
-  </data>
-  <data name="&gt;&gt;productName.Name" xml:space="preserve">
-    <value>productName</value>
-  </data>
-  <data name="dataGridView.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Bottom, Left, Right</value>
-  </data>
-  <data name="dataGridView.Size" type="System.Drawing.Size, System.Drawing">
-    <value>581, 144</value>
-  </data>
-  <data name="&gt;&gt;dataGridView.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="&gt;&gt;copyClipBoard.Name" xml:space="preserve">
-    <value>copyClipBoard</value>
-  </data>
-  <data name="copyClipBoard.Location" type="System.Drawing.Point, System.Drawing">
-    <value>487, 227</value>
-  </data>
-  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
-    <value>6, 13</value>
-  </data>
-  <data name="dataGridView.Location" type="System.Drawing.Point, System.Drawing">
-    <value>20, 58</value>
-  </data>
-  <data name="copyClipBoard.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
-  </data>
-  <data name="productName.Location" type="System.Drawing.Point, System.Drawing">
-    <value>20, 20</value>
-  </data>
-  <metadata name="AssemblyName.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="Path.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="$this.Language" type="System.Globalization.CultureInfo, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>yo</value>
-  </metadata>
-  <metadata name="Version.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
 </root>

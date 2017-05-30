@@ -62,15 +62,8 @@ namespace Acrolinx.Sdk.Sidebar.Util.About
 
         private void SetProductInfo()
         {
-            this.osEdition.Text = Util.AssemblyUtil.OSName();
-
-            var str = Assembly.GetExecutingAssembly().GetName().ProcessorArchitecture;
-            FileVersionInfo fvi = FileVersionInfo.GetVersionInfo(System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName);
-
-            var architecture = (IntPtr.Size * 8).ToString() + " bit";
-            this.editor.Text = fvi.FileDescription + " " + architecture;
-
-            this.productName.Text = Properties.Resources.SDK_ABOUT_LABEL_PRODUCTNAME + fvi.FileDescription.Split(' ').Last();
+            var appInfo = Util.AssemblyUtil.AppInfo();
+            this.productName.Text = Properties.Resources.SDK_ABOUT_LABEL_PRODUCTNAME + appInfo["applicationName"];
         }
 
         private void SetLocalizations()
@@ -80,8 +73,6 @@ namespace Acrolinx.Sdk.Sidebar.Util.About
             AssemblyName.HeaderText = Properties.Resources.SDK_ABOUT_LABEL_ASSEMBLYNAME;
             Path.HeaderText = Properties.Resources.SDK_ABOUT_LABEL_PATH;
             Version.HeaderText = Properties.Resources.SDK_ABOUT_LABEL_VERSION;
-            application.Text = Properties.Resources.SDK_ABOUT_LABEL_APPLICATION;
-            os.Text = Properties.Resources.SDK_ABOUT_LABEL_OS;
         }
 
         private void copyClipBoard_Click(object sender, EventArgs e)
@@ -89,7 +80,7 @@ namespace Acrolinx.Sdk.Sidebar.Util.About
             string clipboardContent = "";
             foreach (DataGridViewRow dataGridRow in dataGridView.Rows)
             {
-                foreach (DataGridViewCell cell in  dataGridRow.Cells)
+                foreach (DataGridViewCell cell in dataGridRow.Cells)
                 {
                     clipboardContent += cell.Value + "\t";
                 }
@@ -100,7 +91,6 @@ namespace Acrolinx.Sdk.Sidebar.Util.About
 
         private void AboutBox_Load(object sender, EventArgs e)
         {
-            //ClientComponents = new List<string[]>();
             ComponentValueExtractor?.Invoke(sender, e);
             AddAssemblyInfo();
         }
