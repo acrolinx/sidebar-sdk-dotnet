@@ -10,6 +10,7 @@
         /// <summary>
         /// Clean up any resources being used.
         /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -27,100 +28,98 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AboutBox));
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            this.dataGridView = new System.Windows.Forms.DataGridView();
-            this.AssemblyName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Version = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Path = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.copyClipBoard = new System.Windows.Forms.Button();
             this.productName = new System.Windows.Forms.Label();
+            this.dataGridView = new System.Windows.Forms.DataGridView();
+            this.assemblyName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.version = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.path = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.copyToClipboard = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
             this.SuspendLayout();
             // 
+            // productName
+            // 
+            this.productName.AutoSize = true;
+            this.productName.Location = new System.Drawing.Point(20, 20);
+            this.productName.Name = "productName";
+            this.productName.Size = new System.Drawing.Size(103, 13);
+            this.productName.TabIndex = 0;
+            this.productName.Text = "<PRODUCTNAME>";
+            // 
             // dataGridView
             // 
-            resources.ApplyResources(this.dataGridView, "dataGridView");
             this.dataGridView.AllowUserToAddRows = false;
             this.dataGridView.AllowUserToDeleteRows = false;
-            dataGridViewCellStyle1.BackColor = System.Drawing.Color.White;
-            this.dataGridView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
-            this.dataGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dataGridView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.dataGridView.BackgroundColor = System.Drawing.SystemColors.Control;
             this.dataGridView.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal;
-            this.dataGridView.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.EnableAlwaysIncludeHeaderText;
-            this.dataGridView.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.ButtonHighlight;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.dataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.AssemblyName,
-            this.Version,
-            this.Path});
+            this.assemblyName,
+            this.version,
+            this.path});
             this.dataGridView.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
-            this.dataGridView.MultiSelect = false;
+            this.dataGridView.GridColor = System.Drawing.SystemColors.Control;
+            this.dataGridView.Location = new System.Drawing.Point(20, 58);
             this.dataGridView.Name = "dataGridView";
             this.dataGridView.ReadOnly = true;
             this.dataGridView.RowHeadersVisible = false;
-            this.dataGridView.ShowCellErrors = false;
-            this.dataGridView.ShowCellToolTips = false;
-            this.dataGridView.ShowEditingIcon = false;
-            this.dataGridView.ShowRowErrors = false;
-            this.dataGridView.TabStop = false;
+            this.dataGridView.Size = new System.Drawing.Size(576, 161);
+            this.dataGridView.TabIndex = 1;
             // 
-            // AssemblyName
+            // assemblyName
             // 
-            this.AssemblyName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            resources.ApplyResources(this.AssemblyName, "AssemblyName");
-            this.AssemblyName.Name = "AssemblyName";
-            this.AssemblyName.ReadOnly = true;
+            this.assemblyName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.assemblyName.HeaderText = "AssemblyName";
+            this.assemblyName.Name = "assemblyName";
+            this.assemblyName.ReadOnly = true;
             // 
-            // Version
+            // version
             // 
-            this.Version.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            resources.ApplyResources(this.Version, "Version");
-            this.Version.Name = "Version";
-            this.Version.ReadOnly = true;
+            this.version.HeaderText = "Version";
+            this.version.Name = "version";
+            this.version.ReadOnly = true;
+            this.version.Width = 193;
             // 
-            // Path
+            // path
             // 
-            this.Path.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            resources.ApplyResources(this.Path, "Path");
-            this.Path.Name = "Path";
-            this.Path.ReadOnly = true;
+            this.path.HeaderText = "Path";
+            this.path.Name = "path";
+            this.path.ReadOnly = true;
+            this.path.Width = 193;
             // 
-            // copyClipBoard
+            // copyToClipboard
             // 
-            resources.ApplyResources(this.copyClipBoard, "copyClipBoard");
-            this.copyClipBoard.Name = "copyClipBoard";
-            this.copyClipBoard.UseVisualStyleBackColor = true;
-            this.copyClipBoard.Click += new System.EventHandler(this.copyClipBoard_Click);
-            // 
-            // productName
-            // 
-            resources.ApplyResources(this.productName, "productName");
-            this.productName.Name = "productName";
+            this.copyToClipboard.Location = new System.Drawing.Point(445, 244);
+            this.copyToClipboard.Name = "copyToClipboard";
+            this.copyToClipboard.Size = new System.Drawing.Size(151, 30);
+            this.copyToClipboard.TabIndex = 2;
+            this.copyToClipboard.Text = "<COPYTOCLIPBOARD>";
+            this.copyToClipboard.UseVisualStyleBackColor = true;
+            this.copyToClipboard.Click += new System.EventHandler(this.copyToClipboard_Click);
             // 
             // AboutBox
             // 
-            resources.ApplyResources(this, "$this");
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.productName);
-            this.Controls.Add(this.copyClipBoard);
+            this.ClientSize = new System.Drawing.Size(620, 289);
+            this.Controls.Add(this.copyToClipboard);
             this.Controls.Add(this.dataGridView);
+            this.Controls.Add(this.productName);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
-            this.MaximizeBox = false;
-            this.MinimizeBox = false;
             this.Name = "AboutBox";
-            this.ShowIcon = false;
-            this.ShowInTaskbar = false;
+            this.Text = "About";
             this.Load += new System.EventHandler(this.AboutBox_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).EndInit();
             this.ResumeLayout(false);
@@ -129,11 +128,12 @@
         }
 
         #endregion
-        private System.Windows.Forms.DataGridView dataGridView;
-        private System.Windows.Forms.DataGridViewTextBoxColumn AssemblyName;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Version;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Path;
-        private System.Windows.Forms.Button copyClipBoard;
+
         private System.Windows.Forms.Label productName;
+        private System.Windows.Forms.DataGridView dataGridView;
+        private System.Windows.Forms.DataGridViewTextBoxColumn assemblyName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn version;
+        private System.Windows.Forms.DataGridViewTextBoxColumn path;
+        private System.Windows.Forms.Button copyToClipboard;
     }
 }

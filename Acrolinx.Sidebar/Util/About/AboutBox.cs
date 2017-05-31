@@ -1,14 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
 using System.Linq;
 using System.Reflection;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Acrolinx.Sdk.Sidebar.Util.About
 {
     public partial class AboutBox : Form
     {
+
         public event EventHandler ComponentValueExtractor;
         private List<Componenets> clientComponents = new List<Componenets>();
 
@@ -38,7 +43,6 @@ namespace Acrolinx.Sdk.Sidebar.Util.About
                 clientComponents = value;
             }
         }
-
         public AboutBox()
         {
             InitializeComponent();
@@ -68,15 +72,22 @@ namespace Acrolinx.Sdk.Sidebar.Util.About
 
         private void SetLocalizations()
         {
-            copyClipBoard.Text = Properties.Resources.SDK_ABOUT_LABEL_COPYTOCLIPBOARD;
+            copyToClipboard.Text = Properties.Resources.SDK_ABOUT_LABEL_COPYTOCLIPBOARD;
             this.Text = Properties.Resources.SDK_ABOUT_DIALOG_TITLE;
-            AssemblyName.HeaderText = Properties.Resources.SDK_ABOUT_LABEL_ASSEMBLYNAME;
-            Path.HeaderText = Properties.Resources.SDK_ABOUT_LABEL_PATH;
-            Version.HeaderText = Properties.Resources.SDK_ABOUT_LABEL_VERSION;
+            assemblyName.HeaderText = Properties.Resources.SDK_ABOUT_LABEL_ASSEMBLYNAME;
+            path.HeaderText = Properties.Resources.SDK_ABOUT_LABEL_PATH;
+            version.HeaderText = Properties.Resources.SDK_ABOUT_LABEL_VERSION;
         }
 
-        private void copyClipBoard_Click(object sender, EventArgs e)
+        private void AboutBox_Load(object sender, EventArgs e)
         {
+            ComponentValueExtractor?.Invoke(sender, e);
+            AddAssemblyInfo();
+        }
+
+        private void copyToClipboard_Click(object sender, EventArgs e)
+        {
+
             string clipboardContent = "";
             foreach (DataGridViewRow dataGridRow in dataGridView.Rows)
             {
@@ -87,12 +98,7 @@ namespace Acrolinx.Sdk.Sidebar.Util.About
                 clipboardContent += "\r\n";
             }
             Clipboard.SetText(clipboardContent);
-        }
 
-        private void AboutBox_Load(object sender, EventArgs e)
-        {
-            ComponentValueExtractor?.Invoke(sender, e);
-            AddAssemblyInfo();
         }
     }
 }
