@@ -403,7 +403,7 @@ namespace Acrolinx.Sdk.Sidebar
             {
                 webBrowser.Document.Body.MouseEnter += MouseEnteredSidebar;
                 webBrowser.Document.Body.MouseLeave += MouseLeftSidebar;
-                webBrowser.Document.Body.MouseDown += MouseDownInSidebar;
+                webBrowser.Document.Body.MouseUp += MouseUpInSidebar;
             }
 
             DocumentLoaded?.Invoke(this, new SidebarDocumentLoadedEvenArgs(sidebarRevisionFound, e.Url));
@@ -427,7 +427,7 @@ namespace Acrolinx.Sdk.Sidebar
             mouseEnteredSidebar = false;
         }
 
-        private void MouseDownInSidebar(object sender, HtmlElementEventArgs e)
+        private void MouseUpInSidebar(object sender, HtmlElementEventArgs e)
         {
             if (!mouseEnteredSidebar)
             {
