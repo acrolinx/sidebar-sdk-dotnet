@@ -3,6 +3,7 @@
 using Acrolinx.Sdk.Sidebar.Documents;
 using Acrolinx.Sdk.Sidebar.Exceptions;
 using Acrolinx.Sdk.Sidebar.Util.Changetracking;
+using Acrolinx.Sdk.Sidebar.Util.Logging;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
@@ -216,7 +217,7 @@ namespace Acrolinx.Sdk.Sidebar.Util.Adapter
         {
             Contract.Requires(range != null);
 
-            System.Diagnostics.Trace.WriteLine("SelectRange must be implemented! Range: " + range);
+            Logger.AcroLog.Info("SelectRange must be implemented! Range: " + range);
         }
 
         protected virtual void ReplaceRawRange(IRange range, string replacement, Format format)
@@ -224,7 +225,7 @@ namespace Acrolinx.Sdk.Sidebar.Util.Adapter
             Contract.Requires(range != null);
             Contract.Requires(replacement != null);
 
-            System.Diagnostics.Trace.WriteLine("ReplaceRange must be implemented! Range: " + range + " Replacement:" + replacement);
+            Logger.AcroLog.Info("ReplaceRange must be implemented! Range: " + range + " Replacement:" + replacement);
         }
     }
 }

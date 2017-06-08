@@ -10,11 +10,15 @@
     <iconUrl>https://github.com/acrolinx/sidebar-sdk-dotnet/raw/master/Acrolinx.Sidebar/icon.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Acrolinx .NET SDK for Sidebar Integration</description>
-    <releaseNotes>Proting to NuGet</releaseNotes>
+    <releaseNotes>Promoting to NuGet</releaseNotes>
     <copyright>$copyright$</copyright>
     <tags>Acrolinx Sidebar SDK</tags>
     <dependencies>
-      <dependency id ="Newtonsoft.Json" version="9.0.1"/>
+      <dependency id ="Newtonsoft.Json" version="10.0.2"/>
+      <dependency id ="log4net" version="2.0.8"/>
     </dependencies>
   </metadata>
+  <files>
+    <file src="Acrolinx.Sidebar.log4net.xml" target="lib\net45" />
+  </files>
 </package>

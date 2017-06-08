@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Diagnostics.Contracts;
 using Acrolinx.Sdk.Sidebar.Documents;
+using Acrolinx.Sdk.Sidebar.Util.Logging;
 using System.Dynamic;
 using System.Reflection;
 using Microsoft.CSharp.RuntimeBinder;
@@ -168,7 +169,7 @@ namespace Acrolinx.Sdk.Sidebar
             {
                 return;
             }
-            System.Diagnostics.Trace.WriteLine("Please call sidebar.RegisterClientComponent(..., SoftwareComponentCategory.MAIN). Sidebar tries to guess the integration name...");
+            Logger.AcroLog.Info("Please call sidebar.RegisterClientComponent(..., SoftwareComponentCategory.MAIN). Sidebar tries to guess the integration name...");
 
             RegisterClientComponent(callingAssembly, "Acrolinx for " + Application.ProductName, SoftwareComponentCategory.MAIN);
 
@@ -311,7 +312,7 @@ namespace Acrolinx.Sdk.Sidebar
         public String Check(IDocument document)
         {
             acrolinxPlugin.Document = document;
-            System.Diagnostics.Trace.WriteLine("Content: " + document.Content);
+            Logger.AcroLog.Debug("Content: " + document.Content);
 
             var code = "new function(){var c = window.external.getContent(); "
                 + "console.log('Content: ' + c); "
@@ -325,7 +326,7 @@ namespace Acrolinx.Sdk.Sidebar
 
         internal dynamic Eval(string code)
         {
-            System.Diagnostics.Trace.WriteLine("eval(" + code + ")");
+            Logger.AcroLog.Debug("eval(" + code + ")");
             dynamic result = webBrowser.Document.InvokeScript("eval", new object[] { code });
             return result;
         }
@@ -370,7 +371,7 @@ namespace Acrolinx.Sdk.Sidebar
 
         private void webBrowser_DocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)
         {
-            System.Diagnostics.Trace.WriteLine("Sidebar navigated to: " + e.Url);
+            Logger.AcroLog.Info("Sidebar navigated to: " + e.Url);
 
             bool sidebarRevisionFound = false;
             foreach (HtmlElement element in webBrowser.Document.GetElementsByTagName("meta"))
@@ -384,13 +385,13 @@ namespace Acrolinx.Sdk.Sidebar
 
             if (!sidebarRevisionFound)
             {
-                System.Diagnostics.Trace.WriteLine("Could not find sidebar at URL: " + e.Url);
+                Logger.AcroLog.Warn("Could not find sidebar at URL: " + e.Url);
 
                 string internalUrl = GetInternalUrl();
                 
                 if (internalUrl.StartsWith("res://ieframe.dll/"))
                 {
-                    System.Diagnostics.Trace.WriteLine("Loaded page seems to be an IE error page. URL: " + e.Url + " / " + internalUrl);
+                    Logger.AcroLog.Error("Loaded page seems to be an IE error page. URL: " + e.Url + " / " + internalUrl);
 
                     SidebarSourceNotReachable?.Invoke(this, new SidebarUrlEvenArgs(e.Url));
                     return;
@@ -454,7 +455,7 @@ namespace Acrolinx.Sdk.Sidebar
             Contract.Requires(matches != null);
             Contract.Requires(!string.IsNullOrWhiteSpace(checkId));
 
-            System.Diagnostics.Trace.WriteLine("InvalidateRanges: " + string.Join(", ", matches));
+            Logger.AcroLog.Debug("InvalidateRanges: " + string.Join(", ", matches));
 
             JArray invalidRanges = new JArray();
 

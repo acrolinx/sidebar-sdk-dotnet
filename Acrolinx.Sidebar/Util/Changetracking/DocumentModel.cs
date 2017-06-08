@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Acrolinx.Sdk.Sidebar.Documents;
+using Acrolinx.Sdk.Sidebar.Util.Logging;
 
 namespace Acrolinx.Sdk.Sidebar.Util.Changetracking
 {
@@ -70,17 +71,17 @@ namespace Acrolinx.Sdk.Sidebar.Util.Changetracking
             Contract.Requires(originalRange.Length >= 0);
             Contract.Requires(originalRange.End <= OriginalContent.Length);
 
-            System.Diagnostics.Trace.WriteLine("Old Content: " + Content);
+            Logger.AcroLog.Debug("Old Content: " + Content);
             var range = OriginalToModifiedRange(originalRange);
 
             var change = new Change(range, content);
-            System.Diagnostics.Trace.WriteLine("Change: " + change);
+            Logger.AcroLog.Debug("Change: " + change);
             this.content.Remove(range.Start, range.Length);
             this.content.Insert(range.Start, content);
-            System.Diagnostics.Trace.WriteLine("New Content: " + Content);
+            Logger.AcroLog.Debug("New Content: " + Content);
             changes.Add(change);
 
-            System.Diagnostics.Trace.WriteLine("All changes: " + String.Join(", " ,this.changes));
+            Logger.AcroLog.Debug("All changes: " + String.Join(", " ,this.changes));
         }
         
         public string OriginalContent
@@ -112,14 +113,13 @@ namespace Acrolinx.Sdk.Sidebar.Util.Changetracking
                 }
                 if(change.Range.End <= end){
                     end += change.LengthDifference;
-                    System.Diagnostics.Trace.WriteLineIf(change.Range.End > oldStart, 
-                        "Warning: text was changed overlapping with the range which had been looked up: " + originalRange + " change: " + change);
+                    if (change.Range.End > oldStart){
+                        Logger.AcroLog.Warn("Warning: text was changed overlapping with the range which had been looked up: " + originalRange + " change: " + change);
+                    }
                 }
-                else if(change.Range.Start < end)
-                {
+                else if(change.Range.Start < end){
                     end = Math.Min(end, change.Range.End);
-                    System.Diagnostics.Trace.WriteLine(
-                        "Warning: text was changed inside the range which had been looked up: " + originalRange + " change: " + change);
+                    Logger.AcroLog.Warn("Warning: text was changed inside the range which had been looked up: " + originalRange + " change: " + change);
                 }
             }
 

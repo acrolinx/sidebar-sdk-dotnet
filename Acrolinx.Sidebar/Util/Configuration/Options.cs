@@ -1,5 +1,6 @@
 ﻿using Acrolinx.Sdk.Sidebar;
 using Acrolinx.Sdk.Sidebar.Properties;
+using Acrolinx.Sdk.Sidebar.Util.Logging;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -164,7 +165,7 @@ namespace Acrolinx.Sdk.Sidebar.Util.Configuration
             if (!e.ValidSidebar)
             {
                 status = ValidationStatus.SidebarFailure;
-                System.Diagnostics.Trace.WriteLine("Loaded page seems to be an IE error page. May be sidebar is not present on server. URL: " + e.Url );
+                Logger.AcroLog.Error("Loaded page seems to be an IE error page. May be sidebar is not present on server. URL: " + e.Url );
                 validateOptionsAndAdjustControlStates();
                 textServerAddress.Focus();
             }
@@ -194,7 +195,7 @@ namespace Acrolinx.Sdk.Sidebar.Util.Configuration
                 Process proc = Process.Start(Logging.Logger.Directory);
             }catch(Exception exce)
             {
-                Trace.WriteLine(exce.Message);
+                Logger.AcroLog.Error(exce.Message);
             }
         }
 

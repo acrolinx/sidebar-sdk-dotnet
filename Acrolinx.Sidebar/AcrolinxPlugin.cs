@@ -5,6 +5,7 @@ using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
+using Acrolinx.Sdk.Sidebar.Util.Logging;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -35,7 +36,7 @@ namespace Acrolinx.Sdk.Sidebar
 
         public void OnAfterObjectSet()
         {
-            System.Diagnostics.Trace.WriteLine("OnAfterObjectSet");
+            Logger.AcroLog.Debug ("OnAfterObjectSet");
 
             sidebar.Eval("if (!window.console) { window.console = {} }; window.console.logOld = window.console.log; window.console.log = function(msg) { window.external.Log(msg); }" );
             sidebar.Eval( "window.onerror = function(msg, url, line, col, error) { window.external.OnError(msg, url, line, col, error); }" );
@@ -47,7 +48,7 @@ namespace Acrolinx.Sdk.Sidebar
         {
             Contract.Requires(o != null);
 
-            System.Diagnostics.Trace.WriteLine("JavaScript Log: " + string.Join(", ", o));
+            Logger.AcroLog.Debug("JavaScript Log: " + string.Join(", ", o));
         }
         
      
@@ -56,19 +57,19 @@ namespace Acrolinx.Sdk.Sidebar
             Contract.Requires(o != null);
             Contract.Requires(o.Length >= 5);
 
-            System.Diagnostics.Trace.WriteLine("onError");
+            Logger.AcroLog.Debug("onError");
             var l = string.Join(", ", o);
             try
             {
                 var message = o[4].message as string;
                 var stack = o[4].stack as string;
 
-                System.Diagnostics.Trace.TraceError("JavaScript Error: " + message + " " + stack);
+                Logger.AcroLog.Error("JavaScript Error: " + message + " " + stack);
             }
             catch
             {
 
-            System.Diagnostics.Trace.TraceError("JavaScript Error: " + l);
+                Logger.AcroLog.Error("JavaScript Error: " + l);
             }
         }
 
@@ -78,7 +79,7 @@ namespace Acrolinx.Sdk.Sidebar
             Contract.Requires(o != null);
             Contract.Requires(o.Length > 0);
 
-            System.Diagnostics.Trace.WriteLine("openWindow");
+            Logger.AcroLog.Debug("openWindow");
 
             dynamic ow = JObject.Parse(o[0]);
 
@@ -86,7 +87,7 @@ namespace Acrolinx.Sdk.Sidebar
 
             if(!(url.ToLower().StartsWith("http") || url.ToLower().StartsWith("mailto:") || url.ToLower().StartsWith("www")))
             {
-                System.Diagnostics.Trace.TraceWarning("Ignoring URL: '" + url + "'. It seems not to be a valid URL.");
+                Logger.AcroLog.Warn("Ignoring URL: '" + url + "'. It seems not to be a valid URL.");
                 return false;
             }
             System.Diagnostics.Process.Start(url);
@@ -96,7 +97,7 @@ namespace Acrolinx.Sdk.Sidebar
 
         public void requestInit(params object[] o)
         {
-            System.Diagnostics.Trace.WriteLine("request init");
+            Logger.AcroLog.Info("request init");
 
             var initParams = sidebar.InitParameters.ToString();
 
@@ -111,19 +112,19 @@ namespace Acrolinx.Sdk.Sidebar
         public IDocument Document { get; set; }
         public String getContent()
         {
-            System.Diagnostics.Trace.WriteLine("getContent");
+            Logger.AcroLog.Info("getContent");
             return Document.Content;
         }
 
         public String getDocumentReference()
         {
-            System.Diagnostics.Trace.WriteLine("getDocumentReference");
+            Logger.AcroLog.Info("getDocumentReference");
             return Document.Reference;
         }
 
         public void requestGlobalCheck(params dynamic[] o)
         {
-            System.Diagnostics.Trace.WriteLine("requestGlobalCheck");
+            Logger.AcroLog.Info("requestGlobalCheck");
 
             sidebar.FireRequestCheck();
         }
@@ -134,7 +135,7 @@ namespace Acrolinx.Sdk.Sidebar
 
             string checkId = o[0];
             string jsonString = o[1];
-            System.Diagnostics.Trace.WriteLine("selectRanges(\"" + checkId + "\", \"" + jsonString + "\"");
+            Logger.AcroLog.Info("selectRanges(\"" + checkId + "\", \"" + jsonString + "\"");
 
             var matches = ConvertMatches(jsonString);
             sidebar.FireSelectRanges(checkId, matches);
@@ -168,11 +169,11 @@ namespace Acrolinx.Sdk.Sidebar
         {
             Contract.Requires(o != null);
             Contract.Requires(o.Length >= 2);
-            System.Diagnostics.Trace.WriteLine("replace ranges: " + o);
+            Logger.AcroLog.Debug("replace ranges: " + o);
 
             string checkId = "" + o[0];
             string jsonString = "" + o[1];
-            System.Diagnostics.Trace.WriteLine("replaceRanges(\"" + checkId + "\", \"" + jsonString + "\"");
+            Logger.AcroLog.Info("replaceRanges(\"" + checkId + "\", \"" + jsonString + "\"");
 
             var matches = ConvertMatches(jsonString);
             sidebar.FireReplaceRanges(checkId, matches);
@@ -183,7 +184,7 @@ namespace Acrolinx.Sdk.Sidebar
             Contract.Requires(o != null);
             Contract.Requires(o.Length > 0);
             string jsonStr = o[0];
-            System.Diagnostics.Trace.WriteLine("onCheckResult: " + jsonStr);
+            Logger.AcroLog.Info("onCheckResult: " + jsonStr);
 
             dynamic json = JObject.Parse(jsonStr);
 
@@ -197,7 +198,7 @@ namespace Acrolinx.Sdk.Sidebar
             Contract.Requires(o != null);
             Contract.Requires(o.Length > 0);
             string json = o[0];
-            System.Diagnostics.Trace.WriteLine("configure: " + json);
+            Logger.AcroLog.Info("configure: " + json);
         }
     }
 }
