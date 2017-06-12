@@ -58,7 +58,7 @@ namespace Acrolinx.Sdk.Sidebar
             this.labelImage.Size = new System.Drawing.Size(300, 450);
             this.labelImage.TabIndex = 1;
             // 
-            // fixFocusTimer
+            // FixFocusTimer
             // 
             this.FixFocusTimer.Tick += new System.EventHandler(this.OnFixFocusTimerTick);
             // 
@@ -68,7 +68,6 @@ namespace Acrolinx.Sdk.Sidebar
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.labelImage);
             this.Controls.Add(this.webBrowser);
-            this.MaximumSize = new System.Drawing.Size(300, 0);
             this.MinimumSize = new System.Drawing.Size(300, 450);
             this.Name = "AcrolinxSidebar";
             this.Size = new System.Drawing.Size(300, 450);
