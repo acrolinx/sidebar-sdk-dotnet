@@ -68,9 +68,10 @@ namespace Acrolinx.Sdk.Sidebar
         {           
             GuessMainComponentAndHostApplication(callingAssembly);
 
-            RegisterClientComponent(typeof(AcrolinxSidebar).Assembly, "Acrolinx.NET", SoftwareComponentCategory.DEFAULT);
+            RegisterClientComponent(typeof(AcrolinxSidebar).Assembly, "Acrolinx Sidebar .NET SDK", SoftwareComponentCategory.DEFAULT);
             RegisterClientComponent(typeof(String).Assembly, ".NET Framework", AcrolinxSidebar.SoftwareComponentCategory.DETAIL);
             RegisterClientComponent(typeof(JObject).Assembly, "Json.NET", AcrolinxSidebar.SoftwareComponentCategory.DETAIL);
+            RegisterClientComponent(typeof(log4net.Core.ILogger).Assembly, "log4net", AcrolinxSidebar.SoftwareComponentCategory.DETAIL);
             RegisterClientComponent(typeof(WebBrowser).Assembly, "WebBrowser Control", AcrolinxSidebar.SoftwareComponentCategory.DETAIL);
             RegisterClientComponent(typeof(WebBrowser).Assembly.GetName().Name + ".browser", "WebBrowser Control Browser", webBrowser.Version.Major + "." + webBrowser.Version.MajorRevision + "." + webBrowser.Version.Minor + "." + webBrowser.Version.MinorRevision, AcrolinxSidebar.SoftwareComponentCategory.DETAIL);
             RegisterClientComponent("osInfo", Util.AssemblyUtil.OSInfo()["osName"], Util.AssemblyUtil.OSInfo()["version"], AcrolinxSidebar.SoftwareComponentCategory.DEFAULT);

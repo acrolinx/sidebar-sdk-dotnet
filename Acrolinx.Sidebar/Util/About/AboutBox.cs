@@ -57,6 +57,8 @@ namespace Acrolinx.Sdk.Sidebar.Util.About
             this.dataGridView.Rows.Add(abtSDK.AssemblyProduct, abtSDK.AssemblyVersion, abtSDK.AssemblyPath);
             AssemblyUtil abtNewtonsoft = new AssemblyUtil(Assembly.Load("Newtonsoft.Json"));
             this.dataGridView.Rows.Add(abtNewtonsoft.AssemblyProduct, abtNewtonsoft.AssemblyVersion, abtNewtonsoft.AssemblyPath);
+            AssemblyUtil abtLog4Net = new AssemblyUtil(Assembly.Load("log4net"));
+            this.dataGridView.Rows.Add(abtLog4Net.AssemblyProduct, abtLog4Net.AssemblyVersion, abtLog4Net.AssemblyPath);
 
             foreach (var item in ClientComponents)
             {
