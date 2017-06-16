@@ -88,7 +88,7 @@
     <value>Chemin</value>
   </data>
   <data name="SDK_OPTION_LABEL_SERVERADDRESS" xml:space="preserve">
-    <value>Adresse du serveur :</value>
+    <value>Adresse du serveur :</value>
   </data>
   <data name="SDK_OPTION_LABEL_STATUS_CONNECTING" xml:space="preserve">
     <value>Connexion en cours ...</value>
@@ -97,7 +97,7 @@
     <value>Version</value>
   </data>
   <data name="SDK_OPTION_LABEL_STATUS_NOT_CONNECTED" xml:space="preserve">
-    <value>Pas connect\u00e9</value>
+    <value>L'adresse du serveur manque</value>
   </data>
   <data name="SDK_OPTION_LABEL_STATUS_FAILURE" xml:space="preserve">
     <value>Est-ce que l'adresse du serveur est correcte ?</value>
