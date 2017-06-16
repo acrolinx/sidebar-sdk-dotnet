@@ -30,7 +30,6 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Options));
             this.buttonOk = new System.Windows.Forms.Button();
-            this.textServerAddress = new System.Windows.Forms.TextBox();
             this.buttonCancel = new System.Windows.Forms.Button();
             this.checkSelectInSidebar = new System.Windows.Forms.CheckBox();
             this.groupLogging = new System.Windows.Forms.GroupBox();
@@ -43,6 +42,7 @@
             this.textStatus = new System.Windows.Forms.TextBox();
             this.pictureStatus = new System.Windows.Forms.PictureBox();
             this.validationSidebar = new Acrolinx.Sdk.Sidebar.AcrolinxSidebar();
+            this.serverSelector = new System.Windows.Forms.ComboBox();
             this.groupLogging.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureStatus)).BeginInit();
             this.SuspendLayout();
@@ -58,18 +58,6 @@
             this.buttonOk.Text = "<OK>";
             this.buttonOk.UseVisualStyleBackColor = true;
             this.buttonOk.Click += new System.EventHandler(this.buttonOk_Click);
-            // 
-            // textServerAddress
-            // 
-            this.textServerAddress.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.textServerAddress.Enabled = false;
-            this.textServerAddress.Location = new System.Drawing.Point(12, 25);
-            this.textServerAddress.Name = "textServerAddress";
-            this.textServerAddress.Size = new System.Drawing.Size(416, 20);
-            this.textServerAddress.TabIndex = 1;
-            this.textServerAddress.TextChanged += new System.EventHandler(this.textServerAddress_TextChanged);
-            this.textServerAddress.Enter += new System.EventHandler(this.textServerAddress_Enter);
             // 
             // buttonCancel
             // 
@@ -206,6 +194,16 @@
             this.validationSidebar.TabIndex = 12;
             this.validationSidebar.Visible = false;
             // 
+            // serverSelector
+            // 
+            this.serverSelector.FormattingEnabled = true;
+            this.serverSelector.Location = new System.Drawing.Point(12, 26);
+            this.serverSelector.Name = "serverSelector";
+            this.serverSelector.Size = new System.Drawing.Size(416, 21);
+            this.serverSelector.TabIndex = 13;
+            this.serverSelector.TextChanged += new System.EventHandler(this.serverSelector_TextChanged);
+            this.serverSelector.Enter += new System.EventHandler(this.serverSelector_Enter);
+            // 
             // Options
             // 
             this.AcceptButton = this.buttonOk;
@@ -213,11 +211,11 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.CancelButton = this.buttonCancel;
             this.ClientSize = new System.Drawing.Size(522, 206);
+            this.Controls.Add(this.serverSelector);
             this.Controls.Add(this.pictureStatus);
             this.Controls.Add(this.textStatus);
             this.Controls.Add(this.labelStatus);
             this.Controls.Add(this.buttonConnect);
-            this.Controls.Add(this.textServerAddress);
             this.Controls.Add(this.labelServerAddress);
             this.Controls.Add(this.checkSelectInSidebar);
             this.Controls.Add(this.groupLogging);
@@ -242,7 +240,6 @@
         #endregion
 
         private System.Windows.Forms.Button buttonOk;
-        private System.Windows.Forms.TextBox textServerAddress;
         private System.Windows.Forms.Button buttonCancel;
         private System.Windows.Forms.CheckBox checkSelectInSidebar;
         private Sdk.Sidebar.AcrolinxSidebar validationSidebar;
@@ -255,5 +252,6 @@
         private System.Windows.Forms.TextBox textStatus;
         private System.Windows.Forms.Label labelStatus;
         private System.Windows.Forms.PictureBox pictureStatus;
+        private System.Windows.Forms.ComboBox serverSelector;
     }
 }

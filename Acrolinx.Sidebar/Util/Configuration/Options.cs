@@ -19,8 +19,7 @@ namespace Acrolinx.Sdk.Sidebar.Util.Configuration
 {
     public partial class Options : Form
     {
-        
-        public Options(string serverAddress, bool showSelectInSidebarOption = false)
+        public Options(List<string> serverAddress, bool showSelectInSidebarOption = false)
         {
             InitializeComponent();
 
@@ -32,15 +31,24 @@ namespace Acrolinx.Sdk.Sidebar.Util.Configuration
             textLogDirectory.Text = Logging.Logger.Directory;
             buttonBrowse.Enabled = !(String.IsNullOrWhiteSpace(textLogDirectory.Text));
 
-            if (serverAddress != null)
+            if (serverAddress != null && serverAddress.Count > 0)
             {
-                this.textServerAddress.Text = serverAddress;
+                foreach (var item in serverAddress)
+                {
+                    serverSelector.Items.Add(item);
+                }
+
+                serverSelector.Text = serverAddress[0];
+            }
+            else
+            {
+                serverSelector.Text = "";
             }
 
             validationSidebar.SidebarSourceNotReachable += Validation_SidebarSourceNotReachable;
             validationSidebar.DocumentLoaded += Validation_DocumentLoaded;
             validationSidebar.SidebarLoaded += Validation_SidebarLoaded;
-            this.textServerAddress.TextChanged += ServerAddressText_TextChanged;
+            this.serverSelector.TextChanged += ServerAddressText_TextChanged;
 
             validateOptionsAndAdjustControlStates();
         }
@@ -72,8 +80,8 @@ namespace Acrolinx.Sdk.Sidebar.Util.Configuration
             }
             else
             {
-                lastCheckedServerAddress = textServerAddress.Text;
-                validate(textServerAddress.Text);
+                lastCheckedServerAddress = serverSelector.Text;
+                validate(serverSelector.Text);
             }
 
             validateOptionsAndAdjustControlStates();
@@ -83,28 +91,28 @@ namespace Acrolinx.Sdk.Sidebar.Util.Configuration
 
         private void buttonOk_Click(object sender, EventArgs e)
         {
-            ServerAddress = textServerAddress.Text;
+            ServerAddress = serverSelector.Text;
         }
 
         private void selectInSidebar_CheckedChanged(object sender, EventArgs e)
         {
             validateOptionsAndAdjustControlStates();
-            if(!checkSelectInSidebar.Checked)
+            if (!checkSelectInSidebar.Checked)
             {
-                textServerAddress.Focus();
+                serverSelector.Focus();
             }
             else
             {
-                this.textServerAddress.Text = "";
+                this.serverSelector.Text = "";
             }
         }
 
         private void validateOptionsAndAdjustControlStates()
         {
-            textServerAddress.Enabled = !checkSelectInSidebar.Checked && status != ValidationStatus.Validating;
+            serverSelector.Enabled = !checkSelectInSidebar.Checked && status != ValidationStatus.Validating;
 
-            buttonConnect.Enabled = !string.IsNullOrWhiteSpace(textServerAddress.Text) && status != ValidationStatus.Validating;
-            bool isValid = checkSelectInSidebar.Checked || (!string.IsNullOrWhiteSpace(textServerAddress.Text) && lastCheckedServerAddress == textServerAddress.Text && status == ValidationStatus.Success);
+            buttonConnect.Enabled = !string.IsNullOrWhiteSpace(serverSelector.Text) && status != ValidationStatus.Validating;
+            bool isValid = checkSelectInSidebar.Checked || (!string.IsNullOrWhiteSpace(serverSelector.Text) && lastCheckedServerAddress == serverSelector.Text && status == ValidationStatus.Success);
             buttonOk.Enabled = isValid;
 
             if (isValid)
@@ -167,7 +175,7 @@ namespace Acrolinx.Sdk.Sidebar.Util.Configuration
                 status = ValidationStatus.SidebarFailure;
                 Logger.AcroLog.Error("Loaded page seems to be an IE error page. May be sidebar is not present on server. URL: " + e.Url );
                 validateOptionsAndAdjustControlStates();
-                textServerAddress.Focus();
+                serverSelector.Focus();
             }
         }
 
@@ -182,7 +190,7 @@ namespace Acrolinx.Sdk.Sidebar.Util.Configuration
         {
             status = ValidationStatus.Failure;
             validateOptionsAndAdjustControlStates();
-            textServerAddress.Focus();
+            serverSelector.Focus();
         }
 
         private string lastCheckedServerAddress;
@@ -199,15 +207,14 @@ namespace Acrolinx.Sdk.Sidebar.Util.Configuration
             }
         }
 
-        private void textServerAddress_Enter(object sender, EventArgs e)
-        {
-            textServerAddress.SelectAll();
-        }
-
-        private void textServerAddress_TextChanged(object sender, EventArgs e)
+        private void serverSelector_TextChanged(object sender, EventArgs e)
         {
             validateOptionsAndAdjustControlStates();
         }
 
+        private void serverSelector_Enter(object sender, EventArgs e)
+        {
+            serverSelector.SelectAll();
+        }
     }
 }
