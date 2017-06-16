@@ -97,7 +97,7 @@
     <value>Version</value>
   </data>
   <data name="SDK_OPTION_LABEL_STATUS_NOT_CONNECTED" xml:space="preserve">
-    <value>Nicht verbunden</value>
+    <value>Keine Serveradresse angegeben</value>
   </data>
   <data name="SDK_OPTION_LABEL_STATUS_FAILURE" xml:space="preserve">
     <value>Der Server reagiert nicht. Ist die eingegebene Adresse korrekt?</value>
