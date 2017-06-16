@@ -1,0 +1,111 @@
+<root>
+  <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string"/>
+              <xsd:attribute name="type" type="xsd:string"/>
+              <xsd:attribute name="mimetype" type="xsd:string"/>
+              <xsd:attribute ref="xml:space"/>
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string"/>
+              <xsd:attribute name="name" type="xsd:string"/>
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
+              <xsd:attribute ref="xml:space"/>
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required"/>
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="SDK_OPTION_LABEL_STATUS_SIDEBAR_FAILURE" xml:space="preserve">
+    <value>サーバーは起動していますが、サイドバー機能がサポートされているサーバーではありません。</value>
+  </data>
+  <data name="SDK_OPTION_DIALOG_TITLE" xml:space="preserve">
+    <value>Acrolinx \u30aa\u30d7\u30b7\u30e7\u30f3</value>
+  </data>
+  <data name="SDK_OPTION_LABEL_BUTTON_OK" xml:space="preserve">
+    <value>&amp;OK</value>
+  </data>
+  <data name="SDK_ABOUT_LABEL_ASSEMBLYNAME" xml:space="preserve">
+    <value>名前</value>
+  </data>
+  <data name="SDK_ABOUT_DIALOG_TITLE" xml:space="preserve">
+    <value>バージョン</value>
+  </data>
+  <data name="SDK_ABOUT_LABEL_COPYTOCLIPBOARD" xml:space="preserve">
+    <value>クリップボードにコピーする</value>
+  </data>
+  <data name="SDK_OPTION_LABEL_STATUS_SUCCESS" xml:space="preserve">
+    <value>サーバーとその他の機能は正常に起動しています。</value>
+  </data>
+  <data name="SDK_OPTION_LABEL_STATUS" xml:space="preserve">
+    <value>ステータス：</value>
+  </data>
+  <data name="SDK_OPTION_GROUP_LOGGING" xml:space="preserve">
+    <value>\u30ed\u30b0</value>
+  </data>
+  <data name="SDK_ABOUT_LABEL_PATH" xml:space="preserve">
+    <value>パス</value>
+  </data>
+  <data name="SDK_OPTION_LABEL_SERVERADDRESS" xml:space="preserve">
+    <value>サーバーアドレス：</value>
+  </data>
+  <data name="SDK_OPTION_LABEL_STATUS_CONNECTING" xml:space="preserve">
+    <value>接続しています...</value>
+  </data>
+  <data name="SDK_ABOUT_LABEL_VERSION" xml:space="preserve">
+    <value>バージョン</value>
+  </data>
+  <data name="SDK_OPTION_LABEL_STATUS_NOT_CONNECTED" xml:space="preserve">
+    <value>\u672a\u63a5\u7d9a</value>
+  </data>
+  <data name="SDK_OPTION_LABEL_STATUS_FAILURE" xml:space="preserve">
+    <value>\u30b5\u30fc\u30d0\u30fc\u304b\u3089\u306e\u5fdc\u7b54\u304c\u3042\u308a\u307e\u305b\u3093\u3002\u30b5\u30fc\u30d0\u30fc\u306e\u30a2\u30c9\u30ec\u30b9\u304c\u6b63\u3057\u3044\u304b\u3092\u78ba\u8a8d\u3057\u3066\u304f\u3060\u3055\u3044\u3002</value>
+  </data>
+  <data name="SDK_OPTION_LABEL_DIRECTORY" xml:space="preserve">
+    <value>\u30c7\u30a3\u30ec\u30af\u30c8\u30ea\u30fc\uff1a</value>
+  </data>
+  <data name="SDK_OPTION_BUTTON_VALIDATE" xml:space="preserve">
+    <value>\u63a5\u7d9a\u3059\u308b</value>
+  </data>
+</root>
