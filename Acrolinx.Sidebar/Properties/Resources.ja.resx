@@ -88,7 +88,7 @@
     <value>パス</value>
   </data>
   <data name="SDK_OPTION_LABEL_SERVERADDRESS" xml:space="preserve">
-    <value>サーバーアドレス：</value>
+    <value>サーバーアドレス :</value>
   </data>
   <data name="SDK_OPTION_LABEL_STATUS_CONNECTING" xml:space="preserve">
     <value>接続しています...</value>
@@ -97,7 +97,7 @@
     <value>バージョン</value>
   </data>
   <data name="SDK_OPTION_LABEL_STATUS_NOT_CONNECTED" xml:space="preserve">
-    <value>\u672a\u63a5\u7d9a</value>
+    <value>サーバーアドレスが入力されていません</value>
   </data>
   <data name="SDK_OPTION_LABEL_STATUS_FAILURE" xml:space="preserve">
     <value>\u30b5\u30fc\u30d0\u30fc\u304b\u3089\u306e\u5fdc\u7b54\u304c\u3042\u308a\u307e\u305b\u3093\u3002\u30b5\u30fc\u30d0\u30fc\u306e\u30a2\u30c9\u30ec\u30b9\u304c\u6b63\u3057\u3044\u304b\u3092\u78ba\u8a8d\u3057\u3066\u304f\u3060\u3055\u3044\u3002</value>
