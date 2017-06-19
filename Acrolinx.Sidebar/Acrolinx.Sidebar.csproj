@@ -154,6 +154,11 @@
     <Compile Include="Exceptions\MatchesNotFoundException.cs" />
     <Compile Include="Exceptions\RangesNotFoundException.cs" />
     <Compile Include="Exceptions\AcrolinxException.cs" />
+    <Compile Include="Properties\Icons.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Icons.resx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\Config.Designer.cs">
       <DependentUpon>Config.resx</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -200,6 +205,10 @@
       <DependentUpon>Options.cs</DependentUpon>
     </Compile>
     <Compile Include="Util\Logging\Logger.cs" />
+    <EmbeddedResource Include="Properties\Icons.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Icons.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Config.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Config.Designer.cs</LastGenOutput>

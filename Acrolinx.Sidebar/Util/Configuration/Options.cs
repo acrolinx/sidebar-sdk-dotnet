@@ -118,7 +118,7 @@ namespace Acrolinx.Sdk.Sidebar.Util.Configuration
             if (isValid)
             {
                 textStatus.Text = Properties.Resources.SDK_OPTION_LABEL_STATUS_SUCCESS;
-                pictureStatus.Image = Resources.iconConnected;
+                pictureStatus.Image = Icons.iconConnected;
                 this.AcceptButton = buttonOk;
             }
             else
@@ -132,19 +132,19 @@ namespace Acrolinx.Sdk.Sidebar.Util.Configuration
                 if (status == ValidationStatus.Validating)
                 {
                     textStatus.Text = Properties.Resources.SDK_OPTION_LABEL_STATUS_CONNECTING;
-                    pictureStatus.Image = Resources.iconConnecting;
+                    pictureStatus.Image = Icons.iconConnecting;
                     this.AcceptButton = buttonCancel;
                 }
                 else if (status == ValidationStatus.SidebarFailure)
                 {
                     textStatus.Text = Properties.Resources.SDK_OPTION_LABEL_STATUS_SIDEBAR_FAILURE;
-                    pictureStatus.Image = Resources.iconDisconnected;
+                    pictureStatus.Image = Icons.iconDisconnected;
                     this.AcceptButton = buttonConnect;
                 }
                 else if (status == ValidationStatus.Failure)
                 {
                     textStatus.Text = Properties.Resources.SDK_OPTION_LABEL_STATUS_FAILURE;
-                    pictureStatus.Image = Resources.iconDisconnected;
+                    pictureStatus.Image = Icons.iconDisconnected;
                     this.AcceptButton = buttonConnect;
                 }
             }
