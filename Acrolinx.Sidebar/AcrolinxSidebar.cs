@@ -148,10 +148,7 @@ namespace Acrolinx.Sdk.Sidebar
 
         private string getServerAddress(string serverAddress)
         {
-            if (serverAddress.Contains("/sidebar/v"))
-            {
-                serverAddress.Remove(serverAddress.IndexOf("/sidebar/v"));
-            }
+            serverAddress = serverAddress.ToLower().Trim();
             serverAddress = serverAddress.Replace("http://", "");
             if (!serverAddress.Contains(":"))
             {
@@ -159,7 +156,14 @@ namespace Acrolinx.Sdk.Sidebar
             }
             if (!serverAddress.StartsWith("http"))
             {
-                serverAddress = "http://" + serverAddress;
+                if (serverAddress.Contains(":443"))
+                {
+                    serverAddress = "https://" + serverAddress;
+                }
+                else
+                {
+                    serverAddress = "http://" + serverAddress;
+                }
             }
             return serverAddress;
         }
@@ -397,6 +401,8 @@ namespace Acrolinx.Sdk.Sidebar
                     SidebarSourceNotReachable?.Invoke(this, new SidebarUrlEvenArgs(e.Url));
                     return;
                 }
+                Logger.AcroLog.Error("The server doesn't seem to be responding. Is the address (" + internalUrl + ") correct?");
+                Logger.AcroLog.Error("A communication error occurred may be connection refused due to network problem.");
             }
 
             labelImage.Visible = false;

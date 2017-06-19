@@ -164,7 +164,15 @@ namespace Acrolinx.Sdk.Sidebar.Util.Configuration
         {
             validationSidebar.SidebarSourceLocation = null;
             status = ValidationStatus.Validating;
-            validationSidebar.Start(serverAddress);
+            try
+            {
+                validationSidebar.Start(serverAddress);
+            }
+            catch (Exception ex)
+            {
+                Logger.AcroLog.Error(ex.Message);
+                status = ValidationStatus.Failure;
+            }
             validateOptionsAndAdjustControlStates();
         }
 
