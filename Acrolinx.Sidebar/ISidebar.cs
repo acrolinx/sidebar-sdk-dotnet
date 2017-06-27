@@ -36,6 +36,11 @@ namespace Acrolinx.Sdk.Sidebar
             get;
             set;
         }
+        bool ReadOnlySuggestions
+        {
+            get;
+            set;
+        }
         string SidebarSourceLocation
         {
             get;
@@ -131,6 +136,19 @@ namespace Acrolinx.Sdk.Sidebar
             {
                 throw new NotImplementedException();
             }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public bool ReadOnlySuggestions
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+
             set
             {
                 throw new NotImplementedException();

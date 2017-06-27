@@ -56,6 +56,7 @@ namespace Acrolinx.Sdk.Sidebar
             InitParameters.Add("showServerSelector", true);
             InitParameters.Add("serverAddress", "");
             InitParameters.Add("clientSignature", "");
+            InitParameters.Add("readOnlySuggestions", false);
             InitParameters.Add("clientLocale", "");
             InitParameters.Add("clientComponents", new JArray());
 
@@ -261,6 +262,21 @@ namespace Acrolinx.Sdk.Sidebar
         {
             get;
             set;
+        }
+
+        [Description("Sets sidebar to show suggestions in read-only mode."), Category("Sidebar")]
+        [DefaultValue(false)]
+        public bool ReadOnlySuggestions
+        {
+            get
+            {
+                return InitParameters["readOnlySuggestions"].Value<bool>();
+            }
+
+            set
+            {
+                InitParameters["readOnlySuggestions"] = value;
+            }
         }
 
         public enum SoftwareComponentCategory
