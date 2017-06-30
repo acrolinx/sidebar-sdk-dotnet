@@ -63,9 +63,6 @@
   <data name="SDK_ABOUT_LABEL_PATH" xml:space="preserve">
     <value>Path</value>
   </data>
-  <data name="SDK_OPTION_LABEL_STATUS_SIDEBAR_FAILURE" xml:space="preserve">
-    <value>The server is online, but it doesn't support the sidebar feature.</value>
-  </data>
   <data name="SDK_OPTION_BUTTON_VALIDATE" xml:space="preserve">
     <value>Connect</value>
   </data>
@@ -75,8 +72,8 @@
   <data name="SDK_OPTION_DIALOG_TITLE" xml:space="preserve">
     <value>Acrolinx Options</value>
   </data>
-  <data name="SDK_OPTION_LABEL_STATUS" xml:space="preserve">
-    <value>Status:</value>
+  <data name="SDK_ABOUT_LABEL_PRODUCTNAME" xml:space="preserve">
+    <value>Acrolinx for </value>
   </data>
   <data name="SDK_OPTION_GROUP_LOGGING" xml:space="preserve">
     <value>Logging</value>
@@ -84,20 +81,23 @@
   <data name="SDK_OPTION_LABEL_STATUS_CONNECTING" xml:space="preserve">
     <value>Connecting...</value>
   </data>
-  <data name="SDK_ABOUT_LABEL_VERSION" xml:space="preserve">
-    <value>Version</value>
+  <data name="SDK_OPTION_LABEL_STATUS_NOT_CONNECTED" xml:space="preserve">
+    <value>No server address provided</value>
   </data>
   <data name="SDK_OPTION_LABEL_DIRECTORY" xml:space="preserve">
     <value>Directory:</value>
   </data>
-  <data name="SDK_ABOUT_LABEL_PRODUCTNAME" xml:space="preserve">
-    <value>Acrolinx for </value>
+  <data name="SDK_OPTION_LABEL_STATUS_SIDEBAR_FAILURE" xml:space="preserve">
+    <value>The server is online, but it doesn't support the sidebar feature.</value>
   </data>
   <data name="SDK_ABOUT_DIALOG_TITLE" xml:space="preserve">
     <value>About</value>
   </data>
   <data name="SDK_ABOUT_LABEL_COPYTOCLIPBOARD" xml:space="preserve">
     <value>Copy to Clipboard</value>
+  </data>
+  <data name="SDK_OPTION_LABEL_STATUS" xml:space="preserve">
+    <value>Status:</value>
   </data>
   <data name="SDK_OPTION_LABEL_SERVERADDRESS" xml:space="preserve">
     <value>Server address:</value>
@@ -108,8 +108,8 @@
   <data name="SDK_OPTION_LABEL_STATUS_FAILURE" xml:space="preserve">
     <value>The server doesn't seem to be responding. Is the address correct?</value>
   </data>
-  <data name="SDK_OPTION_LABEL_STATUS_NOT_CONNECTED" xml:space="preserve">
-    <value>No server address provided</value>
+  <data name="SDK_ABOUT_LABEL_VERSION" xml:space="preserve">
+    <value>Version</value>
   </data>
   <data name="SDK_ABOUT_LABEL_APPLICATION" xml:space="preserve">
     <value>Application:</value>
