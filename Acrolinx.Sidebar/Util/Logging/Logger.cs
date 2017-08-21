@@ -4,6 +4,10 @@ using System.IO;
 using System.Reflection;
 using System.Xml;
 using log4net.Config;
+using log4net.Repository.Hierarchy;
+using log4net;
+using log4net.Appender;
+using System.Linq;
 
 namespace Acrolinx.Sdk.Sidebar.Util.Logging
 {
@@ -20,37 +24,12 @@ namespace Acrolinx.Sdk.Sidebar.Util.Logging
 
         public static string Directory {
             get {
-                return Path.GetTempPath() + "Acrolinx\\logs";
-            }
-        }
 
-        /* This function is deprecated use InitializeLog*/
-        public static void LogToConsole()
-        {
-            /* Create a new console trace listener and add it to the trace listeners. */
-            ConsoleTraceListener consoletraceListener = new ConsoleTraceListener();
-            Trace.Listeners.Add(consoletraceListener);
-            Trace.AutoFlush = true;
-        }
+                var rootAppender = ((Hierarchy)LogManager.GetRepository())
+                                         .Root.Appenders.OfType<FileAppender>()
+                                         .FirstOrDefault();
 
-        /* This function is deprecated use InitializeLog*/
-        public static void LogToFile()
-        {
-            try
-            {
-                System.IO.Directory.CreateDirectory(Logging.Logger.Directory);
-                Stream fileStream = System.IO.File.Create(Directory + "\\" + DateTime.Now.ToString("yyyy-MM-dd") + "-" + Assembly.GetCallingAssembly().GetName().Name + ".log");
-
-                /* Create a new text writer using the output stream, and add it to
-                 * the trace listeners. */
-                TextWriterTraceListener logTextListener = new TextWriterTraceListener(fileStream);
-                Trace.Listeners.Add(logTextListener);
-                Trace.AutoFlush = true;
-            }
-            catch (Exception e)
-            {
-                // To default trace
-                Trace.WriteLine(e.Message);
+                return rootAppender != null ? rootAppender.File : string.Empty;
             }
         }
 
@@ -74,7 +53,6 @@ namespace Acrolinx.Sdk.Sidebar.Util.Logging
             }
             catch (Exception e)
             {
-                // To default trace
                 Trace.WriteLine(e.Message);
             }
         }

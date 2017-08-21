@@ -1,0 +1,8 @@
+{
+	"version": "1.0.0",
+	"name": "sidebar-sdk-dotnet",
+	"private": true,
+    "devDependencies": {
+        "acrolinx-sidebar-startpage": "latest"
+    }
+}

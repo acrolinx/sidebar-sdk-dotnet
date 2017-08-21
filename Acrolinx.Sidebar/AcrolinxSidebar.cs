@@ -18,6 +18,7 @@ using Microsoft.CSharp.RuntimeBinder;
 using System.Linq.Expressions;
 using Newtonsoft.Json.Linq;
 using System.Globalization;
+using Acrolinx.Sdk.Sidebar.Storage;
 
 namespace Acrolinx.Sdk.Sidebar
 {
@@ -41,8 +42,13 @@ namespace Acrolinx.Sdk.Sidebar
         [Description(""), Category("Sidebar")]
         public event SidebarReplaceRangesEventHandler ReplaceRanges;
 
-        private readonly string defaultSidebarUrl = "https://sidebar-classic.acrolinx-cloud.com/v14/prod/index.html?" + System.DateTime.Now.Ticks;
         private readonly string defaultSidebarServerLocation = "/sidebar/v14/index.html?" + System.DateTime.Now.Ticks;
+
+        public IAcrolinxStorage Storage
+        {
+            get;
+            private set;
+        }
 
         public JObject InitParameters
         {
@@ -50,15 +56,18 @@ namespace Acrolinx.Sdk.Sidebar
             private set;
         }
 
-        public AcrolinxSidebar()
+        public AcrolinxSidebar(IAcrolinxStorage acroStorage = null)
         {
+            Storage = (acroStorage != null) ? acroStorage : JSONAcrolinxStorage.Instance;
+
             InitParameters = new JObject();
             InitParameters.Add("showServerSelector", true);
             InitParameters.Add("serverAddress", "");
             InitParameters.Add("clientSignature", "");
             InitParameters.Add("readOnlySuggestions", false);
             InitParameters.Add("clientLocale", "");
-            InitParameters.Add("clientComponents", new JArray());
+            InitParameters.Add("logFileLocation", Logger.Directory);
+            InitParameters.Add("clientComponents", new JArray());            
 
             InitializeComponent();
 
@@ -103,7 +112,6 @@ namespace Acrolinx.Sdk.Sidebar
 
         private void SetDefaults(string serverAddress)
         {
-            HideServerSelectorIfServerAddressParameterSet(serverAddress);
             SetDefaultForSidebarLocationAndShowServerSelectorIfLocationNotSet(serverAddress);
             SetDefaultClientLocaleIfNotSet();
         }
@@ -116,34 +124,18 @@ namespace Acrolinx.Sdk.Sidebar
             }
         }
 
-        private void ShowServerSelectorIfServerAddressNotSet()
-        {
-            if (!string.IsNullOrWhiteSpace(this.ServerAddress))
-            {
-                this.ShowServerSelector = true;
-            }
-        }
-
-        private void HideServerSelectorIfServerAddressParameterSet(string serverAddress)
-        {
-            if (!string.IsNullOrWhiteSpace(serverAddress))
-            {
-                this.ShowServerSelector = false;
-            }
-        }
-
         private void SetDefaultForSidebarLocationAndShowServerSelectorIfLocationNotSet(string serverAddress)
         {
             if (string.IsNullOrWhiteSpace(this.SidebarSourceLocation))
             {
-                if (!string.IsNullOrWhiteSpace(serverAddress))
+                if (!this.ShowServerSelector && (!string.IsNullOrWhiteSpace(serverAddress)))
                 {
                     this.SidebarSourceLocation = getServerAddress(serverAddress) + defaultSidebarServerLocation;
                 }
                 else
                 {
-                    this.SidebarSourceLocation = defaultSidebarUrl;
-                    ShowServerSelectorIfServerAddressNotSet();
+                    this.SidebarSourceLocation = StartPageInstaller.GetStartPageURL();
+                    this.ShowServerSelector = true;
                 }
             }
         }
