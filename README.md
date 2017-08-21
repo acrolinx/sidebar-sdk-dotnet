@@ -10,7 +10,9 @@ After the meeting, we provide you with test server credentials and configuration
 
 ## How to Start
 
-Make sure that you have installed Microsoft Visual Studio with C# support version 2015 or later.
+Make sure that you have installed
+* Microsoft Visual Studio with C# support version 2015 or later.
+* Node [Node.js](https://nodejs.org/en/download/)
 
 Since the Acrolinx Sidebar performs static code analysis to improve quality, you also have to install Code Contracts for .NET:
 
