@@ -87,7 +87,7 @@ namespace Acrolinx.Sdk.Sidebar
         public void setItem(params dynamic[] o)
         {
             Contract.Requires(o != null);
-            Contract.Requires(o.Length > 0);
+            Contract.Requires(o.Length == 2);
 
             Logger.AcroLog.Debug("setItem");
 

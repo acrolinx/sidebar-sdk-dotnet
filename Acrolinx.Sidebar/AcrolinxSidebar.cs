@@ -58,7 +58,7 @@ namespace Acrolinx.Sdk.Sidebar
 
         public AcrolinxSidebar(IAcrolinxStorage acroStorage = null)
         {
-            Storage = (acroStorage != null) ? acroStorage : JSONAcrolinxStorage.Instance;
+            Storage = (acroStorage != null) ? acroStorage : RegistryAcrolinxStorage.Instance;
 
             InitParameters = new JObject();
             InitParameters.Add("showServerSelector", true);

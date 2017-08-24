@@ -170,7 +170,7 @@
     </Compile>
     <Compile Include="StartPageInstaller.cs" />
     <Compile Include="Storage\AcrolinxStorage.cs" />
-    <Compile Include="Storage\JSONAcrolinxStorage.cs" />
+    <Compile Include="Storage\RegistryAcrolinxStorage.cs" />
     <Compile Include="Util\AssemblyUtil.cs" />
     <Compile Include="Util\Adapter\UniversalAdapter.cs" />
     <Compile Include="Util\Adapter\IAdapter.cs" />
@@ -226,7 +226,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="acrolinx.ico" />
     <EmbeddedResource Include="toolbox.bmp" />
   </ItemGroup>
   <ItemGroup>
@@ -234,7 +233,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Config.Resource.log4net.xml" />
-    <Content Include="Acrolinx.Sidebar.log4net.xml" />
+    <Content Include="Acrolinx.Sidebar.log4net.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <EmbeddedResource Include="node_modules\acrolinx-sidebar-startpage\dist\dist-offline\files.txt" />
     <EmbeddedResource Include="node_modules\acrolinx-sidebar-startpage\dist\dist-offline\images\acrolinx-logo.svg" />
     <EmbeddedResource Include="node_modules\acrolinx-sidebar-startpage\dist\dist-offline\index.html" />
