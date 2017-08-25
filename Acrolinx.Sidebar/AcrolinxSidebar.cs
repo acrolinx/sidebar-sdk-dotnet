@@ -112,6 +112,7 @@ namespace Acrolinx.Sdk.Sidebar
 
         private void SetDefaults(string serverAddress)
         {
+            HideServerSelectorIfServerAddressParameterSet(serverAddress);
             SetDefaultForSidebarLocationAndShowServerSelectorIfLocationNotSet(serverAddress);
             SetDefaultClientLocaleIfNotSet();
         }
@@ -128,15 +129,8 @@ namespace Acrolinx.Sdk.Sidebar
         {
             if (string.IsNullOrWhiteSpace(this.SidebarSourceLocation))
             {
-                if (!this.ShowServerSelector && (!string.IsNullOrWhiteSpace(serverAddress)))
-                {
-                    this.SidebarSourceLocation = getServerAddress(serverAddress) + defaultSidebarServerLocation;
-                }
-                else
-                {
-                    this.SidebarSourceLocation = StartPageInstaller.GetStartPageURL();
-                    this.ShowServerSelector = true;
-                }
+                this.SidebarSourceLocation = StartPageInstaller.GetStartPageURL();
+                ShowServerSelectorIfServerAddressNotSet();
             }
         }
 
@@ -495,6 +489,22 @@ namespace Acrolinx.Sdk.Sidebar
                 webBrowser.Document.ActiveElement.Focus();
             }
             FixFocusTimer.Enabled = false;
+        }
+
+        private void ShowServerSelectorIfServerAddressNotSet()
+        {
+            if (!string.IsNullOrWhiteSpace(this.ServerAddress))
+            {
+                this.ShowServerSelector = true;
+            }
+        }
+
+        private void HideServerSelectorIfServerAddressParameterSet(string serverAddress)
+        {
+            if (!string.IsNullOrWhiteSpace(serverAddress))
+            {
+                this.ShowServerSelector = false;
+            }
         }
     }
 }

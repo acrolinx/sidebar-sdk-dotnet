@@ -32,11 +32,21 @@ namespace Acrolinx.Sdk.Sidebar.Storage
         public string GetItem(string key)
         {
             RegistryKey sk = Registry.CurrentUser.OpenSubKey(keyPath);
+            string value = null;
+
             if(sk != null)
             {
-                return sk.GetValue(key) as string;
+                value =  sk.GetValue(key) as string;
             }
-            return null;
+            if (string.IsNullOrEmpty(value))
+            {
+                sk = Registry.LocalMachine.OpenSubKey(keyPath);
+                if (sk != null)
+                {
+                    value = sk.GetValue(key) as string;
+                }
+            }
+            return value;
         }
         public void RemoveItem(string key)
         {
