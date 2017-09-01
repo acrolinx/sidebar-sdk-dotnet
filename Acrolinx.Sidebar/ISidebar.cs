@@ -26,6 +26,11 @@ namespace Acrolinx.Sdk.Sidebar
             get;
             set;
         }
+        string MinimumSidebarVersion
+        {
+            get;
+            set;
+        }
         string ServerAddress
         {
             get;
@@ -81,6 +86,19 @@ namespace Acrolinx.Sdk.Sidebar
         public event SidebarLoadedEventHandler SidebarLoaded;
 
         public string ClientSignature
+        {
+            get
+            {
+                Contract.Ensures(Contract.Result<string>() != null);
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public string MinimumSidebarVersion
         {
             get
             {
