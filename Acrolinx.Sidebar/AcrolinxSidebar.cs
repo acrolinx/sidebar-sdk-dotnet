@@ -67,7 +67,8 @@ namespace Acrolinx.Sdk.Sidebar
             InitParameters.Add("readOnlySuggestions", false);
             InitParameters.Add("clientLocale", "");
             InitParameters.Add("logFileLocation", Logger.Directory);
-            InitParameters.Add("clientComponents", new JArray());            
+            InitParameters.Add("clientComponents", new JArray());
+            InitParameters.Add("minimumSidebarVersion", "");
 
             InitializeComponent();
 
@@ -186,8 +187,22 @@ namespace Acrolinx.Sdk.Sidebar
             {
                 InitParameters["clientSignature"] = value;
             }
-        } 
-        
+        }
+
+        [Description("The integration specifies the minimum Acrolinx Sidebar version required."), Category("Sidebar")]
+        [DefaultValue("")]
+        public string MinimumSidebarVersion
+        {
+            get
+            {
+                return InitParameters["minimumSidebarVersion"].Value<string>();
+            }
+            set
+            {
+                InitParameters["minimumSidebarVersion"] = value;
+            }
+        }
+
         [Description("The address of the server the sidebar talks to. default value is '' which means the base URL of the host that it runs from"), Category("Sidebar")]
         [DefaultValue("")]
         public string ServerAddress
