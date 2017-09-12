@@ -31,6 +31,16 @@ namespace Acrolinx.Sdk.Sidebar.Tests
         }
 
         [TestMethod]
+        public void GetItemFromHKLM()
+        {
+            RegistryAcrolinxStorage storage = RegistryAcrolinxStorage.Instance;
+
+            var value = storage.GetItem("unknown");
+
+            Assert.AreEqual(value, null);
+        }
+
+        [TestMethod]
         public void RemoveItem()
         {
             RegistryAcrolinxStorage storage = RegistryAcrolinxStorage.Instance;

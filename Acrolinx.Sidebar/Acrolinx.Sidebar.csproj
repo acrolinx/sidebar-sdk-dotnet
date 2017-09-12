@@ -168,7 +168,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="StartPageInstaller.cs" />
     <Compile Include="Storage\AcrolinxStorage.cs" />
     <Compile Include="Storage\RegistryAcrolinxStorage.cs" />
     <Compile Include="Util\AssemblyUtil.cs" />
@@ -213,7 +212,6 @@
     <EmbeddedResource Include="node_modules\acrolinx-sidebar-startpage\dist\dist-offline\fonts\Roboto-Bold.ttf" />
     <EmbeddedResource Include="node_modules\acrolinx-sidebar-startpage\dist\dist-offline\fonts\Roboto-Regular.ttf" />
     <EmbeddedResource Include="node_modules\acrolinx-sidebar-startpage\dist\dist-offline\version.properties" />
-    <None Include="package.json" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -232,6 +230,9 @@
     <EmbeddedResource Include="loading.png" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Acrolinx.Startpage.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Config.Resource.log4net.xml" />
     <Content Include="Acrolinx.Sidebar.log4net.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -243,7 +244,6 @@
     <EmbeddedResource Include="node_modules\acrolinx-sidebar-startpage\dist\dist-offline\styles\fonts.css" />
     <EmbeddedResource Include="node_modules\acrolinx-sidebar-startpage\dist\dist-offline\styles\index.css" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PreBuildEvent>

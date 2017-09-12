@@ -46,11 +46,6 @@ namespace Acrolinx.Sdk.Sidebar
             get;
             set;
         }
-        string SidebarSourceLocation
-        {
-            get;
-            set;
-        }
         bool FixFocusWorkaround
         {
             get;
@@ -125,18 +120,6 @@ namespace Acrolinx.Sdk.Sidebar
         }
 
         public bool ShowServerSelector
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        public string SidebarSourceLocation
         {
             get
             {
