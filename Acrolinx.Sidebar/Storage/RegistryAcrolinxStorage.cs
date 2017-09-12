@@ -10,7 +10,7 @@ namespace Acrolinx.Sdk.Sidebar.Storage
         private const string baseKeyPath = @"Software\Acrolinx\PlugIns\";
         private const string storeKey = @"Storage";
         private const string keyPath = baseKeyPath + storeKey;
-        private RegistryAcrolinxStorage(){}
+        private RegistryAcrolinxStorage() { }
         static public RegistryAcrolinxStorage Instance
         {
             get
@@ -34,9 +34,9 @@ namespace Acrolinx.Sdk.Sidebar.Storage
             RegistryKey sk = Registry.CurrentUser.OpenSubKey(keyPath);
             string value = null;
 
-            if(sk != null)
+            if (sk != null)
             {
-                value =  sk.GetValue(key) as string;
+                value = sk.GetValue(key) as string;
             }
             if (string.IsNullOrEmpty(value))
             {
@@ -61,21 +61,6 @@ namespace Acrolinx.Sdk.Sidebar.Storage
             RegistryKey sk = Registry.CurrentUser.CreateSubKey(keyPath);
             sk.SetValue(key, value);
         }
-        public void Clear()
-        {
-            try
-            {
-                RegistryKey rk = Registry.CurrentUser.OpenSubKey(baseKeyPath, true);
-                RegistryKey sk = rk.OpenSubKey(storeKey);
-                if (sk != null)
-                {
-                    rk.DeleteSubKeyTree(storeKey);
-                }
-            }
-            catch (Exception ex)
-            {
-                Logger.AcroLog.Error(ex.Message);
-            }
-        }
+
     }
 }

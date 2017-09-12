@@ -13,7 +13,5 @@ namespace Acrolinx.Sdk.Sidebar.Storage
         void RemoveItem(string key);
 
         void SetItem(string key, string data);
-
-        void Clear();
     }
 }
