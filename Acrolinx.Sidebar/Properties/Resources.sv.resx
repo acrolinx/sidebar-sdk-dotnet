@@ -57,55 +57,55 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="SDK_OPTION_LABEL_STATUS_SIDEBAR_FAILURE" xml:space="preserve">
-    <value>Servern är online men den har inte stöd för sidopanelsfunktionen.</value>
-  </data>
-  <data name="SDK_OPTION_DIALOG_TITLE" xml:space="preserve">
-    <value>Acrolinx Inst\u00e4llningar</value>
-  </data>
-  <data name="SDK_OPTION_LABEL_BUTTON_OK" xml:space="preserve">
-    <value>&amp;OK</value>
+  <data name="SDK_ABOUT_DIALOG_TITLE" xml:space="preserve">
+    <value>Om</value>
   </data>
   <data name="SDK_ABOUT_LABEL_ASSEMBLYNAME" xml:space="preserve">
     <value>Namn</value>
   </data>
-  <data name="SDK_ABOUT_DIALOG_TITLE" xml:space="preserve">
-    <value>Om</value>
-  </data>
   <data name="SDK_ABOUT_LABEL_COPYTOCLIPBOARD" xml:space="preserve">
     <value>Kopiera till Urklipp</value>
-  </data>
-  <data name="SDK_OPTION_LABEL_STATUS_SUCCESS" xml:space="preserve">
-    <value>Servern är online och allt laddas korrekt.</value>
-  </data>
-  <data name="SDK_OPTION_LABEL_STATUS" xml:space="preserve">
-    <value>Status:</value>
-  </data>
-  <data name="SDK_OPTION_GROUP_LOGGING" xml:space="preserve">
-    <value>Loggning</value>
   </data>
   <data name="SDK_ABOUT_LABEL_PATH" xml:space="preserve">
     <value>Sökväg</value>
   </data>
-  <data name="SDK_OPTION_LABEL_SERVERADDRESS" xml:space="preserve">
-    <value>Serveradress:</value>
-  </data>
-  <data name="SDK_OPTION_LABEL_STATUS_CONNECTING" xml:space="preserve">
-    <value>Ansluter...</value>
-  </data>
   <data name="SDK_ABOUT_LABEL_VERSION" xml:space="preserve">
     <value>Version</value>
   </data>
-  <data name="SDK_OPTION_LABEL_STATUS_NOT_CONNECTED" xml:space="preserve">
-    <value>Ingen serveradress angiven</value>
+  <data name="SDK_OPTION_BUTTON_VALIDATE" xml:space="preserve">
+    <value>Anslut</value>
   </data>
-  <data name="SDK_OPTION_LABEL_STATUS_FAILURE" xml:space="preserve">
-    <value>Servern verkar inte svara. \u00c4r adressen korrekt?</value>
+  <data name="SDK_OPTION_DIALOG_TITLE" xml:space="preserve">
+    <value>Acrolinx Inst\u00e4llningar</value>
+  </data>
+  <data name="SDK_OPTION_GROUP_LOGGING" xml:space="preserve">
+    <value>Loggning</value>
+  </data>
+  <data name="SDK_OPTION_LABEL_BUTTON_OK" xml:space="preserve">
+    <value>&amp;OK</value>
   </data>
   <data name="SDK_OPTION_LABEL_DIRECTORY" xml:space="preserve">
     <value>Katalog:</value>
   </data>
-  <data name="SDK_OPTION_BUTTON_VALIDATE" xml:space="preserve">
-    <value>Anslut</value>
+  <data name="SDK_OPTION_LABEL_SERVERADDRESS" xml:space="preserve">
+    <value>Serveradress:</value>
+  </data>
+  <data name="SDK_OPTION_LABEL_STATUS" xml:space="preserve">
+    <value>Status:</value>
+  </data>
+  <data name="SDK_OPTION_LABEL_STATUS_CONNECTING" xml:space="preserve">
+    <value>Ansluter...</value>
+  </data>
+  <data name="SDK_OPTION_LABEL_STATUS_FAILURE" xml:space="preserve">
+    <value>Servern verkar inte svara. \u00c4r adressen korrekt?</value>
+  </data>
+  <data name="SDK_OPTION_LABEL_STATUS_NOT_CONNECTED" xml:space="preserve">
+    <value>Ingen serveradress angiven</value>
+  </data>
+  <data name="SDK_OPTION_LABEL_STATUS_SIDEBAR_FAILURE" xml:space="preserve">
+    <value>Servern är online men den har inte stöd för sidopanelsfunktionen.</value>
+  </data>
+  <data name="SDK_OPTION_LABEL_STATUS_SUCCESS" xml:space="preserve">
+    <value>Servern är online och allt laddas korrekt.</value>
   </data>
 </root>

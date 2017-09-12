@@ -57,55 +57,55 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="SDK_OPTION_LABEL_STATUS_SIDEBAR_FAILURE" xml:space="preserve">
-    <value>Le serveur est en ligne, mais il ne prend pas en charge la Sidebar.</value>
-  </data>
-  <data name="SDK_OPTION_DIALOG_TITLE" xml:space="preserve">
-    <value>Options Acrolinx</value>
-  </data>
-  <data name="SDK_OPTION_LABEL_BUTTON_OK" xml:space="preserve">
-    <value>&amp;OK</value>
+  <data name="SDK_ABOUT_DIALOG_TITLE" xml:space="preserve">
+    <value>A propos de</value>
   </data>
   <data name="SDK_ABOUT_LABEL_ASSEMBLYNAME" xml:space="preserve">
     <value>Nom</value>
   </data>
-  <data name="SDK_ABOUT_DIALOG_TITLE" xml:space="preserve">
-    <value>A propos de</value>
-  </data>
   <data name="SDK_ABOUT_LABEL_COPYTOCLIPBOARD" xml:space="preserve">
     <value>Copier dans le presse-papiers</value>
-  </data>
-  <data name="SDK_OPTION_LABEL_STATUS_SUCCESS" xml:space="preserve">
-    <value>Le serveur est en ligne. Tout fonctionne bien.</value>
-  </data>
-  <data name="SDK_OPTION_LABEL_STATUS" xml:space="preserve">
-    <value>Statut :</value>
-  </data>
-  <data name="SDK_OPTION_GROUP_LOGGING" xml:space="preserve">
-    <value>Journalisation</value>
   </data>
   <data name="SDK_ABOUT_LABEL_PATH" xml:space="preserve">
     <value>Chemin</value>
   </data>
-  <data name="SDK_OPTION_LABEL_SERVERADDRESS" xml:space="preserve">
-    <value>Adresse du serveur :</value>
-  </data>
-  <data name="SDK_OPTION_LABEL_STATUS_CONNECTING" xml:space="preserve">
-    <value>Connexion en cours ...</value>
-  </data>
   <data name="SDK_ABOUT_LABEL_VERSION" xml:space="preserve">
     <value>Version</value>
   </data>
-  <data name="SDK_OPTION_LABEL_STATUS_NOT_CONNECTED" xml:space="preserve">
-    <value>L'adresse du serveur manque</value>
+  <data name="SDK_OPTION_BUTTON_VALIDATE" xml:space="preserve">
+    <value>Se connecter</value>
   </data>
-  <data name="SDK_OPTION_LABEL_STATUS_FAILURE" xml:space="preserve">
-    <value>Est-ce que l'adresse du serveur est correcte ?</value>
+  <data name="SDK_OPTION_DIALOG_TITLE" xml:space="preserve">
+    <value>Options Acrolinx</value>
+  </data>
+  <data name="SDK_OPTION_GROUP_LOGGING" xml:space="preserve">
+    <value>Journalisation</value>
+  </data>
+  <data name="SDK_OPTION_LABEL_BUTTON_OK" xml:space="preserve">
+    <value>&amp;OK</value>
   </data>
   <data name="SDK_OPTION_LABEL_DIRECTORY" xml:space="preserve">
     <value>R\u00e9pertoire :</value>
   </data>
-  <data name="SDK_OPTION_BUTTON_VALIDATE" xml:space="preserve">
-    <value>Se connecter</value>
+  <data name="SDK_OPTION_LABEL_SERVERADDRESS" xml:space="preserve">
+    <value>Adresse du serveur :</value>
+  </data>
+  <data name="SDK_OPTION_LABEL_STATUS" xml:space="preserve">
+    <value>Statut :</value>
+  </data>
+  <data name="SDK_OPTION_LABEL_STATUS_CONNECTING" xml:space="preserve">
+    <value>Connexion en cours ...</value>
+  </data>
+  <data name="SDK_OPTION_LABEL_STATUS_FAILURE" xml:space="preserve">
+    <value>Est-ce que l'adresse du serveur est correcte ?</value>
+  </data>
+  <data name="SDK_OPTION_LABEL_STATUS_NOT_CONNECTED" xml:space="preserve">
+    <value>L'adresse du serveur manque</value>
+  </data>
+  <data name="SDK_OPTION_LABEL_STATUS_SIDEBAR_FAILURE" xml:space="preserve">
+    <value>Le serveur est en ligne, mais il ne prend pas en charge la Sidebar.</value>
+  </data>
+  <data name="SDK_OPTION_LABEL_STATUS_SUCCESS" xml:space="preserve">
+    <value>Le serveur est en ligne. Tout fonctionne bien.</value>
   </data>
 </root>
