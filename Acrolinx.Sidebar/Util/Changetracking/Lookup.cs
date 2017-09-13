@@ -84,7 +84,7 @@ namespace Acrolinx.Sdk.Sidebar.Util.Changetracking
                 regexSearchStr.Append("(" + Regex.Escape(surface) + ")");
             }
 
-            Regex regex = new Regex(regexSearchStr.ToString(), RegexOptions.Multiline);
+            Regex regex = new Regex(regexSearchStr.ToString(), RegexOptions.Singleline);
 
             var searchTextRange = OriginalText.Substring(0, Math.Min(OriginalText.Length, ranges[ranges.Count -1].End+1));
             var matchesBefore = regex.Matches(searchTextRange).Count;
