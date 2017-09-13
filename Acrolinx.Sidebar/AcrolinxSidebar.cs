@@ -18,10 +18,12 @@ using Microsoft.CSharp.RuntimeBinder;
 using System.Linq.Expressions;
 using Newtonsoft.Json.Linq;
 using System.Globalization;
+using Acrolinx.Sdk.Sidebar.Storage;
+using System.IO;
 
 namespace Acrolinx.Sdk.Sidebar
 {
-    [ToolboxBitmap( typeof(AcrolinxSidebar) , "toolbox.bmp")]
+    [ToolboxBitmap(typeof(AcrolinxSidebar), "toolbox.bmp")]
     public partial class AcrolinxSidebar : UserControl, ISidebar
     {
         [Description("Called when the sidebar source was downloaded successfully."), Category("Sidebar")]
@@ -41,8 +43,11 @@ namespace Acrolinx.Sdk.Sidebar
         [Description(""), Category("Sidebar")]
         public event SidebarReplaceRangesEventHandler ReplaceRanges;
 
-        private readonly string defaultSidebarUrl = "https://sidebar-classic.acrolinx-cloud.com/v14/prod/index.html?" + System.DateTime.Now.Ticks;
-        private readonly string defaultSidebarServerLocation = "/sidebar/v14/index.html?" + System.DateTime.Now.Ticks;
+        public IAcrolinxStorage Storage
+        {
+            get;
+            private set;
+        }
 
         public JObject InitParameters
         {
@@ -50,15 +55,19 @@ namespace Acrolinx.Sdk.Sidebar
             private set;
         }
 
-        public AcrolinxSidebar()
+        public AcrolinxSidebar(IAcrolinxStorage acroStorage = null)
         {
+            Storage = (acroStorage != null) ? acroStorage : RegistryAcrolinxStorage.Instance;
+
             InitParameters = new JObject();
             InitParameters.Add("showServerSelector", true);
             InitParameters.Add("serverAddress", "");
             InitParameters.Add("clientSignature", "");
             InitParameters.Add("readOnlySuggestions", false);
             InitParameters.Add("clientLocale", "");
+            InitParameters.Add("logFileLocation", Logger.Directory);
             InitParameters.Add("clientComponents", new JArray());
+            InitParameters.Add("minimumSidebarVersion", "");
 
             InitializeComponent();
 
@@ -66,7 +75,7 @@ namespace Acrolinx.Sdk.Sidebar
         }
 
         private void RegisterComponents(Assembly callingAssembly)
-        {           
+        {
             GuessMainComponentAndHostApplication(callingAssembly);
 
             RegisterClientComponent(typeof(AcrolinxSidebar).Assembly, "Acrolinx Sidebar .NET SDK", SoftwareComponentCategory.DEFAULT);
@@ -84,6 +93,9 @@ namespace Acrolinx.Sdk.Sidebar
             this.Start(null);
         }
 
+        /// <summary>
+        /// Prefered way to start sidebar is Start(), this will enable server selector feature by default
+        /// </summary>
         public void Start(string serverAddress)
         {
             if (this.DesignMode)
@@ -98,13 +110,12 @@ namespace Acrolinx.Sdk.Sidebar
             RegisterComponents(Assembly.GetCallingAssembly());
             AutoScaleDimensions = new SizeF(96F, 96F);
 
-            webBrowser.Navigate(this.SidebarSourceLocation);
+            webBrowser.Navigate(GetStartPageURL());
         }
 
         private void SetDefaults(string serverAddress)
         {
-            HideServerSelectorIfServerAddressParameterSet(serverAddress);
-            SetDefaultForSidebarLocationAndShowServerSelectorIfLocationNotSet(serverAddress);
+            ShowHideServerSelectorIfServerAddressParameterSet(serverAddress);
             SetDefaultClientLocaleIfNotSet();
         }
 
@@ -116,36 +127,16 @@ namespace Acrolinx.Sdk.Sidebar
             }
         }
 
-        private void ShowServerSelectorIfServerAddressNotSet()
+        private string GetStartPageURL()
         {
-            if (!string.IsNullOrWhiteSpace(this.ServerAddress))
-            {
-                this.ShowServerSelector = true;
-            }
-        }
+            var assemblyLocation = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + @"\Acrolinx.Startpage.dll";
 
-        private void HideServerSelectorIfServerAddressParameterSet(string serverAddress)
-        {
-            if (!string.IsNullOrWhiteSpace(serverAddress))
+            if (File.Exists(assemblyLocation))
             {
-                this.ShowServerSelector = false;
+                return @"res://" + assemblyLocation + "//index.html";
             }
-        }
-
-        private void SetDefaultForSidebarLocationAndShowServerSelectorIfLocationNotSet(string serverAddress)
-        {
-            if (string.IsNullOrWhiteSpace(this.SidebarSourceLocation))
-            {
-                if (!string.IsNullOrWhiteSpace(serverAddress))
-                {
-                    this.SidebarSourceLocation = getServerAddress(serverAddress) + defaultSidebarServerLocation;
-                }
-                else
-                {
-                    this.SidebarSourceLocation = defaultSidebarUrl;
-                    ShowServerSelectorIfServerAddressNotSet();
-                }
-            }
+            Logger.AcroLog.Error("Failed to locate " + assemblyLocation);
+            return null;
         }
 
         private string getServerAddress(string serverAddress)
@@ -200,8 +191,22 @@ namespace Acrolinx.Sdk.Sidebar
             {
                 InitParameters["clientSignature"] = value;
             }
-        } 
-        
+        }
+
+        [Description("The integration specifies the minimum Acrolinx Sidebar version required."), Category("Sidebar")]
+        [DefaultValue("")]
+        public string MinimumSidebarVersion
+        {
+            get
+            {
+                return InitParameters["minimumSidebarVersion"].Value<string>();
+            }
+            set
+            {
+                InitParameters["minimumSidebarVersion"] = value;
+            }
+        }
+
         [Description("The address of the server the sidebar talks to. default value is '' which means the base URL of the host that it runs from"), Category("Sidebar")]
         [DefaultValue("")]
         public string ServerAddress
@@ -247,15 +252,6 @@ namespace Acrolinx.Sdk.Sidebar
                 InitParameters["clientLocale"] = value.Trim().ToLower();
             }
         }
-        
-
-        [Description("The URL where the sidebar loads its HTML from."), Category("Sidebar")]
-        [DefaultValue("")]
-        public string SidebarSourceLocation
-        {
-            get;
-            set;
-        }
 
         [Description("Experimental: In case you face focus problems, turn this on."), Category("Sidebar")]
         [DefaultValue(false)]
@@ -293,7 +289,7 @@ namespace Acrolinx.Sdk.Sidebar
             /// <summary>
             /// Version information about such components are displayed in the about dialog.
             /// </summary>
-        
+
             DEFAULT,
             /// <summary>
             /// Version information about such components are displayed in the detail section of the about dialog or not at all.
@@ -338,7 +334,7 @@ namespace Acrolinx.Sdk.Sidebar
 
             var code = "new function(){var c = window.external.getContent(); "
                 + "console.log('Content: ' + c); "
-                + "return acrolinxSidebar.checkGlobal(c, {inputFormat:'" + document.Format.ToString().ToUpper() + "', requestDescription:{documentReference: '" 
+                + "return acrolinxSidebar.checkGlobal(c, {inputFormat:'" + document.Format.ToString().ToUpper() + "', requestDescription:{documentReference: '"
                 + document.Reference.Replace("\\", "\\\\").Replace("'", "\\'").Replace("\n", "").Replace("\r", "") + "'}})}();";
 
             dynamic check = Eval(code);
@@ -375,7 +371,7 @@ namespace Acrolinx.Sdk.Sidebar
         {
             Contract.Requires(checkId != null);
             Contract.Requires(matches != null);
-            ReplaceRanges?.Invoke(this, new MatchesWithReplacementEventArgs(checkId , matches));
+            ReplaceRanges?.Invoke(this, new MatchesWithReplacementEventArgs(checkId, matches));
         }
 
         internal void FireChecked(string checkId, Range range)
@@ -410,7 +406,7 @@ namespace Acrolinx.Sdk.Sidebar
                 Logger.AcroLog.Warn("Could not find sidebar at URL: " + e.Url);
 
                 string internalUrl = GetInternalUrl();
-                
+
                 if (internalUrl.StartsWith("res://ieframe.dll/"))
                 {
                     Logger.AcroLog.Error("Loaded page seems to be an IE error page. URL: " + e.Url + " / " + internalUrl);
@@ -483,7 +479,8 @@ namespace Acrolinx.Sdk.Sidebar
 
             JArray invalidRanges = new JArray();
 
-            foreach(Match match in matches){
+            foreach (Match match in matches)
+            {
                 JObject invalidDocumentPart = new JObject();
                 invalidDocumentPart.Add("checkId", checkId);
                 invalidDocumentPart.Add("range", new JArray(match.Range.Start, match.Range.End));
@@ -497,12 +494,25 @@ namespace Acrolinx.Sdk.Sidebar
 
         private void OnFixFocusTimerTick(object sender, EventArgs e)
         {
-            if(webBrowser.Document?.ActiveElement != null)
+            if (webBrowser.Document?.ActiveElement != null)
             {
                 webBrowser.Focus();
                 webBrowser.Document.ActiveElement.Focus();
             }
             FixFocusTimer.Enabled = false;
+        }
+
+        private void ShowHideServerSelectorIfServerAddressParameterSet(string serverAddress)
+        {
+            if (!string.IsNullOrWhiteSpace(serverAddress))
+            {
+                this.ServerAddress = serverAddress;
+                this.ShowServerSelector = false;
+            }
+            else
+            {
+                this.ShowServerSelector = true;
+            }
         }
     }
 }

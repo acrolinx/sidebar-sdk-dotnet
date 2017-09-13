@@ -14,6 +14,7 @@ using System.Runtime.InteropServices;
 using System.Security.Permissions;
 using System.Text;
 using System.Threading.Tasks;
+using System.Diagnostics;
 
 namespace Acrolinx.Sdk.Sidebar
 {
@@ -41,7 +42,8 @@ namespace Acrolinx.Sdk.Sidebar
             sidebar.Eval("if (!window.console) { window.console = {} }; window.console.logOld = window.console.log; window.console.log = function(msg) { window.external.Log(msg); }" );
             sidebar.Eval( "window.onerror = function(msg, url, line, col, error) { window.external.OnError(msg, url, line, col, error); }" );
             //The next line would have the effect that the sidebar exchanges objects instead of strings. This seem to fail in case of .NET internet explorer web control...
-            webBrowser.Document.InvokeScript("eval", new object[] { "window.acrolinxPlugin =   {requestInit: function(){ window.external.requestInit()}, onInitFinished: function(finishResult) {window.external.onInitFinished(JSON.stringify(finishResult))}, configure: function(configuration) { window.external.configure(JSON.stringify(configuration)) }, requestGlobalCheck: function() { window.external.requestGlobalCheck() }, onCheckResult: function(checkResult) {window.external.onCheckResult(JSON.stringify(checkResult)) }, selectRanges: function(checkId, matches) { window.external.selectRanges(checkId, JSON.stringify(matches))}, replaceRanges: function(checkId, matchesWithReplacements) { window.external.replaceRanges(checkId, JSON.stringify(matchesWithReplacements)) }, download: function(downloadInfo) { window.external.download(JSON.stringify(downloadInfo))}, openWindow: function(openWindowParameters) { window.external.openWindow(JSON.stringify(openWindowParameters)) }}; "});
+            webBrowser.Document.InvokeScript("eval", new object[] { "window.acrolinxStorage = { getItem: function(key) { return window.external.getItem(key); }, removeItem: function(key) { window.external.removeItem(key); }, setItem: function(key, data) { window.external.setItem(key, data); } }" });
+            webBrowser.Document.InvokeScript("eval", new object[] { "window.acrolinxPlugin =   {requestInit: function(){ window.external.requestInit()}, onInitFinished: function(finishResult) {window.external.onInitFinished(JSON.stringify(finishResult))}, configure: function(configuration) { window.external.configure(JSON.stringify(configuration)) }, requestGlobalCheck: function() { window.external.requestGlobalCheck() }, onCheckResult: function(checkResult) {window.external.onCheckResult(JSON.stringify(checkResult)) }, selectRanges: function(checkId, matches) { window.external.selectRanges(checkId, JSON.stringify(matches))}, replaceRanges: function(checkId, matchesWithReplacements) { window.external.replaceRanges(checkId, JSON.stringify(matchesWithReplacements)) }, download: function(downloadInfo) { window.external.download(JSON.stringify(downloadInfo))}, openWindow: function(openWindowParameters) { window.external.openWindow(JSON.stringify(openWindowParameters)) }, openLogFile: function() {window.external.openLogFile()}}; " });
         }
 
         public void Log(params dynamic[] o)
@@ -68,12 +70,38 @@ namespace Acrolinx.Sdk.Sidebar
             }
             catch
             {
-
                 Logger.AcroLog.Error("JavaScript Error: " + l);
             }
         }
 
+        public string getItem(params dynamic[] o)
+        {
+            Contract.Requires(o != null);
+            Contract.Requires(o.Length > 0);
 
+            Logger.AcroLog.Debug("getItem");
+
+            string key = o[0];
+            return sidebar.Storage.GetItem(key);
+        }
+        public void setItem(params dynamic[] o)
+        {
+            Contract.Requires(o != null);
+            Contract.Requires(o.Length == 2);
+
+            Logger.AcroLog.Debug("setItem");
+
+            sidebar.Storage.SetItem(o[0], o[1]);
+        }
+        public void removeItem(params dynamic[] o)
+        {
+            Contract.Requires(o != null);
+            Contract.Requires(o.Length > 0);
+
+            Logger.AcroLog.Debug("removeItem");
+
+            sidebar.Storage.RemoveItem(o[0]);
+        }
         public bool openWindow(params dynamic[] o)
         {
             Contract.Requires(o != null);
@@ -199,6 +227,18 @@ namespace Acrolinx.Sdk.Sidebar
             Contract.Requires(o.Length > 0);
             string json = o[0];
             Logger.AcroLog.Info("configure: " + json);
+        }
+
+        public void openLogFile()
+        {
+            try
+            {
+                Process proc = Process.Start("notepad.exe", Logger.Directory);
+            }
+            catch (Exception exce)
+            {
+                Logger.AcroLog.Error(exce.Message);
+            }
         }
     }
 }

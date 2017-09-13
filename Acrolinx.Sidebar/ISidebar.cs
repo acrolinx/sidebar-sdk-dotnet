@@ -26,6 +26,11 @@ namespace Acrolinx.Sdk.Sidebar
             get;
             set;
         }
+        string MinimumSidebarVersion
+        {
+            get;
+            set;
+        }
         string ServerAddress
         {
             get;
@@ -37,11 +42,6 @@ namespace Acrolinx.Sdk.Sidebar
             set;
         }
         bool ReadOnlySuggestions
-        {
-            get;
-            set;
-        }
-        string SidebarSourceLocation
         {
             get;
             set;
@@ -93,6 +93,19 @@ namespace Acrolinx.Sdk.Sidebar
             }
         }
 
+        public string MinimumSidebarVersion
+        {
+            get
+            {
+                Contract.Ensures(Contract.Result<string>() != null);
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
         public string ServerAddress
         {
             get
@@ -107,18 +120,6 @@ namespace Acrolinx.Sdk.Sidebar
         }
 
         public bool ShowServerSelector
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        public string SidebarSourceLocation
         {
             get
             {

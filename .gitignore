@@ -3,6 +3,7 @@
 **/bin
 **/TestResults
 **/*.userprefs
+**/node_modules
 packages
 /.idea
 /acrolinx-sidebar-demo-dotnet.userprefs

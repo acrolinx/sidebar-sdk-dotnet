@@ -1,5 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\MSBuild.Npm.0.5.1\build\MSBuild.Npm.props" Condition="Exists('..\packages\MSBuild.Npm.0.5.1\build\MSBuild.Npm.props')" />
+  <Import Project="..\packages\MSBuild.Node.0.5.1\build\MSBuild.Node.props" Condition="Exists('..\packages\MSBuild.Node.0.5.1\build\MSBuild.Node.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -13,6 +15,8 @@
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
     <CodeContractsAssemblyMode>0</CodeContractsAssemblyMode>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -154,11 +158,6 @@
     <Compile Include="Exceptions\MatchesNotFoundException.cs" />
     <Compile Include="Exceptions\RangesNotFoundException.cs" />
     <Compile Include="Exceptions\AcrolinxException.cs" />
-    <Compile Include="Properties\Icons.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Icons.resx</DependentUpon>
-    </Compile>
     <Compile Include="Properties\Config.Designer.cs">
       <DependentUpon>Config.resx</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -169,12 +168,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="Util\About\AboutBox.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Util\About\AboutBox.Designer.cs">
-      <DependentUpon>AboutBox.cs</DependentUpon>
-    </Compile>
+    <Compile Include="Storage\AcrolinxStorage.cs" />
+    <Compile Include="Storage\RegistryAcrolinxStorage.cs" />
     <Compile Include="Util\AssemblyUtil.cs" />
     <Compile Include="Util\Adapter\UniversalAdapter.cs" />
     <Compile Include="Util\Adapter\IAdapter.cs" />
@@ -198,17 +193,7 @@
     <Compile Include="AcrolinxSidebar.Designer.cs">
       <DependentUpon>AcrolinxSidebar.cs</DependentUpon>
     </Compile>
-    <Compile Include="Util\Configuration\Options.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Util\Configuration\Options.Designer.cs">
-      <DependentUpon>Options.cs</DependentUpon>
-    </Compile>
     <Compile Include="Util\Logging\Logger.cs" />
-    <EmbeddedResource Include="Properties\Icons.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Icons.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Config.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Config.Designer.cs</LastGenOutput>
@@ -223,14 +208,10 @@
       <DependentUpon>AcrolinxSidebar.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Util\About\AboutBox.resx">
-      <DependentUpon>AboutBox.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Util\Configuration\Options.resx">
-      <DependentUpon>Options.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
     <None Include="App.config" />
+    <EmbeddedResource Include="node_modules\acrolinx-sidebar-startpage\dist\dist-offline\fonts\Roboto-Bold.ttf" />
+    <EmbeddedResource Include="node_modules\acrolinx-sidebar-startpage\dist\dist-offline\fonts\Roboto-Regular.ttf" />
+    <EmbeddedResource Include="node_modules\acrolinx-sidebar-startpage\dist\dist-offline\version.properties" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -243,22 +224,42 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="acrolinx.ico" />
     <EmbeddedResource Include="toolbox.bmp" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="loading.png" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\Images\iconConnected.png" />
-    <EmbeddedResource Include="Resources\Images\iconConnecting.png" />
-    <EmbeddedResource Include="Resources\Images\iconDisconnected.png" />
-  </ItemGroup>
-  <ItemGroup>
+    <Content Include="Acrolinx.Startpage.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Config.Resource.log4net.xml" />
-    <Content Include="Acrolinx.Sidebar.log4net.xml" />
+    <Content Include="Acrolinx.Sidebar.log4net.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <EmbeddedResource Include="node_modules\acrolinx-sidebar-startpage\dist\dist-offline\files.txt" />
+    <EmbeddedResource Include="node_modules\acrolinx-sidebar-startpage\dist\dist-offline\images\acrolinx-logo.svg" />
+    <EmbeddedResource Include="node_modules\acrolinx-sidebar-startpage\dist\dist-offline\index.html" />
+    <EmbeddedResource Include="node_modules\acrolinx-sidebar-startpage\dist\dist-offline\scripts\main.js" />
+    <EmbeddedResource Include="node_modules\acrolinx-sidebar-startpage\dist\dist-offline\styles\fonts.css" />
+    <EmbeddedResource Include="node_modules\acrolinx-sidebar-startpage\dist\dist-offline\styles\index.css" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>
+    </PreBuildEvent>
+  </PropertyGroup>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\MSBuild.Node.0.5.1\build\MSBuild.Node.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\MSBuild.Node.0.5.1\build\MSBuild.Node.props'))" />
+    <Error Condition="!Exists('..\packages\MSBuild.Node.0.5.1\build\MSBuild.Node.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\MSBuild.Node.0.5.1\build\MSBuild.Node.targets'))" />
+    <Error Condition="!Exists('..\packages\MSBuild.Npm.0.5.1\build\MSBuild.Npm.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\MSBuild.Npm.0.5.1\build\MSBuild.Npm.props'))" />
+    <Error Condition="!Exists('..\packages\MSBuild.Npm.0.5.1\build\MSBuild.Npm.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\MSBuild.Npm.0.5.1\build\MSBuild.Npm.targets'))" />
+  </Target>
+  <Import Project="..\packages\MSBuild.Node.0.5.1\build\MSBuild.Node.targets" Condition="Exists('..\packages\MSBuild.Node.0.5.1\build\MSBuild.Node.targets')" />
+  <Import Project="..\packages\MSBuild.Npm.0.5.1\build\MSBuild.Npm.targets" Condition="Exists('..\packages\MSBuild.Npm.0.5.1\build\MSBuild.Npm.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
