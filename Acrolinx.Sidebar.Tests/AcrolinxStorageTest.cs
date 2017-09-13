@@ -56,6 +56,20 @@ namespace Acrolinx.Sdk.Sidebar.Tests
             value = storage.GetItem("acro.test.token1");
 
             Assert.AreEqual(value, "tokendata1");
+
+        }
+
+        [TestMethod]
+        public void OverwriteAcrolinxStorage()
+        {
+            RegistryAcrolinxStorage storage = RegistryAcrolinxStorage.Instance;
+
+            storage.SetItem("acro.test.token1", "tokendata1");
+            storage.SetItem("acro.test.token1", "tokendata2");
+
+            var value = storage.GetItem("acro.test.token1");
+
+            Assert.AreEqual(value, "tokendata2");
         }
 
     }
