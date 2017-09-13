@@ -277,5 +277,31 @@ namespace Acrolinx.Sdk.Sidebar.Tests
 
             Assert.AreEqual(result[0], new Range(16, 21));
         }
+
+        [TestMethod]
+        public void PartContainingXML4()
+        {
+            var lookup = new Lookup("<x>\r\n    <some>Tesst</some>\r\n    <structured>data sdfs</structured>\r\n</x>");
+            var ranges = new Range[] { new Range(15, 20), new Range(30, 31), new Range(31, 32), new Range(32, 33), new Range(45, 49) };
+
+            var result = lookup.Search("<x>a\r\n    <some>Tesst</some>\r\n    <structured>data sdfs</structured>\r\n</x>", ranges);
+
+            Assert.AreEqual(5, result.Count);
+
+            Assert.AreEqual(result[0], new Range(16, 21));
+        }
+
+        [TestMethod]
+        public void PartContainingXML5()
+        {
+            var lookup = new Lookup("<x>\r\n    <some>Tesst</some>\r\n    <structured>data sdfs</structured>\r\n</x>");
+            var ranges = new Range[] { new Range(15, 20), new Range(45, 49) };
+
+            var result = lookup.Search("<x>a\r\n    <some>Tesst</some>\r\n    <structured>data sdfs</structured>\r\n</x>", ranges);
+
+            Assert.AreEqual(2, result.Count);
+
+            Assert.AreEqual(result[0], new Range(16, 21));
+        }
     }
 }
