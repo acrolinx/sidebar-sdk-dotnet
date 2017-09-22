@@ -79,13 +79,26 @@ namespace Acrolinx.Sdk.Sidebar
             GuessMainComponentAndHostApplication(callingAssembly);
 
             RegisterClientComponent(typeof(AcrolinxSidebar).Assembly, "Acrolinx Sidebar .NET SDK", SoftwareComponentCategory.DEFAULT);
-            RegisterClientComponent(typeof(String).Assembly, ".NET Framework", AcrolinxSidebar.SoftwareComponentCategory.DETAIL);
-            RegisterClientComponent(typeof(JObject).Assembly, "Json.NET", AcrolinxSidebar.SoftwareComponentCategory.DETAIL);
-            RegisterClientComponent(typeof(log4net.Core.ILogger).Assembly, "log4net", AcrolinxSidebar.SoftwareComponentCategory.DETAIL);
-            RegisterClientComponent(typeof(WebBrowser).Assembly, "WebBrowser Control", AcrolinxSidebar.SoftwareComponentCategory.DETAIL);
-            RegisterClientComponent(typeof(WebBrowser).Assembly.GetName().Name + ".browser", "WebBrowser Control Browser", webBrowser.Version.Major + "." + webBrowser.Version.MajorRevision + "." + webBrowser.Version.Minor + "." + webBrowser.Version.MinorRevision, AcrolinxSidebar.SoftwareComponentCategory.DETAIL);
             RegisterClientComponent("osInfo", Util.AssemblyUtil.OSInfo()["osName"], Util.AssemblyUtil.OSInfo()["version"], AcrolinxSidebar.SoftwareComponentCategory.DEFAULT);
             RegisterClientComponent("editor", Util.AssemblyUtil.AppInfo()["productName"], Util.AssemblyUtil.AppInfo()["version"], AcrolinxSidebar.SoftwareComponentCategory.DEFAULT);
+            RegisterClientComponent(typeof(WebBrowser).Assembly.GetName().Name + ".browser", "WebBrowser Control Browser", webBrowser.Version.Major + "." + webBrowser.Version.MajorRevision + "." + webBrowser.Version.Minor + "." + webBrowser.Version.MinorRevision, AcrolinxSidebar.SoftwareComponentCategory.DETAIL);
+            LogSidebarComponents();
+        }
+        private void LogSidebarComponents()
+        {
+            Dictionary<string, Assembly> componentDetails = new Dictionary<string, Assembly>();
+            componentDetails.Add(".NET Framework", typeof(String).Assembly);
+            componentDetails.Add("Json.NET", typeof(JObject).Assembly);
+            componentDetails.Add("log4net", typeof(log4net.Core.ILogger).Assembly);
+            componentDetails.Add("WebBrowser Control", typeof(WebBrowser).Assembly);
+
+            var logDetails = new StringBuilder();
+            logDetails.Append("Sidebar Components:" + Environment.NewLine + "Name\tVersion");
+            foreach (var entry in componentDetails)
+            {
+                logDetails.Append(Environment.NewLine + entry.Key + "\t" + entry.Value.GetName().Version);
+            }
+            Logger.AcroLog.Info(logDetails.ToString());
         }
 
         public void Start()
