@@ -90,6 +90,7 @@ namespace Acrolinx.Sdk.Sidebar
 
         public void Start()
         {
+            RegisterComponents(Assembly.GetCallingAssembly());
             this.Start(null);
         }
 
@@ -107,7 +108,7 @@ namespace Acrolinx.Sdk.Sidebar
 
             SetDefaults(serverAddress);
 
-            RegisterComponents(Assembly.GetCallingAssembly());
+
             AutoScaleDimensions = new SizeF(96F, 96F);
 
             webBrowser.Navigate(GetStartPageURL());
