@@ -181,6 +181,16 @@ namespace Acrolinx.Sdk.Sidebar
 
         public Range Range { get; private set; }
     }
+    public class CheckRequestedEventArgs : EventArgs
+    {
+        internal CheckRequestedEventArgs(ICheckOptions options)
+        {
+            Contract.Requires(options != null);
+            Options = options;
+        }
+
+        public ICheckOptions Options { get; private set; }
+    }
 
     public class CheckEventArgs : EventArgs
     {
@@ -237,7 +247,7 @@ namespace Acrolinx.Sdk.Sidebar
     public delegate void SidebarLoadedEventHandler(object sender, SidebarUrlEvenArgs e);
     public delegate void SidebarSourceNotReachableEventHandler(object sender, SidebarUrlEvenArgs e);
     public delegate void SidebarDocumentLoadedEventHandler(object sender, SidebarDocumentLoadedEvenArgs e);
-    public delegate void SidebarCheckRequestedEventHandler(object sender, EventArgs e);
+    public delegate void SidebarCheckRequestedEventHandler(object sender, CheckRequestedEventArgs e);
     public delegate void SidebarCheckedEventHandler(object sender, CheckedEventArgs e);
     public delegate void SidebarSelectRangesEventHandler(object sender, MatchesEventArgs e);
     public delegate void SidebarReplaceRangesEventHandler(object sender, MatchesWithReplacementEventArgs e);

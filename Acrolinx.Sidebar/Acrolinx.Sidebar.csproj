@@ -152,6 +152,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AcrolinxPlugin.cs" />
+    <Compile Include="Documents\CheckOptions.cs" />
+    <Compile Include="Documents\ICheckOptions.cs" />
     <Compile Include="Exceptions\MatchesNotFoundException.cs" />
     <Compile Include="Exceptions\RangesNotFoundException.cs" />
     <Compile Include="Exceptions\AcrolinxException.cs" />

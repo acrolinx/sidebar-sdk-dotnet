@@ -154,8 +154,20 @@ namespace Acrolinx.Sdk.Sidebar
         {
             Logger.AcroLog.Info("requestGlobalCheck");
 
-            sidebar.FireRequestCheck();
+            ICheckOptions options = ConvertOptions(o);
+
+            sidebar.FireRequestCheck(options);
         }
+
+        private ICheckOptions ConvertOptions(dynamic[] o)
+        {
+            if(o.Length == 0)
+            {
+                return new CheckOptionsProxy();
+            }
+            return new CheckOptionsProxy(o[0]);
+        }
+
         public void selectRanges(params dynamic[] o)
         {
             Contract.Requires(o != null);

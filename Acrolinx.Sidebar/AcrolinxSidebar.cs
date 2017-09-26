@@ -346,7 +346,6 @@ namespace Acrolinx.Sdk.Sidebar
             /// </summary>
             DETAIL
         }
-
         public void RegisterClientComponent(Assembly assembly, string humanReadableName, SoftwareComponentCategory category)
         {
             Contract.Requires(assembly != null);
@@ -409,9 +408,11 @@ namespace Acrolinx.Sdk.Sidebar
             return result;
         }
 
-        internal void FireRequestCheck()
+        internal void FireRequestCheck(ICheckOptions options)
         {
-            RequestCheck?.Invoke(this, new EventArgs());
+            Contract.Requires(options != null);
+
+            RequestCheck?.Invoke(this, new CheckRequestedEventArgs(options));
         }
 
         internal void FireInitFinished()
