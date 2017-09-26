@@ -85,7 +85,11 @@ namespace Acrolinx.Sdk.Sidebar
             private set;
         }
 
-        public AcrolinxSidebar(IAcrolinxStorage acroStorage = null)
+        public AcrolinxSidebar() : this(null)
+        {
+        }
+
+        public AcrolinxSidebar(IAcrolinxStorage acroStorage)
         {
             Storage = (acroStorage != null) ? acroStorage : RegistryAcrolinxStorage.Instance;
 
