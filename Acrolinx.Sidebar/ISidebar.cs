@@ -51,7 +51,8 @@ namespace Acrolinx.Sdk.Sidebar
             get;
             set;
         }
-        
+        bool SupportCheckSelection { get; set; }
+
         string Check(IDocument document);
     }
 
@@ -144,6 +145,19 @@ namespace Acrolinx.Sdk.Sidebar
         }
 
         public bool ReadOnlySuggestions
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public bool SupportCheckSelection
         {
             get
             {

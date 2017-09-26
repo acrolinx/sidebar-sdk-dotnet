@@ -1,6 +1,7 @@
 ﻿/* Copyright (c) 2016 Acrolinx GmbH */
 
 using System;
+using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 namespace Acrolinx.Sdk.Sidebar.Documents
 {
@@ -10,6 +11,7 @@ namespace Acrolinx.Sdk.Sidebar.Documents
         string Content { get;  }
         Format Format { get;  }
         string Reference { get;  }
+        IReadOnlyList<IRange> Selections { get; }
     }
     
     [ContractClassFor(typeof(IDocument))]
@@ -38,6 +40,14 @@ namespace Acrolinx.Sdk.Sidebar.Documents
             {
                 Contract.Ensures(Contract.Result<string>() != null);
                 return "";
+            }
+        }
+
+        public IReadOnlyList<IRange> Selections
+        {
+            get
+            {
+                return new List<IRange>();
             }
         }
     }

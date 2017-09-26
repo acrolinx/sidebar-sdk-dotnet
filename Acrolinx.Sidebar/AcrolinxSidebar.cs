@@ -49,6 +49,36 @@ namespace Acrolinx.Sdk.Sidebar
             private set;
         }
 
+        [Description("Turns check selection support on. In case request check has selections set to true, you have to specify the selected offsets in the check document."), Category("Sidebar")]
+        public bool SupportCheckSelection
+        {
+            get
+            {
+                return Supported.GetValue("checkSelection").Value<bool>();
+            }
+            set
+            {
+                Supported["checkSelection"] = value;
+            }
+        }
+
+        public JObject Supported
+        {
+            get
+            {
+                if(InitParameters["supported"] == null)
+                {
+                    InitParameters.Add("supported", new JObject());
+                }
+                return InitParameters["supported"] as JObject;
+            }
+            set
+            {
+                InitParameters.Remove("supported");
+                InitParameters.Add("supported", value);
+            }
+        }
+
         public JObject InitParameters
         {
             get;
@@ -349,11 +379,21 @@ namespace Acrolinx.Sdk.Sidebar
             var code = "new function(){var c = window.external.getContent(); "
                 + "console.log('Content: ' + c); "
                 + "return acrolinxSidebar.checkGlobal(c, {inputFormat:'" + document.Format.ToString().ToUpper() + "', requestDescription:{documentReference: '"
-                + document.Reference.Replace("\\", "\\\\").Replace("'", "\\'").Replace("\n", "").Replace("\r", "") + "'}})}();";
+                + document.Reference.Replace("\\", "\\\\").Replace("'", "\\'").Replace("\n", "").Replace("\r", "") + "'}, selection:{ranges:" + SerializeSelection(document.Selections) + "}})}();";
 
             dynamic check = Eval(code);
             string checkId = check.checkId;
             return checkId;
+        }
+
+        private string SerializeSelection(IReadOnlyList<IRange> selections)
+        {
+            if (selections == null)
+            {
+                return "[]";
+            }
+
+            return "[" + String.Join(",", selections.Select(s => "[" + s.Start + ", " + s.End + "]")) + "]";
         }
 
         internal dynamic Eval(string code)

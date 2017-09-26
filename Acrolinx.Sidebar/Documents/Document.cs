@@ -9,16 +9,22 @@ using System.Xml.Linq;
 
 namespace Acrolinx.Sdk.Sidebar.Documents
 {
-    public class Document : Acrolinx.Sdk.Sidebar.Documents.IDocument
+    public class Document : IDocument
     {
         public Document() : this("",Format.Text, "")
         {
         }
-        public Document(string content, Format format, string reference)
+
+        public Document(string content, Format format, string reference) : this(content,format, reference, new List<IRange>())
+        {
+
+        }
+        public Document(string content, Format format, string reference, IReadOnlyList<IRange> selections)
         {
             Content = content;
             Format = format;
             Reference = reference;
+            Selections = selections;
         }
 
         public string Content
@@ -34,6 +40,12 @@ namespace Acrolinx.Sdk.Sidebar.Documents
         }
 
         public string Reference
+        {
+            get;
+            set;
+        }
+
+        public IReadOnlyList<IRange> Selections
         {
             get;
             set;
