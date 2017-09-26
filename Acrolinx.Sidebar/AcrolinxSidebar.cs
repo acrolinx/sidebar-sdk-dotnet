@@ -54,7 +54,12 @@ namespace Acrolinx.Sdk.Sidebar
         {
             get
             {
-                return Supported.GetValue("checkSelection").Value<bool>();
+                var checkSelection = Supported["checkSelection"];
+                if (checkSelection == null)
+                {
+                    return false;
+                }
+                return checkSelection.Value<bool>();
             }
             set
             {
@@ -66,10 +71,6 @@ namespace Acrolinx.Sdk.Sidebar
         {
             get
             {
-                if(InitParameters["supported"] == null)
-                {
-                    InitParameters.Add("supported", new JObject());
-                }
                 return InitParameters["supported"] as JObject;
             }
             set
@@ -102,6 +103,7 @@ namespace Acrolinx.Sdk.Sidebar
             InitParameters.Add("logFileLocation", Logger.Directory);
             InitParameters.Add("clientComponents", new JArray());
             InitParameters.Add("minimumSidebarVersion", "14.5.0");
+            InitParameters.Add("supported", new JObject());
 
             InitializeComponent();
 
