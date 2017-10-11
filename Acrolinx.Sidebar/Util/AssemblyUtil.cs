@@ -98,6 +98,8 @@ namespace Acrolinx.Sdk.Sidebar.Util
             var osVersion = Environment.OSVersion.ToString() + architecture;
             osInfo.Add("version", osVersion);
 
+            osInfo.Add("osId", osName.Trim().Replace(" ", ".").ToLower());
+
             return osInfo;
         }
 
@@ -109,6 +111,7 @@ namespace Acrolinx.Sdk.Sidebar.Util
             appInfo.Add("applicationName", fvi.FileDescription.Split(' ').Last());
             appInfo.Add("productName", fvi.FileDescription);
             appInfo.Add("version", fvi.FileVersion + " " + architecture);
+            appInfo.Add("appId", fvi.FileDescription.Trim().Replace(" ", ".").ToLower());
 
             return appInfo;
         }

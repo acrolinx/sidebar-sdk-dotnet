@@ -114,10 +114,14 @@ namespace Acrolinx.Sdk.Sidebar
         {
             GuessMainComponentAndHostApplication(callingAssembly);
 
+            var osInfo = Util.AssemblyUtil.OSInfo();
+            var appInfo = Util.AssemblyUtil.AppInfo();
+
             RegisterClientComponent(typeof(AcrolinxSidebar).Assembly, "Acrolinx Sidebar .NET SDK", SoftwareComponentCategory.DEFAULT);
-            RegisterClientComponent("osInfo", Util.AssemblyUtil.OSInfo()["osName"], Util.AssemblyUtil.OSInfo()["version"], AcrolinxSidebar.SoftwareComponentCategory.DEFAULT);
-            RegisterClientComponent("editor", Util.AssemblyUtil.AppInfo()["productName"], Util.AssemblyUtil.AppInfo()["version"], AcrolinxSidebar.SoftwareComponentCategory.DEFAULT);
+            RegisterClientComponent(osInfo["osId"], osInfo["osName"], osInfo["version"], AcrolinxSidebar.SoftwareComponentCategory.DEFAULT);
+            RegisterClientComponent(appInfo["appId"], appInfo["productName"], appInfo["version"], AcrolinxSidebar.SoftwareComponentCategory.DEFAULT);
             RegisterClientComponent(typeof(WebBrowser).Assembly.GetName().Name + ".browser", "WebBrowser Control Browser", webBrowser.Version.Major + "." + webBrowser.Version.MajorRevision + "." + webBrowser.Version.Minor + "." + webBrowser.Version.MinorRevision, AcrolinxSidebar.SoftwareComponentCategory.DETAIL);
+
             LogSidebarComponents();
         }
         private void LogSidebarComponents()
@@ -367,7 +371,7 @@ namespace Acrolinx.Sdk.Sidebar
             var clientComponents = InitParameters["clientComponents"].Value<JArray>();
 
             var component = new JObject();
-            component.Add("id", "dotnet." + id.ToLower());
+            component.Add("id", id.ToLower());
             component.Add("name", name);
             component.Add("version", version);
             component.Add("category", category.ToString().ToUpper());
