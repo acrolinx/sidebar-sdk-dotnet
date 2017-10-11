@@ -128,13 +128,11 @@ namespace Acrolinx.Sdk.Sidebar
             componentDetails.Add("log4net", typeof(log4net.Core.ILogger).Assembly);
             componentDetails.Add("WebBrowser Control", typeof(WebBrowser).Assembly);
 
-            var logDetails = new StringBuilder();
-            logDetails.Append("Sidebar Components:" + Environment.NewLine + "Name\tVersion");
+            Logger.AcroLog.Info("Sidebar Components:");
             foreach (var entry in componentDetails)
             {
-                logDetails.Append(Environment.NewLine + entry.Key + "\t" + entry.Value.GetName().Version);
+                Logger.AcroLog.Info(entry.Key + "\t" + entry.Value.GetName().Version);
             }
-            Logger.AcroLog.Info(logDetails.ToString());
         }
 
         public void Start()
