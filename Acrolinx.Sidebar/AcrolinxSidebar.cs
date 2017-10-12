@@ -112,33 +112,20 @@ namespace Acrolinx.Sdk.Sidebar
 
         private void RegisterComponents(Assembly callingAssembly)
         {
+            Logger.AcroLog.Info("Registering Sidebar Components");
             GuessMainComponentAndHostApplication(callingAssembly);
 
+            RegisterClientComponent(typeof(AcrolinxSidebar).Assembly, "Acrolinx Sidebar .NET SDK", SoftwareComponentCategory.DEFAULT);
+            RegisterClientComponent(typeof(String).Assembly, ".NET Framework", AcrolinxSidebar.SoftwareComponentCategory.DETAIL);
+            RegisterClientComponent(typeof(JObject).Assembly, "Json.NET", AcrolinxSidebar.SoftwareComponentCategory.DETAIL);
+            RegisterClientComponent(typeof(log4net.Core.ILogger).Assembly, "log4net", AcrolinxSidebar.SoftwareComponentCategory.DETAIL);
+            RegisterClientComponent(typeof(WebBrowser).Assembly, "WebBrowser Control", AcrolinxSidebar.SoftwareComponentCategory.DETAIL);
+            RegisterClientComponent(typeof(WebBrowser).Assembly.GetName().Name + ".browser", "WebBrowser Control Browser", webBrowser.Version.Major + "." + webBrowser.Version.MajorRevision + "." + webBrowser.Version.Minor + "." + webBrowser.Version.MinorRevision, AcrolinxSidebar.SoftwareComponentCategory.DETAIL);
             var osInfo = Util.AssemblyUtil.OSInfo();
             var appInfo = Util.AssemblyUtil.AppInfo();
-
-            RegisterClientComponent(typeof(AcrolinxSidebar).Assembly, "Acrolinx Sidebar .NET SDK", SoftwareComponentCategory.DEFAULT);
             RegisterClientComponent(osInfo["osId"], osInfo["osName"], osInfo["version"], AcrolinxSidebar.SoftwareComponentCategory.DEFAULT);
             RegisterClientComponent(appInfo["appId"], appInfo["productName"], appInfo["version"], AcrolinxSidebar.SoftwareComponentCategory.DEFAULT);
-            RegisterClientComponent(typeof(WebBrowser).Assembly.GetName().Name + ".browser", "WebBrowser Control Browser", webBrowser.Version.Major + "." + webBrowser.Version.MajorRevision + "." + webBrowser.Version.Minor + "." + webBrowser.Version.MinorRevision, AcrolinxSidebar.SoftwareComponentCategory.DETAIL);
-
-            LogSidebarComponents();
         }
-        private void LogSidebarComponents()
-        {
-            Dictionary<string, Assembly> componentDetails = new Dictionary<string, Assembly>();
-            componentDetails.Add(".NET Framework", typeof(String).Assembly);
-            componentDetails.Add("Json.NET", typeof(JObject).Assembly);
-            componentDetails.Add("log4net", typeof(log4net.Core.ILogger).Assembly);
-            componentDetails.Add("WebBrowser Control", typeof(WebBrowser).Assembly);
-
-            Logger.AcroLog.Info("Sidebar Components:");
-            foreach (var entry in componentDetails)
-            {
-                Logger.AcroLog.Info(entry.Key + "\t" + entry.Value.GetName().Version);
-            }
-        }
-
         public void Start()
         {
             RegisterComponents(Assembly.GetCallingAssembly());
@@ -403,7 +390,11 @@ namespace Acrolinx.Sdk.Sidebar
             component.Add("name", name);
             component.Add("version", version);
             component.Add("category", category.ToString().ToUpper());
-            clientComponents.Add(component);
+            if (category != SoftwareComponentCategory.DETAIL)
+            {
+                clientComponents.Add(component);
+            }
+            Logger.AcroLog.Info(name + "\t" + version);
         }
 
         public String Check(IDocument document)
