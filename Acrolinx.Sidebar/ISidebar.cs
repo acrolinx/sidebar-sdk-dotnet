@@ -52,6 +52,7 @@ namespace Acrolinx.Sdk.Sidebar
             set;
         }
         bool SupportCheckSelection { get; set; }
+        string StartPageSourceLocation { get; set; }
 
         string Check(IDocument document);
     }
@@ -133,6 +134,18 @@ namespace Acrolinx.Sdk.Sidebar
         }
 
         public bool FixFocusWorkaround
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public string StartPageSourceLocation
         {
             get
             {

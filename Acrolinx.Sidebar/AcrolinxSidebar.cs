@@ -181,7 +181,19 @@ namespace Acrolinx.Sdk.Sidebar
 
         private string GetStartPageURL()
         {
-            var assemblyLocation = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + @"\Acrolinx.Startpage.dll";
+            var assemblyLocation = "";
+            if (string.IsNullOrEmpty(StartPageSourceLocation))
+            {
+                assemblyLocation = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + @"\Acrolinx.Startpage.dll";
+            }
+            else
+            {
+                if (!Path.IsPathRooted(StartPageSourceLocation))
+                {
+                    StartPageSourceLocation = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), StartPageSourceLocation);
+                }
+                assemblyLocation = ((Path.GetFileName(StartPageSourceLocation) != "Acrolinx.Startpage.dll")) ? StartPageSourceLocation + @"\Acrolinx.Startpage.dll" : StartPageSourceLocation;
+            }
 
             if (File.Exists(assemblyLocation))
             {
@@ -230,6 +242,7 @@ namespace Acrolinx.Sdk.Sidebar
         }
 
         private AcrolinxPlugin acrolinxPlugin = null;
+        private string startPageLocation = "";
 
         [Description("The integration specific clientSignature. To get one, ask your Acrolinx contact."), Category("Sidebar")]
         [DefaultValue("")]
@@ -325,6 +338,21 @@ namespace Acrolinx.Sdk.Sidebar
             set
             {
                 InitParameters["readOnlySuggestions"] = value;
+            }
+        }
+
+        [Description("Sets startpage location."), Category("Startpage")]
+        [DefaultValue("")]
+        public string StartPageSourceLocation
+        {
+            get
+            {
+                return startPageLocation;
+            }
+
+            set
+            {
+                startPageLocation = value;
             }
         }
 
