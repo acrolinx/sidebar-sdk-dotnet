@@ -471,7 +471,7 @@ namespace Acrolinx.Sdk.Sidebar
 
         private void webBrowser_DocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)
         {
-            Logger.AcroLog.Info("Sidebar navigated to: " + String.Format("{0}{1}{2}{3}", e.Url.Scheme, Uri.SchemeDelimiter, e.Url.Authority, e.Url.AbsolutePath));
+            Logger.AcroLog.Debug("Sidebar navigated to: " + String.Format("{0}{1}{2}{3}", e.Url.Scheme, Uri.SchemeDelimiter, e.Url.Authority, e.Url.AbsolutePath));
 
             bool sidebarRevisionFound = false;
             foreach (HtmlElement element in webBrowser.Document.GetElementsByTagName("meta"))
