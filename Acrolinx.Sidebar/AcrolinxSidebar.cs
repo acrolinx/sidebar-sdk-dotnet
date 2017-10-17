@@ -146,10 +146,13 @@ namespace Acrolinx.Sdk.Sidebar
 
             SetDefaults(serverAddress);
 
-
             AutoScaleDimensions = new SizeF(96F, 96F);
 
-            webBrowser.Navigate(GetStartPageURL());
+            var startpageUrl = GetStartPageURL();
+            if (!string.IsNullOrEmpty(startpageUrl))
+            {
+                webBrowser.Navigate(startpageUrl);
+            }
         }
 
         private void SetDefaults(string serverAddress)
@@ -171,6 +174,7 @@ namespace Acrolinx.Sdk.Sidebar
             var assemblyLocation = "";
             if (string.IsNullOrEmpty(StartPageSourceLocation))
             {
+                Logger.AcroLog.Debug("Default start page source location is used");
                 assemblyLocation = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + @"\Acrolinx.Startpage.dll";
             }
             else
@@ -186,7 +190,9 @@ namespace Acrolinx.Sdk.Sidebar
             {
                 return @"res://" + assemblyLocation + "//index.html";
             }
+
             Logger.AcroLog.Error("Failed to locate " + assemblyLocation);
+            SetUiError();
             return null;
         }
 
@@ -611,6 +617,12 @@ namespace Acrolinx.Sdk.Sidebar
             {
                 this.ShowServerSelector = true;
             }
+        }
+
+        private void SetUiError()
+        {
+            labelImage.Text = "\n\n\nOops, something went wrong with loading the Sidebar. Check the log file for any errors.";
+            labelImage.TextAlign = ContentAlignment.TopLeft;
         }
     }
 }
