@@ -245,7 +245,7 @@ namespace Acrolinx.Sdk.Sidebar
         {
             try
             {
-                Process proc = Process.Start("notepad.exe", Logger.Directory);
+                Process proc = Process.Start("explorer.exe", "/select," + Logger.Directory);
             }
             catch (Exception exce)
             {
