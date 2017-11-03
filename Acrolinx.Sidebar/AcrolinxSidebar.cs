@@ -514,9 +514,9 @@ namespace Acrolinx.Sdk.Sidebar
                 webBrowser.Document.Body.MouseLeave += MouseLeftSidebar;
                 webBrowser.Document.Body.MouseUp += MouseUpInSidebar;
 
-                if(webBrowser.Document.Window.Frames.Count > 0)
+                foreach (HtmlWindow frame in webBrowser.Document.Window.Frames)
                 {
-                    webBrowser.Document.Window.Frames[0].Document.LosingFocus += LosingFocusInSidebar;
+                    frame.Document.LosingFocus += LosingFocusInSidebar;
                 }
             }
 
@@ -538,10 +538,8 @@ namespace Acrolinx.Sdk.Sidebar
 
         private void LosingFocusInSidebar(object sender, EventArgs e)
         {
-            var frameCount = webBrowser.Document.Window.Frames.Count;
-            if (frameCount > 0)
+            foreach(HtmlWindow frame in webBrowser.Document.Window.Frames)
             {
-                var frame = webBrowser.Document.Window.Frames[0];
                 frame.Document.Body.MouseUp += MouseUpInSidebar;
                 frame.Document.LosingFocus -= LosingFocusInSidebar;
             }
