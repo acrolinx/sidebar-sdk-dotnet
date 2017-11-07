@@ -512,7 +512,6 @@ namespace Acrolinx.Sdk.Sidebar
             {
                 webBrowser.Document.Body.MouseEnter += MouseEnteredSidebar;
                 webBrowser.Document.Body.MouseLeave += MouseLeftSidebar;
-                webBrowser.Document.Body.MouseUp += MouseUpInSidebar;
 
                 foreach (HtmlWindow frame in webBrowser.Document.Window.Frames)
                 {
@@ -596,10 +595,14 @@ namespace Acrolinx.Sdk.Sidebar
 
         private void OnFixFocusTimerTick(object sender, EventArgs e)
         {
-            if (webBrowser.Document?.ActiveElement != null)
+            foreach (HtmlWindow frame in webBrowser.Document.Window.Frames)
             {
-                webBrowser.Focus();
-                webBrowser.Document.ActiveElement.Focus();
+                if (frame.Document?.ActiveElement != null)
+                {
+                    webBrowser.Focus();
+                    frame.Document.ActiveElement.Focus();
+                    break;
+                }
             }
             FixFocusTimer.Enabled = false;
         }
