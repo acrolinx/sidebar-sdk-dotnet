@@ -658,7 +658,7 @@ namespace Acrolinx.Sdk.Sidebar
             }
             catch (Exception e)
             {
-                Trace.TraceWarning(e);
+                Trace.TraceWarning(e.Message);
             }
         }
     }
