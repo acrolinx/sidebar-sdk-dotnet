@@ -20,6 +20,7 @@ using Newtonsoft.Json.Linq;
 using System.Globalization;
 using Acrolinx.Sdk.Sidebar.Storage;
 using System.IO;
+using System.Diagnostics;
 
 namespace Acrolinx.Sdk.Sidebar
 {
@@ -533,11 +534,13 @@ namespace Acrolinx.Sdk.Sidebar
             }
 
             SidebarLoaded?.Invoke(this, new SidebarUrlEvenArgs(e.Url));
+
+            AdjustSidebarZoomLevelByWidth();
         }
 
         private void LosingFocusInSidebar(object sender, EventArgs e)
         {
-            foreach(HtmlWindow frame in webBrowser.Document.Window.Frames)
+            foreach (HtmlWindow frame in webBrowser.Document.Window.Frames)
             {
                 frame.Document.Body.MouseUp += MouseUpInSidebar;
                 frame.Document.LosingFocus -= LosingFocusInSidebar;
@@ -624,6 +627,39 @@ namespace Acrolinx.Sdk.Sidebar
         {
             labelImage.Text = "\n\n\nOops, something went wrong with loading the Sidebar. Check the log file for any errors.";
             labelImage.TextAlign = ContentAlignment.TopLeft;
+        }
+
+        private void AcrolinxSidebar_Resize(object sender, EventArgs e)
+        {
+            AdjustSidebarZoomLevelByWidth();
+        }
+
+        private void AdjustSidebarZoomLevelByWidth()
+        {
+            try
+            {
+                if(webBrowser.ReadyState != WebBrowserReadyState.Complete)
+                {
+                    return;
+                }
+
+                object ax = webBrowser.ActiveXInstance;
+                if(ax == null)
+                {
+                    return;
+                }
+
+                dynamic activeX = ax;
+                const int OLECMDID_OPTICAL_ZOOM = 63;
+                const int OLECMDEXECOPT_DONTPROMPTUSER = 2;
+                int zoomFactor = this.Width * 100 / 300;
+
+                activeX.ExecWB(OLECMDID_OPTICAL_ZOOM, OLECMDEXECOPT_DONTPROMPTUSER, zoomFactor, IntPtr.Zero);
+            }
+            catch (Exception e)
+            {
+                Trace.TraceWarning(e);
+            }
         }
     }
 }
