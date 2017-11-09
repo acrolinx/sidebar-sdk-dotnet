@@ -374,13 +374,11 @@ namespace Acrolinx.Sdk.Sidebar
         {
             Contract.Requires(assembly != null);
             Contract.Requires(humanReadableName != null);
-            if (assembly == null)
+            if (assembly != null)
             {
-                return;
+                var name = assembly.GetName();
+                RegisterClientComponent(name.Name, humanReadableName, name.Version.ToString(), category);
             }
-
-            var name = assembly.GetName();
-            RegisterClientComponent(name.Name, humanReadableName, name.Version.ToString(), category);
         }
 
         private bool mainComponentSet = false;
@@ -652,13 +650,13 @@ namespace Acrolinx.Sdk.Sidebar
                 dynamic activeX = ax;
                 const int OLECMDID_OPTICAL_ZOOM = 63;
                 const int OLECMDEXECOPT_DONTPROMPTUSER = 2;
-                int zoomFactor = this.Width * 100 / 300;
+                int zoomFactor =(int)( this.Width * 100 * Util.GraphicUtil.GetScaling() / 300);
 
                 activeX.ExecWB(OLECMDID_OPTICAL_ZOOM, OLECMDEXECOPT_DONTPROMPTUSER, zoomFactor, IntPtr.Zero);
             }
             catch (Exception e)
             {
-                Trace.TraceWarning(e.Message);
+                Logger.AcroLog.Warn(e.Message);
             }
         }
     }

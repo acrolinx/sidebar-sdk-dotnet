@@ -192,6 +192,7 @@
     <Compile Include="AcrolinxSidebar.Designer.cs">
       <DependentUpon>AcrolinxSidebar.cs</DependentUpon>
     </Compile>
+    <Compile Include="Util\GraphicUtil.cs" />
     <Compile Include="Util\Logging\Logger.cs" />
     <EmbeddedResource Include="Properties\Config.resx">
       <Generator>ResXFileCodeGenerator</Generator>
