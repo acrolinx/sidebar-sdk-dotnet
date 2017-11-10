@@ -152,6 +152,7 @@ namespace Acrolinx.Sdk.Sidebar
 
         public void requestGlobalCheck(params dynamic[] o)
         {
+            Contract.Requires(o != null);
             Logger.AcroLog.Info("requestGlobalCheck");
 
             ICheckOptions options = ConvertOptions(o);
