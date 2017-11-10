@@ -113,7 +113,7 @@ namespace Acrolinx.Sdk.Sidebar
 
             string url = ow.url.Value;
 
-            if(!(url.ToLower().StartsWith("http") || url.ToLower().StartsWith("mailto:") || url.ToLower().StartsWith("www")))
+            if(!(url.ToLower().StartsWith("http://") || url.ToLower().StartsWith("https://") || url.ToLower().StartsWith("mailto:") || url.ToLower().StartsWith("www.")))
             {
                 Logger.AcroLog.Warn("Ignoring URL: '" + url + "'. It seems not to be a valid URL.");
                 return false;
