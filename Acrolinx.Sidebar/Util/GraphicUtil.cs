@@ -8,16 +8,20 @@ namespace Acrolinx.Sdk.Sidebar.Util
 {
     public class GraphicUtil
     {
+        private static float cachedFactor = 0F;
         public static float GetScaling()
         {
             float dpiX = 96F;
-            using (var lbl = new System.Windows.Forms.Label())
-            using (var g = lbl.CreateGraphics())
+            if (cachedFactor == 0F)
             {
-                dpiX = g.DpiX / dpiX;
+                using (var lbl = new System.Windows.Forms.Label())
+                using (var g = lbl.CreateGraphics())
+                {
+                    dpiX = g.DpiX / dpiX;
+                }
+                cachedFactor = dpiX;
             }
-
-            return dpiX;
+            return cachedFactor;
         }
     }
 }
