@@ -50,7 +50,7 @@ namespace Acrolinx.Sdk.Sidebar
         {
             Contract.Requires(o != null);
 
-            Logger.AcroLog.Debug("JavaScript Log: " + string.Join(", ", o));
+            Logger.AcroLog.Info("JavaScript Log: " + string.Join(", ", o));
         }
         
      

@@ -197,28 +197,6 @@ namespace Acrolinx.Sdk.Sidebar
             return null;
         }
 
-        private string getServerAddress(string serverAddress)
-        {
-            serverAddress = serverAddress.ToLower().Trim();
-            serverAddress = serverAddress.Replace("http://", "");
-            if (!serverAddress.Contains(":"))
-            {
-                serverAddress += ":8031";
-            }
-            if (!serverAddress.StartsWith("http"))
-            {
-                if (serverAddress.Contains(":443"))
-                {
-                    serverAddress = "https://" + serverAddress;
-                }
-                else
-                {
-                    serverAddress = "http://" + serverAddress;
-                }
-            }
-            return serverAddress;
-        }
-
         private void GuessMainComponentAndHostApplication(Assembly callingAssembly)
         {
             if (mainComponentSet)
@@ -408,7 +386,6 @@ namespace Acrolinx.Sdk.Sidebar
             Logger.AcroLog.Debug("Content: " + document.Content);
 
             var code = "new function(){var c = window.external.getContent(); "
-                + "console.log('Content: ' + c); "
                 + "return acrolinxSidebar.checkGlobal(c, {inputFormat:'" + document.Format.ToString().ToUpper() + "', requestDescription:{documentReference: '"
                 + document.Reference.Replace("\\", "\\\\").Replace("'", "\\'").Replace("\n", "").Replace("\r", "") + "'}, selection:{ranges:" + SerializeSelection(document.Selections) + "}})}();";
 
