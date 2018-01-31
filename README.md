@@ -27,6 +27,15 @@ Visual Studio downloads the required dependencies and compiles the Acrolinx .NET
 
 Refer to [sidebar demo] (https://github.com/acrolinx/acrolinx-sidebar-demo-dotnet/blob/master/README.md)
 
+## SDK Features
+
+1. **Document Model** - Provides [lookup](https://github.com/acrolinx/acrolinx-coding-guidance/blob/master/topics/lookup/change-tracking.md "Lookup") functionality.
+2. **Start-page** - Provides interactive way to login to Acrolinx with in-built error handling.
+3. **Logger** - Provides [logging](https://github.com/acrolinx/sidebar-sdk-dotnet/blob/master/Acrolinx.Sidebar/Util/Logging/Logger.cs "logging") using Log4net.
+4. **Acrolinx Storage**: Applications using IE web browser control may be denied to access local storage.
+	1. SDK uses its own [storage](https://github.com/acrolinx/sidebar-sdk-dotnet/blob/master/Acrolinx.Sidebar/Storage/RegistryAcrolinxStorage.cs "storage") mechanism using windows registry.
+	2. **Registry path**: HKCU\Software\Acrolinx\Plugins\Storage\[KEY] **Fallback path**: HKLM\Software\Acrolinx\Plugins\Storage\[KEY]
+
 ## Server Dependency
 
 To use the Acrolinx Sidebar, you need to connect to an Acrolinx server. If you've already received your Acrolinx server address, you’re good to go. If your company has installed an Acrolinx server, but you don't have an address yet, ask your server administrator first.
