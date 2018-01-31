@@ -29,11 +29,11 @@ Refer to [sidebar demo] (https://github.com/acrolinx/acrolinx-sidebar-demo-dotne
 
 ## SDK Features
 
-1. **Document Model** - Provides [lookup](https://github.com/acrolinx/acrolinx-coding-guidance/blob/master/topics/text-lookup.md "Lookup") functionality.
+1. **Document Model** - Provides [lookup](https://github.com/acrolinx/acrolinx-coding-guidance/blob/master/topics/lookup/change-tracking.md "Lookup") functionality.
 2. **Start-page** - Provides interactive way to login to Acrolinx with in-built error handling.
-3. **Logger** - Provides logging using Log4net.
+3. **Logger** - Provides [logging](https://github.com/acrolinx/sidebar-sdk-dotnet/blob/master/Acrolinx.Sidebar/Util/Logging/Logger.cs "logging") using Log4net.
 4. **Acrolinx Storage**: Applications using IE web browser control may be denied to access local storage.
-	1. SDK uses its own storage mechanism using windows registry.
+	1. SDK uses its own [storage](https://github.com/acrolinx/sidebar-sdk-dotnet/blob/master/Acrolinx.Sidebar/Storage/RegistryAcrolinxStorage.cs "storage") mechanism using windows registry.
 	2. **Registry path**: HKCU\Software\Acrolinx\Plugins\Storage\[KEY] **Fallback path**: HKLM\Software\Acrolinx\Plugins\Storage\[KEY]
 
 ## Server Dependency
