@@ -438,11 +438,11 @@ namespace Acrolinx.Sdk.Sidebar
             ReplaceRanges?.Invoke(this, new MatchesWithReplacementEventArgs(checkId, matches));
         }
 
-        internal void FireChecked(string checkId, Range range)
+        internal void FireChecked(string checkId, Range range, JArray embedCheckInformation, string inputFormat)
         {
             Contract.Requires(checkId != null);
             Contract.Requires(range != null);
-            Checked?.Invoke(this, new CheckedEventArgs(checkId, range));
+            Checked?.Invoke(this, new CheckedEventArgs(checkId, range, embedCheckInformation, inputFormat));
         }
 
         private void webBrowser_Navigated(object sender, WebBrowserNavigatedEventArgs e)
