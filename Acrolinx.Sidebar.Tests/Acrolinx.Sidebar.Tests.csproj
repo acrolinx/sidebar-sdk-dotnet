@@ -112,8 +112,10 @@
   </Choose>
   <ItemGroup>
     <Compile Include="AcrolinxSidebarTest.cs" />
+    <Compile Include="CheckedEventArgsTest.cs" />
     <Compile Include="DocumentModelTest.cs" />
     <Compile Include="AcrolinxStorageTest.cs" />
+    <Compile Include="DocumentTest.cs" />
     <Compile Include="MultiAdapterTest.cs" />
     <Compile Include="LookupTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

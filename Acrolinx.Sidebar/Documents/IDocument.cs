@@ -12,6 +12,7 @@ namespace Acrolinx.Sdk.Sidebar.Documents
         Format Format { get;  }
         string Reference { get;  }
         IReadOnlyList<IRange> Selections { get; }
+        Format StringToFormat(String inputFormat);
     }
     
     [ContractClassFor(typeof(IDocument))]
@@ -49,6 +50,11 @@ namespace Acrolinx.Sdk.Sidebar.Documents
             {
                 return new List<IRange>();
             }
+        }
+
+        public Format StringToFormat(string format)
+        {
+            return Format.Auto;
         }
     }
 }
