@@ -112,7 +112,6 @@
   </Choose>
   <ItemGroup>
     <Compile Include="AcrolinxSidebarTest.cs" />
-    <Compile Include="CheckedEventArgsTest.cs" />
     <Compile Include="DocumentModelTest.cs" />
     <Compile Include="AcrolinxStorageTest.cs" />
     <Compile Include="DocumentTest.cs" />

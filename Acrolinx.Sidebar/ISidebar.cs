@@ -4,6 +4,7 @@ using Acrolinx.Sdk.Sidebar.Documents;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
+using System.Linq;
 using System.Xml;
 
 namespace Acrolinx.Sdk.Sidebar
@@ -186,7 +187,7 @@ namespace Acrolinx.Sdk.Sidebar
 
     public class CheckedEventArgs : CheckEventArgs
     {
-        public CheckedEventArgs(string checkId, Range range, Dictionary<string,string> embedCheckInformation, Format inputFormat) : base(checkId)
+        internal CheckedEventArgs(string checkId, Range range, Dictionary<string,string> embedCheckInformation, Format inputFormat) : base(checkId)
         {
             Range = range;
             EmbedCheckInformation = embedCheckInformation;
@@ -199,14 +200,16 @@ namespace Acrolinx.Sdk.Sidebar
 
         public Format InputFormat { get; private set; }
 
+        private string EmbedCheckToString(Dictionary<string, string> source, string keyValueSeparator, string sequenceSeparator)
+        {
+            var pairs = source.Select(x => string.Format("{0}{1}{2}", x.Key, keyValueSeparator, x.Value));
+            return string.Join(sequenceSeparator, pairs);
+        }
+
         public string GetEmbedCheckDataAsEmbeddableString()
         {
             XmlDocument doc = new XmlDocument();
-            string keyValueString = "";
-            foreach (var pair in EmbedCheckInformation)
-            {
-                keyValueString = keyValueString + pair.Key + "=\"" + pair.Value + "\" ";
-            }
+            var keyValueString = EmbedCheckToString(EmbedCheckInformation, "=", " ");
 
             if (InputFormat == Format.XML)
             {
@@ -231,7 +234,11 @@ namespace Acrolinx.Sdk.Sidebar
                 XmlComment markDown = doc.CreateComment(markDownStr);
                 return markDown.OuterXml;
             }
-            return null;
+
+            var jsonPairs = EmbedCheckInformation.Select(x => string.Format("{0}{1}{2}{3}{4}", "{\"key\":\"", x.Key, "\",\"value\":\"", x.Value, "\"}"));
+            var jsonString = "{\"embedCheckInformation\":[" + string.Join(",", jsonPairs) + "]}";
+
+            return jsonString;
         }
     }
     public class CheckRequestedEventArgs : EventArgs

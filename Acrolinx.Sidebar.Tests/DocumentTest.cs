@@ -1,4 +1,4 @@
-﻿/* Copyright (c) 2016 Acrolinx GmbH */
+﻿/* Copyright (c) 2018 Acrolinx GmbH */
 
 using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -14,6 +14,15 @@ namespace Acrolinx.Sdk.Sidebar.Tests
         {
             var document = new Document();
             Format actualFormat = document.StringToFormat("HTML");
+            Format expectedFormat = Format.HTML;
+
+            Assert.AreEqual(expectedFormat, actualFormat);
+        }
+        [TestMethod]
+        public void StringToFormatInvalidFormat()
+        {
+            var document = new Document("", Format.HTML, "");
+            Format actualFormat = document.StringToFormat("DITA");
             Format expectedFormat = Format.HTML;
 
             Assert.AreEqual(expectedFormat, actualFormat);
