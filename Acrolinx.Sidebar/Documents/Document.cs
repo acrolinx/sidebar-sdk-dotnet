@@ -55,5 +55,20 @@ namespace Acrolinx.Sdk.Sidebar.Documents
         {
             return Format.ToString() + ": " + Content;
         }
+
+        public Format StringToFormat(String inputFormat)
+        {
+            if ("XML".Equals(inputFormat, StringComparison.OrdinalIgnoreCase))
+                return Format.XML;
+            if ("HTML".Equals(inputFormat, StringComparison.OrdinalIgnoreCase))
+                return Format.HTML;
+            if ("MARKDOWN".Equals(inputFormat, StringComparison.OrdinalIgnoreCase))
+                return Format.Markdown;
+            if ("TEXT".Equals(inputFormat, StringComparison.OrdinalIgnoreCase))
+                return Format.Text;
+            if ("WORD_XML".Equals(inputFormat, StringComparison.OrdinalIgnoreCase))
+                return Format.Word_XML;
+            return Format;
+        }
     }
 }

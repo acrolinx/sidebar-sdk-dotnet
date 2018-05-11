@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.Linq;
-using System.Text;
+using System.Xml;
 
 namespace Acrolinx.Sdk.Sidebar
 {
@@ -187,12 +187,59 @@ namespace Acrolinx.Sdk.Sidebar
 
     public class CheckedEventArgs : CheckEventArgs
     {
-        internal CheckedEventArgs(string checkId, Range range) : base(checkId)
+        internal CheckedEventArgs(string checkId, Range range, Dictionary<string,string> embedCheckInformation, Format inputFormat) : base(checkId)
         {
             Range = range;
+            EmbedCheckInformation = embedCheckInformation;
+            InputFormat = inputFormat;
         }
 
         public Range Range { get; private set; }
+
+        public Dictionary<string,string> EmbedCheckInformation { get; private set; }
+
+        public Format InputFormat { get; private set; }
+
+        private string EmbedCheckToString(Dictionary<string, string> source, string keyValueSeparator, string sequenceSeparator)
+        {
+            var pairs = source.Select(x => string.Format("{0}{1}{2}", x.Key, keyValueSeparator, x.Value));
+            return string.Join(sequenceSeparator, pairs);
+        }
+
+        public string GetEmbedCheckDataAsEmbeddableString()
+        {
+            XmlDocument doc = new XmlDocument();
+            var keyValueString = EmbedCheckToString(EmbedCheckInformation, "=", " ");
+
+            if (InputFormat == Format.XML)
+            {
+                XmlProcessingInstruction procInstruction = doc.CreateProcessingInstruction("acrolinxCheckData", keyValueString);
+                return procInstruction.OuterXml;
+            }
+
+            if (InputFormat == Format.HTML)
+            {
+                XmlElement metaElement = doc.CreateElement("meta");
+                metaElement.SetAttribute("name", "acrolinxCheckData");
+                foreach (var pair in EmbedCheckInformation)
+                {
+                    metaElement.SetAttribute(pair.Key, pair.Value);
+                }
+                return metaElement.OuterXml;
+            }
+
+            if (InputFormat == Format.Markdown)
+            {
+                string markDownStr = "name=\"acrolinxCheckData\" " + keyValueString;
+                XmlComment markDown = doc.CreateComment(markDownStr);
+                return markDown.OuterXml;
+            }
+
+            var jsonPairs = EmbedCheckInformation.Select(x => string.Format("{0}{1}{2}{3}{4}", "{\"key\":\"", x.Key, "\",\"value\":\"", x.Value, "\"}"));
+            var jsonString = "{\"embedCheckInformation\":[" + string.Join(",", jsonPairs) + "]}";
+
+            return jsonString;
+        }
     }
     public class CheckRequestedEventArgs : EventArgs
     {
