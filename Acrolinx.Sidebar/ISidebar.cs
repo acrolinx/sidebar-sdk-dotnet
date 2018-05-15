@@ -278,9 +278,6 @@ namespace Acrolinx.Sdk.Sidebar
 
         public string GetEmbedCheckDataAsEmbeddableString()
         {
-            if (EmbedCheckInformation == null)
-                return null;
-
             XmlDocument doc = new XmlDocument();
             var keyValueString = EmbedCheckToString(EmbedCheckInformation, "=", " ");
 
