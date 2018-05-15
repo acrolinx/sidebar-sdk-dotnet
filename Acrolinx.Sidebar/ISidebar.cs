@@ -20,6 +20,7 @@ namespace Acrolinx.Sdk.Sidebar
         event SidebarCheckRequestedEventHandler RequestCheck;
         event SidebarSelectRangesEventHandler SelectRanges;
         event SidebarReplaceRangesEventHandler ReplaceRanges;
+        event SidebarProcessEmbedCheckDataEventHandler ProcessEmbedCheckData;
 
         string ClientSignature
         {
@@ -81,6 +82,8 @@ namespace Acrolinx.Sdk.Sidebar
         public event SidebarReplaceRangesEventHandler ReplaceRanges;
 
         public event SidebarLoadedEventHandler SidebarLoaded;
+
+        public event SidebarProcessEmbedCheckDataEventHandler ProcessEmbedCheckData;
 
         public string ClientSignature
         {
@@ -187,59 +190,12 @@ namespace Acrolinx.Sdk.Sidebar
 
     public class CheckedEventArgs : CheckEventArgs
     {
-        internal CheckedEventArgs(string checkId, Range range, Dictionary<string,string> embedCheckInformation, Format inputFormat) : base(checkId)
+        internal CheckedEventArgs(string checkId, Range range) : base(checkId)
         {
             Range = range;
-            EmbedCheckInformation = embedCheckInformation;
-            InputFormat = inputFormat;
         }
 
         public Range Range { get; private set; }
-
-        public Dictionary<string,string> EmbedCheckInformation { get; private set; }
-
-        public Format InputFormat { get; private set; }
-
-        private string EmbedCheckToString(Dictionary<string, string> source, string keyValueSeparator, string sequenceSeparator)
-        {
-            var pairs = source.Select(x => string.Format("{0}{1}{2}", x.Key, keyValueSeparator, x.Value));
-            return string.Join(sequenceSeparator, pairs);
-        }
-
-        public string GetEmbedCheckDataAsEmbeddableString()
-        {
-            XmlDocument doc = new XmlDocument();
-            var keyValueString = EmbedCheckToString(EmbedCheckInformation, "=", " ");
-
-            if (InputFormat == Format.XML)
-            {
-                XmlProcessingInstruction procInstruction = doc.CreateProcessingInstruction("acrolinxCheckData", keyValueString);
-                return procInstruction.OuterXml;
-            }
-
-            if (InputFormat == Format.HTML)
-            {
-                XmlElement metaElement = doc.CreateElement("meta");
-                metaElement.SetAttribute("name", "acrolinxCheckData");
-                foreach (var pair in EmbedCheckInformation)
-                {
-                    metaElement.SetAttribute(pair.Key, pair.Value);
-                }
-                return metaElement.OuterXml;
-            }
-
-            if (InputFormat == Format.Markdown)
-            {
-                string markDownStr = "name=\"acrolinxCheckData\" " + keyValueString;
-                XmlComment markDown = doc.CreateComment(markDownStr);
-                return markDown.OuterXml;
-            }
-
-            var jsonPairs = EmbedCheckInformation.Select(x => string.Format("{0}{1}{2}{3}{4}", "{\"key\":\"", x.Key, "\",\"value\":\"", x.Value, "\"}"));
-            var jsonString = "{\"embedCheckInformation\":[" + string.Join(",", jsonPairs) + "]}";
-
-            return jsonString;
-        }
     }
     public class CheckRequestedEventArgs : EventArgs
     {
@@ -303,6 +259,59 @@ namespace Acrolinx.Sdk.Sidebar
         public bool ValidSidebar { get; private set; }
     }
 
+    public class ProcessEmbedCheckDataEventArgs : EventArgs
+    {
+        internal ProcessEmbedCheckDataEventArgs(IDictionary<string,string> embedCheckInformation, Format inputFormat)
+        {
+            EmbedCheckInformation = embedCheckInformation;
+            InputFormat = inputFormat;
+        }
+
+        public IDictionary<string, string> EmbedCheckInformation { get; private set; }
+        public Format InputFormat { get; private set; }
+
+        private string EmbedCheckToString(IDictionary<string, string> source, string keyValueSeparator, string sequenceSeparator)
+        {
+            var pairs = source.Select(x => string.Format("{0}{1}{2}", x.Key, keyValueSeparator, x.Value));
+            return string.Join(sequenceSeparator, pairs);
+        }
+
+        public string GetEmbedCheckDataAsEmbeddableString()
+        {
+            XmlDocument doc = new XmlDocument();
+            var keyValueString = EmbedCheckToString(EmbedCheckInformation, "=", " ");
+
+            if (InputFormat == Format.XML)
+            {
+                XmlProcessingInstruction procInstruction = doc.CreateProcessingInstruction("acrolinxCheckData", keyValueString);
+                return procInstruction.OuterXml;
+            }
+
+            if (InputFormat == Format.HTML)
+            {
+                XmlElement metaElement = doc.CreateElement("meta");
+                metaElement.SetAttribute("name", "acrolinxCheckData");
+                foreach (var pair in EmbedCheckInformation)
+                {
+                    metaElement.SetAttribute(pair.Key, pair.Value);
+                }
+                return metaElement.OuterXml;
+            }
+
+            if (InputFormat == Format.Markdown)
+            {
+                string markDownStr = "name=\"acrolinxCheckData\" " + keyValueString;
+                XmlComment markDown = doc.CreateComment(markDownStr);
+                return markDown.OuterXml;
+            }
+
+            var jsonPairs = EmbedCheckInformation.Select(x => string.Format("{0}{1}{2}{3}{4}", "{\"key\":\"", x.Key, "\",\"value\":\"", x.Value, "\"}"));
+            var jsonString = "{\"embedCheckInformation\":[" + string.Join(",", jsonPairs) + "]}";
+
+            return jsonString;
+        }
+    }
+
     public delegate void SidebarInitFinishedEventHandler(object sender, EventArgs e);
     public delegate void SidebarLoadedEventHandler(object sender, SidebarUrlEvenArgs e);
     public delegate void SidebarSourceNotReachableEventHandler(object sender, SidebarUrlEvenArgs e);
@@ -311,5 +320,6 @@ namespace Acrolinx.Sdk.Sidebar
     public delegate void SidebarCheckedEventHandler(object sender, CheckedEventArgs e);
     public delegate void SidebarSelectRangesEventHandler(object sender, MatchesEventArgs e);
     public delegate void SidebarReplaceRangesEventHandler(object sender, MatchesWithReplacementEventArgs e);
+    public delegate void SidebarProcessEmbedCheckDataEventHandler(object sender, ProcessEmbedCheckDataEventArgs e);
 
 }

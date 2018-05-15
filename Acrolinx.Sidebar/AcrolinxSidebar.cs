@@ -43,6 +43,8 @@ namespace Acrolinx.Sdk.Sidebar
         public event SidebarSelectRangesEventHandler SelectRanges;
         [Description(""), Category("Sidebar")]
         public event SidebarReplaceRangesEventHandler ReplaceRanges;
+        [Description("Called when the sidebar has embed check information"), Category("Sidebar")]
+        public event SidebarProcessEmbedCheckDataEventHandler ProcessEmbedCheckData;
 
         public IAcrolinxStorage Storage
         {
@@ -438,17 +440,24 @@ namespace Acrolinx.Sdk.Sidebar
             ReplaceRanges?.Invoke(this, new MatchesWithReplacementEventArgs(checkId, matches));
         }
 
-        internal void FireChecked(string checkId, Range range, JArray embedCheckInformation, string inputFormat)
+        internal void FireChecked(string checkId, Range range)
         {
             Contract.Requires(checkId != null);
             Contract.Requires(range != null);
-            Dictionary<string, string> embedCheckInfo = new Dictionary<string, string>();
-            foreach (JObject info in embedCheckInformation)
-            {
-                embedCheckInfo.Add(info["key"].ToString(), info["value"].ToString());
-            }
 
-            Checked?.Invoke(this, new CheckedEventArgs(checkId, range, embedCheckInfo, acrolinxPlugin.Document.StringToFormat(inputFormat)));
+            Checked?.Invoke(this, new CheckedEventArgs(checkId, range));
+        }
+
+        internal void FireProcessEmbedCheckData(JArray embedCheckInformation, string inputFormat)
+        {
+            Contract.Requires(embedCheckInformation != null);
+
+            IDictionary<string, string> embedCheckInfo = null;
+            if (embedCheckInformation != null)
+            {
+                embedCheckInfo = embedCheckInformation.ToDictionary(k => k["key"].ToString(), v => v["value"].ToString());
+            }
+            ProcessEmbedCheckData?.Invoke(this, new ProcessEmbedCheckDataEventArgs(embedCheckInfo, acrolinxPlugin.Document.StringToFormat(inputFormat)));
         }
 
         private void webBrowser_Navigated(object sender, WebBrowserNavigatedEventArgs e)
