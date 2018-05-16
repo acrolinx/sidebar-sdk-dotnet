@@ -276,18 +276,19 @@ namespace Acrolinx.Sdk.Sidebar
             return string.Join(sequenceSeparator, pairs);
         }
 
-        public string GetEmbedCheckDataAsEmbeddableString()
+        public string GetEmbedCheckDataAsEmbeddableString(Format inputFormat = Format.Auto)
         {
             XmlDocument doc = new XmlDocument();
             var keyValueString = EmbedCheckToString(EmbedCheckInformation, "=", " ");
 
-            if (InputFormat == Format.XML)
+            inputFormat = (inputFormat == Format.Auto) ? InputFormat : inputFormat;
+            if (inputFormat == Format.XML)
             {
                 XmlProcessingInstruction procInstruction = doc.CreateProcessingInstruction("acrolinxCheckData", keyValueString);
                 return procInstruction.OuterXml;
             }
 
-            if (InputFormat == Format.HTML)
+            if (inputFormat == Format.HTML)
             {
                 XmlElement metaElement = doc.CreateElement("meta");
                 metaElement.SetAttribute("name", "acrolinxCheckData");
@@ -298,7 +299,7 @@ namespace Acrolinx.Sdk.Sidebar
                 return metaElement.OuterXml;
             }
 
-            if (InputFormat == Format.Markdown)
+            if (inputFormat == Format.Markdown)
             {
                 string markDownStr = "name=\"acrolinxCheckData\" " + keyValueString;
                 XmlComment markDown = doc.CreateComment(markDownStr);
