@@ -8,7 +8,7 @@ namespace Acrolinx.Sdk.Sidebar.Storage
     {
         private static RegistryAcrolinxStorage instance;
         private const string baseKeyPath = @"Software\Acrolinx\PlugIns\";
-        private const string storeKey = @"Storage";
+        private const string storeKey = @"Storage\AcrolinxStorage";
         private const string keyPath = baseKeyPath + storeKey;
         private RegistryAcrolinxStorage() { }
         static public RegistryAcrolinxStorage Instance
