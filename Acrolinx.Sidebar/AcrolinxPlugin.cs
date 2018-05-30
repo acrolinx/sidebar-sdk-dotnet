@@ -228,8 +228,13 @@ namespace Acrolinx.Sdk.Sidebar
             Logger.AcroLog.Info("onCheckResult: " + jsonStr);
 
             dynamic json = JObject.Parse(jsonStr);
-
             sidebar.FireChecked(json.checkedPart.checkId.Value, new Range((int)json.checkedPart.range[0].Value, (int)json.checkedPart.range[1].Value));
+
+            if(json.embedCheckInformation != null)
+            {
+                sidebar.FireProcessEmbedCheckData(json.embedCheckInformation, json.inputFormat != null ? json.inputFormat.Value : "");
+            }
+
             return "{}";
         }
 

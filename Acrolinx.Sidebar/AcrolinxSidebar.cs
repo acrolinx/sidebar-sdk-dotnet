@@ -43,6 +43,8 @@ namespace Acrolinx.Sdk.Sidebar
         public event SidebarSelectRangesEventHandler SelectRanges;
         [Description(""), Category("Sidebar")]
         public event SidebarReplaceRangesEventHandler ReplaceRanges;
+        [Description("Called when the sidebar has embed check information"), Category("Sidebar")]
+        public event SidebarProcessEmbedCheckDataEventHandler ProcessEmbedCheckData;
 
         public IAcrolinxStorage Storage
         {
@@ -442,7 +444,20 @@ namespace Acrolinx.Sdk.Sidebar
         {
             Contract.Requires(checkId != null);
             Contract.Requires(range != null);
+
             Checked?.Invoke(this, new CheckedEventArgs(checkId, range));
+        }
+
+        internal void FireProcessEmbedCheckData(JArray embedCheckInformation, string inputFormat)
+        {
+            Contract.Requires(embedCheckInformation != null);
+
+            IDictionary<string, string> embedCheckInfo = null;
+            if (embedCheckInformation != null)
+            {
+                embedCheckInfo = embedCheckInformation.ToDictionary(k => k["key"].ToString(), v => v["value"].ToString());
+            }
+            ProcessEmbedCheckData?.Invoke(this, new ProcessEmbedCheckDataEventArgs(embedCheckInfo, acrolinxPlugin.Document.StringToFormat(inputFormat)));
         }
 
         private void webBrowser_Navigated(object sender, WebBrowserNavigatedEventArgs e)
