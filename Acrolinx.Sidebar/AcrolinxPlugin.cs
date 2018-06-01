@@ -15,6 +15,7 @@ using System.Security.Permissions;
 using System.Text;
 using System.Threading.Tasks;
 using System.Diagnostics;
+using Newtonsoft.Json;
 
 namespace Acrolinx.Sdk.Sidebar
 {
@@ -220,22 +221,22 @@ namespace Acrolinx.Sdk.Sidebar
             sidebar.FireReplaceRanges(checkId, matches);
         }
 
-        public string onCheckResult(params dynamic[] o)
+        public void onCheckResult(params dynamic[] o)
         {
             Contract.Requires(o != null);
             Contract.Requires(o.Length > 0);
             string jsonStr = o[0];
-            Logger.AcroLog.Info("onCheckResult: " + jsonStr);
+            Logger.AcroLog.Debug("onCheckResult: " + jsonStr);
 
-            dynamic json = JObject.Parse(jsonStr);
-            sidebar.FireChecked(json.checkedPart.checkId.Value, new Range((int)json.checkedPart.range[0].Value, (int)json.checkedPart.range[1].Value));
-
-            if(json.embedCheckInformation != null)
+            using (var jsonReader = new JsonTextReader(new StringReader(jsonStr)) { DateParseHandling = DateParseHandling.None })
             {
-                sidebar.FireProcessEmbedCheckData(json.embedCheckInformation, json.inputFormat != null ? json.inputFormat.Value : "");
+                dynamic json = JObject.Load(jsonReader);
+                sidebar.FireChecked(json.checkedPart.checkId.Value, new Range((int)json.checkedPart.range[0].Value, (int)json.checkedPart.range[1].Value));
+                if (json.embedCheckInformation != null)
+                {
+                    sidebar.FireProcessEmbedCheckData(json.embedCheckInformation, json.inputFormat != null ? json.inputFormat.Value : "");
+                }
             }
-
-            return "{}";
         }
 
 

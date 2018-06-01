@@ -12,7 +12,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Acrolinx")]
 [assembly: AssemblyProduct("Acrolinx Sidebar .NET SDK")]
-[assembly: AssemblyCopyright("Copyright 2016-2017 Acrolinx GmbH")]
+[assembly: AssemblyCopyright("Copyright Acrolinx GmbH")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -35,6 +35,6 @@ using System.Runtime.InteropServices;
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
 
-[assembly: AssemblyVersion("1.1.0.28")]
-[assembly: AssemblyFileVersion("1.1.0.28")]
+[assembly: AssemblyVersion("1.1.0.29")]
+[assembly: AssemblyFileVersion("1.1.0.29")]
 
