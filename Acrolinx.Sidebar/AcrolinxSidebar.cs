@@ -616,7 +616,7 @@ namespace Acrolinx.Sdk.Sidebar
                 this.ServerAddress = serverAddress;
                 this.ShowServerSelector = false;
             }
-            else
+            else if(string.IsNullOrWhiteSpace(this.ServerAddress))
             {
                 this.ShowServerSelector = true;
             }
