@@ -252,7 +252,7 @@ namespace Acrolinx.Sdk.Sidebar
         {
             try
             {
-                Process proc = Process.Start("start", "explorer.exe /select," + Logger.Directory);
+                Process proc = Process.Start(Path.GetDirectoryName(Logger.Directory));
             }
             catch (Exception exce)
             {
