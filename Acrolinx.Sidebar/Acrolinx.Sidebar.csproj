@@ -130,6 +130,14 @@
     <ApplicationIcon>acrolinx.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Diff.Match.Patch, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Diff.Match.Patch.2.1.0\lib\net45\Diff.Match.Patch.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="FSharp.Core, Version=4.3.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\FSharp.Core.3.1.2.5\lib\net40\FSharp.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="log4net, Version=1.2.13.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
       <HintPath>..\packages\log4net.2.0.3\lib\net40-full\log4net.dll</HintPath>
       <Private>True</Private>
@@ -176,6 +184,7 @@
     <Compile Include="Documents\IDocument.cs" />
     <Compile Include="Documents\IRange.cs" />
     <Compile Include="Documents\MatchWithReplacement.cs" />
+    <Compile Include="Util\Changetracking\DiffBasedLookup.cs" />
     <Compile Include="Util\Changetracking\RelativeRange.cs" />
     <Compile Include="Util\Changetracking\DocumentMap.cs" />
     <Compile Include="Util\Changetracking\DocumentModel.cs" />

@@ -1,14 +1,12 @@
 ﻿/* Copyright (c) 2016 Acrolinx GmbH */
 
 using Acrolinx.Sdk.Sidebar.Documents;
-using Acrolinx.Sdk.Sidebar.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace Acrolinx.Sdk.Sidebar.Util.Changetracking
 {
@@ -19,10 +17,10 @@ namespace Acrolinx.Sdk.Sidebar.Util.Changetracking
     {
         public enum LookupStrategy
         {
-            SEARCH, NONE
+            SEARCH, NONE, TEXTDIFF
         }
 
-        public Lookup(string originalText) : this(originalText,LookupStrategy.SEARCH)
+        public Lookup(string originalText) : this(originalText, LookupStrategy.SEARCH)
         {
             Contract.Requires(originalText != null);
 
@@ -53,15 +51,20 @@ namespace Acrolinx.Sdk.Sidebar.Util.Changetracking
             Contract.Requires(ranges != null);
             Contract.Requires(ranges.All(range => range != null));
 
+            if (Strategy == LookupStrategy.TEXTDIFF)
+            {
+                DiffBasedLookup dbl = new DiffBasedLookup(OriginalText);
+                return dbl.TextDiffSearch(currentText, new List<IRange>(ranges));
+            }
+
             if (Strategy == LookupStrategy.NONE || ranges.Count == 0 || currentText.Equals(OriginalText))
             {
                 return ranges;
             }
-
             var regexSearchStr = new StringBuilder();
 
             var offset = 0;
-            for(var i = 0;i < ranges.Count ; i++)
+            for (var i = 0; i < ranges.Count; i++)
             {
                 var range = ranges[i];
                 var surface = OriginalText.Substring(range.Start, range.Length);
@@ -73,8 +76,9 @@ namespace Acrolinx.Sdk.Sidebar.Util.Changetracking
                         regexSearchStr.Append(".*?");
                     }
                     regexSearchStr.Append("(?:");
-                    regexSearchStr.Append(Regex.Escape(OriginalText.Substring(range.Start-1,1)));
-                    if(offset == 0) {
+                    regexSearchStr.Append(Regex.Escape(OriginalText.Substring(range.Start - 1, 1)));
+                    if (offset == 0)
+                    {
                         regexSearchStr.Append("|\\A");
                     }
                     regexSearchStr.Append(")");
@@ -86,7 +90,7 @@ namespace Acrolinx.Sdk.Sidebar.Util.Changetracking
 
             Regex regex = new Regex(regexSearchStr.ToString(), RegexOptions.Singleline);
 
-            var searchTextRange = OriginalText.Substring(0, Math.Min(OriginalText.Length, ranges[ranges.Count -1].End+1));
+            var searchTextRange = OriginalText.Substring(0, Math.Min(OriginalText.Length, ranges[ranges.Count - 1].End + 1));
             var matchesBefore = regex.Matches(searchTextRange).Count;
 
             //Contract.Assert(matchesBefore >= 1);
@@ -96,11 +100,12 @@ namespace Acrolinx.Sdk.Sidebar.Util.Changetracking
             List<IRange> result = new List<IRange>();
             {
                 var i = 0;
-                foreach(System.Text.RegularExpressions.Match match in currentMatches){
+                foreach (System.Text.RegularExpressions.Match match in currentMatches)
+                {
                     i++;
-                    if(i == Math.Min(matchesBefore, currentMatches.Count))
+                    if (i == Math.Min(matchesBefore, currentMatches.Count))
                     {
-                        Contract.Assert(match.Groups.Count -1 == ranges.Count);
+                        Contract.Assert(match.Groups.Count - 1 == ranges.Count);
                         var r = -1;
                         foreach (Group group in match.Groups)
                         {
@@ -109,15 +114,15 @@ namespace Acrolinx.Sdk.Sidebar.Util.Changetracking
                             {
                                 continue;
                             }
-                            var range = ranges[r -1];
-                            Contract.Assert(OriginalText.Substring(range.Start,range.Length).Equals(group.Value));
+
+                            var range = ranges[r - 1];
+                            Contract.Assert(OriginalText.Substring(range.Start, range.Length).Equals(group.Value));
 
                             result.Add(new Range(group.Index, group.Index + group.Length));
                         }
                     }
                 }
             }
-
             return result;
         }
 
