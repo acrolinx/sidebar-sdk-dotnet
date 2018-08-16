@@ -1,4 +1,4 @@
-﻿/* Copyright (c) 2016 Acrolinx GmbH */
+﻿/* Copyright (c) 2018 Acrolinx GmbH */
 
 using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -15,17 +15,17 @@ namespace Acrolinx.Sdk.Sidebar.Tests
         public void SimpleSearch()
         {
             var lookup = new DiffBasedLookup("This is an test");
-            var range = new Range(0, "This".Length);
+            var range = new Range[] { new Range(0, "This".Length) };
             var result = lookup.TextDiffSearch("This is an test", range);
 
-            Assert.AreEqual(result[0], range);
+            Assert.AreEqual(result[0], range[0]);
         }
 
         [TestMethod]
         public void TextHasMoved()
         {
             var lookup = new DiffBasedLookup("This is an test");
-            var range = new Range(0, "This".Length);
+            var range = new Range[] { new Range(0, "This".Length) };
             var result = lookup.TextDiffSearch("AA This is an test", range);
 
             Assert.AreEqual(result[0], new Range("AA ".Length, "AA This".Length));
@@ -37,7 +37,8 @@ namespace Acrolinx.Sdk.Sidebar.Tests
             var lookup = new DiffBasedLookup("This is an test");
             var range1 = new Range(0, "This".Length);
             var range2 = new Range("This ".Length, "This is".Length);
-            var result = lookup.TextDiffSearch("AA This is an test", range1, range2);
+            var ranges = new Range[] { range1, range2 };
+            var result = lookup.TextDiffSearch("AA This is an test", ranges);
 
             Assert.AreEqual(2, result.Count);
 
@@ -49,7 +50,7 @@ namespace Acrolinx.Sdk.Sidebar.Tests
         public void MultiTextFoundAtCorrectPosition()
         {
             var lookup = new DiffBasedLookup("A A");
-            var range1 = new Range(0, 1);
+            var range1 = new Range[] { new Range(0, 1) };
 
             var result = lookup.TextDiffSearch("A A", range1);
 
@@ -62,7 +63,7 @@ namespace Acrolinx.Sdk.Sidebar.Tests
         public void MultiTextFoundAtCorrectPosition2()
         {
             var lookup = new DiffBasedLookup("A A");
-            var range1 = new Range(2, 3);
+            var range1 = new Range[] { new Range(2, 3) };
 
             var result = lookup.TextDiffSearch("A A", range1);
 
@@ -75,7 +76,7 @@ namespace Acrolinx.Sdk.Sidebar.Tests
         public void MultiTextFoundAtCorrectPosition3()
         {
             var lookup = new DiffBasedLookup("A A");
-            var range1 = new Range(0, 1);
+            var range1 = new Range[] { new Range(0, 1) };
 
             var result = lookup.TextDiffSearch(" A A", range1);
 
@@ -88,7 +89,7 @@ namespace Acrolinx.Sdk.Sidebar.Tests
         public void MultiTextFoundAtCorrectPosition4()
         {
             var lookup = new DiffBasedLookup("A A");
-            var range1 = new Range(2, 3);
+            var range1 = new Range[] { new Range(2, 3) };
 
             var result = lookup.TextDiffSearch(" A A", range1);
 
@@ -101,7 +102,7 @@ namespace Acrolinx.Sdk.Sidebar.Tests
         public void PartOfTextIsFound()
         {
             var lookup = new DiffBasedLookup("AB");
-            var range1 = new Range(1, 2);
+            var range1 = new Range[] { new Range(1, 2) };
 
             var result = lookup.TextDiffSearch(" AB", range1);
 
@@ -114,7 +115,7 @@ namespace Acrolinx.Sdk.Sidebar.Tests
         public void PartOfTextIsFound2()
         {
             var lookup = new DiffBasedLookup("ABCD");
-            var range1 = new Range(1, 3);
+            var range1 = new Range[] { new Range(1, 3) };
 
             var result = lookup.TextDiffSearch(" ABCD", range1);
 
@@ -127,7 +128,7 @@ namespace Acrolinx.Sdk.Sidebar.Tests
         public void TextFoundIfOriginalDeleted()
         {
             var lookup = new DiffBasedLookup("A A");
-            var range1 = new Range(2, 3);
+            var range1 = new Range[] { new Range(2, 3) };
 
             var result = lookup.TextDiffSearch("A", range1);
 
@@ -138,7 +139,7 @@ namespace Acrolinx.Sdk.Sidebar.Tests
         public void TextFoundIfOriginalDeleted2()
         {
             var lookup = new DiffBasedLookup("A A");
-            var range1 = new Range(0, 1);
+            var range1 = new Range[] { new Range(0, 1) };
 
             var result = lookup.TextDiffSearch("  A", range1);
 
@@ -149,7 +150,7 @@ namespace Acrolinx.Sdk.Sidebar.Tests
         public void TextFoundIfOriginalDeleted3()
         {
             var lookup = new DiffBasedLookup("A A A B");
-            var range1 = new Range(5, 6);
+            var range1 = new Range[] { new Range(5, 6) };
 
             var result = lookup.TextDiffSearch("  A A B", range1);
 
@@ -162,8 +163,8 @@ namespace Acrolinx.Sdk.Sidebar.Tests
         public void ChangedTextIsFound()
         {
             var lookup = new DiffBasedLookup("This is an test");
-            var range = new Range(0, "This".Length);
-            var result = lookup.TextDiffSearch("AAThis is an test", range);
+            var ranges = new Range[] { new Range(0, "This".Length) };
+            var result = lookup.TextDiffSearch("AAThis is an test", ranges);
 
             Assert.AreEqual(result[0], new Range(2, 6));
         }

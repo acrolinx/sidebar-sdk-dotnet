@@ -17,7 +17,7 @@ namespace Acrolinx.Sdk.Sidebar.Util.Changetracking
     {
         public enum LookupStrategy
         {
-            SEARCH, NONE, TEXTDIFF
+            TEXTDIFF, SEARCH, NONE
         }
 
         public Lookup(string originalText) : this(originalText, LookupStrategy.SEARCH)
@@ -51,15 +51,14 @@ namespace Acrolinx.Sdk.Sidebar.Util.Changetracking
             Contract.Requires(ranges != null);
             Contract.Requires(ranges.All(range => range != null));
 
+            if (Strategy == LookupStrategy.NONE || ranges.Count == 0 || currentText.Equals(OriginalText))
+            {
+                return ranges;
+            }
             if (Strategy == LookupStrategy.TEXTDIFF)
             {
                 DiffBasedLookup dbl = new DiffBasedLookup(OriginalText);
                 return dbl.TextDiffSearch(currentText, new List<IRange>(ranges));
-            }
-
-            if (Strategy == LookupStrategy.NONE || ranges.Count == 0 || currentText.Equals(OriginalText))
-            {
-                return ranges;
             }
             var regexSearchStr = new StringBuilder();
 

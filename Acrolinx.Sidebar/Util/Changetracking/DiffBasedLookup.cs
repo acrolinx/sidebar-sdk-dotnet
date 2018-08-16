@@ -1,4 +1,6 @@
-﻿using Acrolinx.Sdk.Sidebar.Documents;
+﻿/* Copyright (c) 2018 Acrolinx GmbH */
+
+using Acrolinx.Sdk.Sidebar.Documents;
 using Acrolinx.Sdk.Sidebar.Util.Logging;
 using DiffMatchPatch;
 using System;
@@ -17,15 +19,6 @@ namespace Acrolinx.Sdk.Sidebar.Util.Changetracking
             this.originalText = originalText;
         }
 
-        public IReadOnlyList<IRange> TextDiffSearch(string currentText, params IRange[] ranges)
-        {
-            Contract.Requires(currentText != null);
-            Contract.Requires(ranges != null);
-            Contract.Requires(ranges.All(range => range != null));
-
-            return this.TextDiffSearch(currentText, new List<IRange>(ranges));
-        }
-
         public IReadOnlyList<IRange> TextDiffSearch(string currentText, IReadOnlyList<IRange> ranges)
         {
             Contract.Requires(currentText != null);
@@ -34,43 +27,43 @@ namespace Acrolinx.Sdk.Sidebar.Util.Changetracking
 
             int offsetCountOld = 0;
             int currentDiffOffset = 0;
-            List<Tuple<double, double>> offsetMappingSet = new List<Tuple<double, double>>();
+            List<Tuple<double, double>> offsetMappingList = new List<Tuple<double, double>>();
             DiffMatchPatch.DiffMatchPatch dmp = DiffMatchPatchModule.Default;
             List<Diff> diff = dmp.DiffMain(originalText, currentText);
-            for (int i = 0; i < diff.Count; i++)
+            diff.ForEach(d =>
             {
-                switch (diff[i].Operation.ToString())
+                switch (d.Operation.ToString())
                 {
                     case "Equal":
-                        offsetCountOld += diff[i].Text.Length;
+                        offsetCountOld += d.Text.Length;
                         break;
                     case "Delete":
-                        offsetCountOld += diff[i].Text.Length;
-                        currentDiffOffset -= diff[i].Text.Length;
+                        offsetCountOld += d.Text.Length;
+                        currentDiffOffset -= d.Text.Length;
                         break;
                     case "Insert":
-                        currentDiffOffset += diff[i].Text.Length;
+                        currentDiffOffset += d.Text.Length;
                         break;
                     default:
                         break;
                 }
                 Tuple<double, double> offsetMap = new Tuple<double, double>(offsetCountOld, currentDiffOffset);
-                offsetMappingSet.Add(offsetMap);
-            }
-            offsetMappingSet.Sort(Comparer<Tuple<double, double>>.Default);
+                offsetMappingList.Add(offsetMap);
+            });
+
+            offsetMappingList.Sort(Comparer<Tuple<double, double>>.Default);
 
             int startOffest = 0;
             int endOffset = 0;
             List<IRange> result = new List<IRange>();
 
-            for (var i = 0; i < ranges.Count; i++)
+            foreach (var range in ranges)
             {
-                var range = ranges[i];
                 startOffest = range.Start;
                 endOffset = range.End;
 
-                int alignedBegin = FindNewIndex(offsetMappingSet, startOffest);
-                int alignedEnd = FindNewIndex(offsetMappingSet, endOffset);
+                int alignedBegin = FindNewIndex(offsetMappingList, startOffest);
+                int alignedEnd = FindNewIndex(offsetMappingList, endOffset);
                 string originalMatchSurface = originalText.Substring(startOffest, range.Length);
                 string currentMatchSurface = string.Empty;
                 try
@@ -79,33 +72,34 @@ namespace Acrolinx.Sdk.Sidebar.Util.Changetracking
                 }
                 catch (ArgumentOutOfRangeException ex)
                 {
-                    Logger.AcroLog.Info("Original Surface ranges: "+ new Range(startOffest, endOffset)+" does not match Current Surface ranges: " + new Range(alignedBegin, alignedEnd));
+                    Logger.AcroLog.Info("Modified content has no matches for the given range. Original Surface ranges: " + new Range(startOffest, endOffset) + " Current Surface ranges: " + new Range(alignedBegin, alignedEnd));
                 }
                 if (originalMatchSurface.Equals(currentMatchSurface))
                 {
                     result.Add(new Range(alignedBegin, alignedEnd));
                 }
+
             }
             return result;
         }
 
-        private int FindNewIndex(List<Tuple<double, double>> offsetMappingSet, int originalIndex)
+        private int FindNewIndex(List<Tuple<double, double>> offsetMappingList, int originalIndex)
         {
-            return originalIndex + FindDisplacement(offsetMappingSet, originalIndex);
+            return originalIndex + FindDisplacement(offsetMappingList, originalIndex);
         }
 
-        private int FindDisplacement(List<Tuple<double, double>> offsetMappingSet, int originalIndex)
+        private int FindDisplacement(List<Tuple<double, double>> offsetMappingList, int originalIndex)
         {
             int displacement = 0;
             Tuple<double, double> offsetMap = new Tuple<double, double>(originalIndex + 0.1, originalIndex);
-            offsetMappingSet.Add(offsetMap);
-            offsetMappingSet.Sort(Comparer<Tuple<double, double>>.Default);
-            var findIndex = offsetMappingSet.IndexOf(offsetMap);
+            offsetMappingList.Add(offsetMap);
+            offsetMappingList.Sort(Comparer<Tuple<double, double>>.Default);
+            var findIndex = offsetMappingList.IndexOf(offsetMap);
             if (findIndex > 0)
             {
-                displacement = Convert.ToInt32(offsetMappingSet[findIndex - 1].Item2);
+                displacement = Convert.ToInt32(offsetMappingList[findIndex - 1].Item2);
             }
-            offsetMappingSet.RemoveAt(findIndex);
+            offsetMappingList.RemoveAt(findIndex);
             return displacement;
         }
     }
