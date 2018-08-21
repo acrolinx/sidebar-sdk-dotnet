@@ -73,6 +73,7 @@ namespace Acrolinx.Sdk.Sidebar.Util.Changetracking
                 catch (ArgumentOutOfRangeException ex)
                 {
                     Logger.AcroLog.Info("Modified content has no matches for the given range. Original Surface ranges: " + new Range(startOffest, endOffset) + " Current Surface ranges: " + new Range(alignedBegin, alignedEnd));
+                    Logger.AcroLog.Debug(ex.Message);
                 }
                 if (originalMatchSurface.Equals(currentMatchSurface))
                 {
