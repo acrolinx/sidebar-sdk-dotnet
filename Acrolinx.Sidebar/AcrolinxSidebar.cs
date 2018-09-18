@@ -395,6 +395,12 @@ namespace Acrolinx.Sdk.Sidebar
             string checkId = check.checkId;
             return checkId;
         }
+        public void CancelCheck()
+        {
+            var code = "new function(){ return acrolinxSidebar.onGlobalCheckRejected(); }";
+            Eval(code);
+            Logger.AcroLog.Info("Check has been cancelled due to some errors in document.");
+        }
 
         private string SerializeSelection(IReadOnlyList<IRange> selections)
         {
