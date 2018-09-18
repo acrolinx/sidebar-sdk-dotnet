@@ -397,9 +397,9 @@ namespace Acrolinx.Sdk.Sidebar
         }
         public void CancelCheck()
         {
-            var code = "new function(){ return acrolinxSidebar.onGlobalCheckRejected(); }";
+            var code = "acrolinxSidebar.onGlobalCheckRejected();";
             Eval(code);
-            Logger.AcroLog.Info("Check has been cancelled due to some errors in document.");
+            Logger.AcroLog.Info("Check cancelled by the integration.");
         }
 
         private string SerializeSelection(IReadOnlyList<IRange> selections)
