@@ -56,6 +56,8 @@ namespace Acrolinx.Sdk.Sidebar
         string StartPageSourceLocation { get; set; }
 
         string Check(IDocument document);
+
+        void CancelCheck();
     }
 
     [ContractClassFor(typeof(ISidebar))]
@@ -65,6 +67,11 @@ namespace Acrolinx.Sdk.Sidebar
         {
             Contract.Requires(document != null);
             return "";
+        }
+
+        public void CancelCheck()
+        {
+            throw new NotImplementedException();
         }
 #pragma warning disable
         public event SidebarInitFinishedEventHandler InitFinished;
