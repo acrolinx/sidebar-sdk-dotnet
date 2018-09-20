@@ -399,7 +399,7 @@ namespace Acrolinx.Sdk.Sidebar
         {
             var code = "acrolinxSidebar.onGlobalCheckRejected();";
             Eval(code);
-            Logger.AcroLog.Info("Check cancelled by Acrolinx integration.");
+            Logger.AcroLog.Info("Check canceled by Acrolinx Integration.");
         }
 
         private string SerializeSelection(IReadOnlyList<IRange> selections)
