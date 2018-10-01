@@ -53,7 +53,6 @@ Visual Studio downloads the required dependencies and compiles the Acrolinx .NET
 
 Have a look at the sample source code provided in the [Acrolinx Sidebar .NET Demo](https://github.com/acrolinx/acrolinx-sidebar-demo-dotnet). Use the [Acrolinx Sidebar .NET SDK NuGet package](https://www.nuget.org/packages/Acrolinx.Sidebar/).
 
-
 ## SDK Features
 
 1. **Document Model** - Provides [lookup](https://github.com/acrolinx/acrolinx-coding-guidance/blob/master/topics/text-lookup.md "Lookup") functionality.
