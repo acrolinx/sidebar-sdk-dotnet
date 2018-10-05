@@ -1,8 +1,9 @@
 # Acrolinx Sidebar .NET SDK
 
-This is a library for integrating the [Acrolinx](http://www.acrolinx.com/) Sidebar into a .NET application.
+This is a library for integrating the [Acrolinx](https://www.acrolinx.com/) Sidebar into a .NET application.
 
-You can use the [Acrolinx Sidebar .NET SDK NuGet package](https://www.nuget.org/packages/Acrolinx.Sidebar/) to integrate Acrolinx in your .NET application.
+You can use the [Acrolinx Sidebar .NET SDK NuGet package](https://www.nuget.org/packages/Acrolinx.Sidebar/)
+to integrate Acrolinx in your .NET application.
 
 ## Live Demo
 
@@ -41,7 +42,8 @@ Before you start developing your own integration, you might benefit from looking
 ## Build Locally
 
 1. Make sure that you have installed Microsoft Visual Studio with C# support version 2015 or later.
-2. Since the Acrolinx Sidebar performs static code analysis to improve quality, you also have to install [Code Contracts for .NET](https://visualstudiogallery.msdn.microsoft.com/1ec7db13-3363-46c9-851f-1ce455f66970).
+2. Since the Acrolinx Sidebar performs static code analysis to improve quality,
+   you also have to install [Code Contracts for .NET](https://visualstudiogallery.msdn.microsoft.com/1ec7db13-3363-46c9-851f-1ce455f66970).
 3. Open the solution file [`Acrolinx.Sidebar.Net.sln`](Acrolinx.Sidebar.Net.sln) with Visual Studio.
 4. Build the solution.
 
@@ -51,17 +53,21 @@ Visual Studio downloads the required dependencies and compiles the Acrolinx .NET
 
 ## Using the SDK
 
-Have a look at the sample source code provided in the [Acrolinx Sidebar .NET Demo](https://github.com/acrolinx/acrolinx-sidebar-demo-dotnet). Use the [Acrolinx Sidebar .NET SDK NuGet package](https://www.nuget.org/packages/Acrolinx.Sidebar/).
+Have a look at the sample source code provided in the [Acrolinx Sidebar .NET Demo](https://github.com/acrolinx/acrolinx-sidebar-demo-dotnet).
+Use the [Acrolinx Sidebar .NET SDK NuGet package](https://www.nuget.org/packages/Acrolinx.Sidebar/).
 
 ## SDK Features
 
-1. **Document Model** - Provides [lookup](https://github.com/acrolinx/acrolinx-coding-guidance/blob/master/topics/text-lookup.md) functionality.
+1. **Document Model** - Provides [lookup](https://github.com/acrolinx/acrolinx-coding-guidance/blob/master/topics/text-lookup.md)
+   functionality.
 2. **Start page** - Provides interactive way to sign in to Acrolinx with built-in error handling.
-3. **Logger** - Provides [logging](https://github.com/acrolinx/sidebar-sdk-dotnet/blob/master/Acrolinx.Sidebar/Util/Logging/Logger.cs) using Log4net.
+3. **Logger** - Provides [logging](https://github.com/acrolinx/sidebar-sdk-dotnet/blob/master/Acrolinx.Sidebar/Util/Logging/Logger.cs)
+   using Log4net.
 4. **Acrolinx Storage**: Applications using the IE web browser control may be denied to access LocalStorage.
-   The SDK uses its own [storage](https://github.com/acrolinx/sidebar-sdk-dotnet/blob/master/Acrolinx.Sidebar/Storage/RegistryAcrolinxStorage.cs) mechanism using Windows registry.
-   **Registry path**: `HKCU\Software\Acrolinx\Plugins\Storage\[KEY]`
-   **Fallback path**: `HKLM\Software\Acrolinx\Plugins\Storage\[KEY]`
+   The SDK uses its own [storage](https://github.com/acrolinx/sidebar-sdk-dotnet/blob/master/Acrolinx.Sidebar/Storage/RegistryAcrolinxStorage.cs)
+   mechanism using Windows registry:
+   + **Registry path**: `HKCU\Software\Acrolinx\Plugins\Storage\[KEY]`
+   + **Fallback path**: `HKLM\Software\Acrolinx\Plugins\Storage\[KEY]`
 
 ## References
 
@@ -84,4 +90,4 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 
-For more information visit: [http://www.acrolinx.com](http://www.acrolinx.com)
+For more information visit: [https://www.acrolinx.com](https://www.acrolinx.com)
