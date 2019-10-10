@@ -72,7 +72,7 @@ Use the [Acrolinx Sidebar .NET SDK NuGet package](https://www.nuget.org/packages
 ## References
 
 * The [Sidebar DEMO .NET](https://github.com/acrolinx/acrolinx-sidebar-demo-dotnet) is built based on this SDK.
-* The Sidebar SDKs are based on the [Acrolinx Sidebar Interface](https://acrolinx.github.io/sidebar-sdk-js/).
+* The Sidebar SDKs are based on the [Acrolinx Sidebar Interface](https://acrolinx.github.io/sidebar-interface/).
 
 ## License
 
