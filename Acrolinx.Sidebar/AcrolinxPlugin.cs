@@ -7,13 +7,6 @@ using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using Acrolinx.Sdk.Sidebar.Util.Logging;
 using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Reflection.Emit;
-using System.Runtime.InteropServices;
-using System.Security.Permissions;
-using System.Text;
-using System.Threading.Tasks;
 using System.Diagnostics;
 using Newtonsoft.Json;
 

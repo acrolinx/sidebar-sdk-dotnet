@@ -1,12 +1,4 @@
-﻿using Newtonsoft.Json.Linq;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics.Contracts;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Acrolinx.Sdk.Sidebar.Documents
+﻿namespace Acrolinx.Sdk.Sidebar.Documents
 {
     public class CheckOptionsProxy : ICheckOptions
     {

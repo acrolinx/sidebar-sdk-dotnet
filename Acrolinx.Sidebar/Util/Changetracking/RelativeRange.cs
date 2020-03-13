@@ -1,12 +1,7 @@
 ﻿/* Copyright (c) 2016 Acrolinx GmbH */
 
 using Acrolinx.Sdk.Sidebar.Documents;
-using System;
-using System.Collections.Generic;
 using System.Diagnostics.Contracts;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Acrolinx.Sdk.Sidebar.Util.Changetracking
 {

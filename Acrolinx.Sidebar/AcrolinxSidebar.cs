@@ -6,21 +6,15 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Data;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Diagnostics.Contracts;
 using Acrolinx.Sdk.Sidebar.Documents;
 using Acrolinx.Sdk.Sidebar.Util.Logging;
-using System.Dynamic;
 using System.Reflection;
-using Microsoft.CSharp.RuntimeBinder;
-using System.Linq.Expressions;
 using Newtonsoft.Json.Linq;
 using System.Globalization;
 using Acrolinx.Sdk.Sidebar.Storage;
 using System.IO;
-using System.Diagnostics;
 
 namespace Acrolinx.Sdk.Sidebar
 {
@@ -186,16 +180,38 @@ namespace Acrolinx.Sdk.Sidebar
                 {
                     StartPageSourceLocation = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), StartPageSourceLocation);
                 }
-                assemblyLocation = ((Path.GetFileName(StartPageSourceLocation) != "Acrolinx.Startpage.dll")) ? StartPageSourceLocation + @"\Acrolinx.Startpage.dll" : StartPageSourceLocation;
+                assemblyLocation = ((Path.GetFileName(StartPageSourceLocation) != "Acrolinx.Startpage.dll"))
+                    ? StartPageSourceLocation + @"\Acrolinx.Startpage.dll" : StartPageSourceLocation;
             }
 
-            if (File.Exists(assemblyLocation))
+            var resUrl = BuildResUrl(assemblyLocation);
+            if (string.IsNullOrEmpty(resUrl))
             {
-                return @"res://" + assemblyLocation + "//index.html";
+                Logger.AcroLog.Error("Failed to locate " + assemblyLocation);
+                SetUiError();
             }
+            return resUrl;
+        }
 
-            Logger.AcroLog.Error("Failed to locate " + assemblyLocation);
-            SetUiError();
+        private string BuildResUrl(string assemblyLocation)
+        {
+            Contract.Requires(!string.IsNullOrEmpty(assemblyLocation));
+            var version = Util.FileUtil.GetFileVersion(assemblyLocation);
+            if (!string.IsNullOrEmpty(version))
+            {
+                if (!assemblyLocation.StartsWith(@"\\"))
+                {
+                    return @"res://" + assemblyLocation + "//index.html";
+                }
+
+                var userTempPath = Path.GetTempPath()
+                            + "Acrolinx.Startpage_" + version + ".dll";
+
+
+                return (Util.FileUtil.CopyFileWithRetries(assemblyLocation, userTempPath, 5))
+                    ? @"res://" + userTempPath + "//index.html"
+                    : null;
+            }
             return null;
         }
 
@@ -622,7 +638,7 @@ namespace Acrolinx.Sdk.Sidebar
                 this.ServerAddress = serverAddress;
                 this.ShowServerSelector = false;
             }
-            else if(string.IsNullOrWhiteSpace(this.ServerAddress))
+            else if (string.IsNullOrWhiteSpace(this.ServerAddress))
             {
                 this.ShowServerSelector = true;
             }
@@ -643,13 +659,13 @@ namespace Acrolinx.Sdk.Sidebar
         {
             try
             {
-                if(webBrowser.ReadyState != WebBrowserReadyState.Complete)
+                if (webBrowser.ReadyState != WebBrowserReadyState.Complete)
                 {
                     return;
                 }
 
                 object ax = webBrowser.ActiveXInstance;
-                if(ax == null)
+                if (ax == null)
                 {
                     return;
                 }
@@ -657,7 +673,7 @@ namespace Acrolinx.Sdk.Sidebar
                 dynamic activeX = ax;
                 const int OLECMDID_OPTICAL_ZOOM = 63;
                 const int OLECMDEXECOPT_DONTPROMPTUSER = 2;
-                int zoomFactor =(int)( this.Width * 100 * Util.GraphicUtil.GetScaling() / 300);
+                int zoomFactor = (int)(this.Width * 100 * Util.GraphicUtil.GetScaling() / 300);
 
                 activeX.ExecWB(OLECMDID_OPTICAL_ZOOM, OLECMDEXECOPT_DONTPROMPTUSER, zoomFactor, IntPtr.Zero);
             }
