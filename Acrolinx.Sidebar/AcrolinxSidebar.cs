@@ -39,7 +39,8 @@ namespace Acrolinx.Sdk.Sidebar
         public event SidebarReplaceRangesEventHandler ReplaceRanges;
         [Description("Called when the sidebar has embed check information"), Category("Sidebar")]
         public event SidebarProcessEmbedCheckDataEventHandler ProcessEmbedCheckData;
-
+        [Description("Called when the sidebar to open a web browser (sign in / Scorecard)"), Category("Sidebar")]
+        public event SidebarOpenBrowserEventHandler OpenBrowser;
         public IAcrolinxStorage Storage
         {
             get;
@@ -480,6 +481,17 @@ namespace Acrolinx.Sdk.Sidebar
                 embedCheckInfo = embedCheckInformation.ToDictionary(k => k["key"].ToString(), v => v["value"].ToString());
             }
             ProcessEmbedCheckData?.Invoke(this, new ProcessEmbedCheckDataEventArgs(embedCheckInfo, acrolinxPlugin.Document.StringToFormat(inputFormat)));
+        }
+
+        internal bool FireOpenBrowser(string url)
+        {
+            Contract.Requires(url != null);
+
+            OpenBrowserEventArgs args = new OpenBrowserEventArgs(new Uri(url));
+
+            OpenBrowser?.Invoke(this, args);
+
+            return !args.Cancel;
         }
 
         private void webBrowser_Navigated(object sender, WebBrowserNavigatedEventArgs e)

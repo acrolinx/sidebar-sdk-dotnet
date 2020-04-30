@@ -112,6 +112,12 @@ namespace Acrolinx.Sdk.Sidebar
                 Logger.AcroLog.Warn("Ignoring URL: '" + url + "'. It seems not to be a valid URL.");
                 return false;
             }
+
+            if (!sidebar.FireOpenBrowser(url))
+            {
+                return false;
+            }
+
             System.Diagnostics.Process.Start(url);
 
             return true;

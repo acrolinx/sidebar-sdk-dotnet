@@ -21,6 +21,7 @@ namespace Acrolinx.Sdk.Sidebar
         event SidebarSelectRangesEventHandler SelectRanges;
         event SidebarReplaceRangesEventHandler ReplaceRanges;
         event SidebarProcessEmbedCheckDataEventHandler ProcessEmbedCheckData;
+        event SidebarOpenBrowserEventHandler OpenBrowser;
 
         string ClientSignature
         {
@@ -91,6 +92,8 @@ namespace Acrolinx.Sdk.Sidebar
         public event SidebarLoadedEventHandler SidebarLoaded;
 
         public event SidebarProcessEmbedCheckDataEventHandler ProcessEmbedCheckData;
+
+        public event SidebarOpenBrowserEventHandler OpenBrowser;
 
         public string ClientSignature
         {
@@ -266,6 +269,16 @@ namespace Acrolinx.Sdk.Sidebar
         public bool ValidSidebar { get; private set; }
     }
 
+    public class OpenBrowserEventArgs : SidebarUrlEvenArgs
+    {
+        public OpenBrowserEventArgs(Uri url) : base(url)
+        {
+            Contract.Requires(url != null);
+        }
+
+        public bool Cancel { get; set; }
+    }
+
     public class ProcessEmbedCheckDataEventArgs : EventArgs
     {
         internal ProcessEmbedCheckDataEventArgs(IDictionary<string,string> embedCheckInformation, Format inputFormat)
@@ -329,5 +342,5 @@ namespace Acrolinx.Sdk.Sidebar
     public delegate void SidebarSelectRangesEventHandler(object sender, MatchesEventArgs e);
     public delegate void SidebarReplaceRangesEventHandler(object sender, MatchesWithReplacementEventArgs e);
     public delegate void SidebarProcessEmbedCheckDataEventHandler(object sender, ProcessEmbedCheckDataEventArgs e);
-
+    public delegate void SidebarOpenBrowserEventHandler(object sender, OpenBrowserEventArgs e); 
 }
