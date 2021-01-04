@@ -27,8 +27,6 @@ namespace Acrolinx.Sdk.Sidebar
         public event SidebarInitFinishedEventHandler InitFinished;
         [Description("Called when the sidebar was not able to download its source. Maybe the URL is wrong or the user is offline..."), Category("Sidebar")]
         public event SidebarSourceNotReachableEventHandler SidebarSourceNotReachable;
-        [Description("Called when any kind of html was download. See Eventargs is the downloaded HTML was a valid Acrolinx Sidebar."), Category("Sidebar")]
-        public event SidebarDocumentLoadedEventHandler DocumentLoaded;
         [Description("Called when the sidebar has finished a check."), Category("Sidebar")]
         public event SidebarCheckedEventHandler Checked;
         [Description("Called when sidebar.Check() should be called with extracted document."), Category("Sidebar")]
@@ -565,7 +563,7 @@ namespace Acrolinx.Sdk.Sidebar
             // TODO: Disable context menu. Javascript way event handling.
         }
 
-        private void webView2_NavigationCompletedAsync(object sender, Microsoft.Web.WebView2.Core.CoreWebView2NavigationCompletedEventArgs e)
+        private async void webView2_NavigationCompletedAsync(object sender, Microsoft.Web.WebView2.Core.CoreWebView2NavigationCompletedEventArgs e)
         {
             if (!e.IsSuccess)
             {
@@ -574,7 +572,9 @@ namespace Acrolinx.Sdk.Sidebar
 
             acrolinxPlugin = new AcrolinxPlugin(webView2, this);
             webView2.CoreWebView2.AddHostObjectToScript("bridge", acrolinxPlugin);
-            acrolinxPlugin.OnAfterObjectSetAsync();
+
+            // TODO: Stay void? Does returning task make sense here?
+            // await acrolinxPlugin.OnAfterObjectSetAsync();
 
             //TODO: Implement zooming..
             //TODO: Think if we need more error handling..
@@ -592,7 +592,7 @@ namespace Acrolinx.Sdk.Sidebar
             // TODO: Disable context menu. Javascript way event handling.
         }
 
-        private void CoreWebView2_FrameNavigationCompleted(object sender, Microsoft.Web.WebView2.Core.CoreWebView2NavigationCompletedEventArgs e)
+        private async void CoreWebView2_FrameNavigationCompletedAsync(object sender, Microsoft.Web.WebView2.Core.CoreWebView2NavigationCompletedEventArgs e)
         {
             if (!e.IsSuccess)
             {
@@ -601,7 +601,9 @@ namespace Acrolinx.Sdk.Sidebar
 
             acrolinxPlugin = new AcrolinxPlugin(webView2, this);
             webView2.CoreWebView2.AddHostObjectToScript("bridge", acrolinxPlugin);
-            acrolinxPlugin.OnAfterObjectSetAsync();
+
+            // TODO: Stay void? Does returning task make sense here?
+            // await acrolinxPlugin.OnAfterObjectSetAsync();
 
             //TODO: Implement zooming..
             //TODO: Think if we need more error handling..

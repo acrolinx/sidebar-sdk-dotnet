@@ -64,8 +64,8 @@ namespace Acrolinx.Sdk.Sidebar
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.labelImage);
             this.Controls.Add(this.webView2);
+            this.Controls.Add(this.labelImage);
             this.Name = "AcrolinxSidebar";
             this.Size = new System.Drawing.Size(300, 490);
             this.Resize += new System.EventHandler(this.AcrolinxSidebar_Resize);

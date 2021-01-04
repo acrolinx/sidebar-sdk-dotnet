@@ -40,8 +40,8 @@ namespace Acrolinx.Sdk.Sidebar
             await sidebar.EvalAsync("window.bridge = chrome.webview.hostObjects.bridge; window.onerror = function(msg, url, line, col, error) { window.bridge.OnError(msg, url, line, col, error); }");
             //The next line would have the effect that the sidebar exchanges objects instead of strings. This seem to fail in case of .NET internet explorer web control...
 
-            // webBrowser.Document.InvokeScript("eval", new object[] { "window.acrolinxStorage = { getItem: function(key) { return window.external.getItem(key); }, removeItem: function(key) { window.external.removeItem(key); }, setItem: function(key, data) { window.external.setItem(key, data); } }" });
-            // webBrowser.Document.InvokeScript("eval", new object[] { "window.acrolinxPlugin =   {requestInit: function(){ window.external.requestInit()}, onInitFinished: function(finishResult) {window.external.onInitFinished(JSON.stringify(finishResult))}, configure: function(configuration) { window.external.configure(JSON.stringify(configuration)) }, requestGlobalCheck: function(options) { window.external.requestGlobalCheck(options) }, onCheckResult: function(checkResult) {window.external.onCheckResult(JSON.stringify(checkResult)) }, selectRanges: function(checkId, matches) { window.external.selectRanges(checkId, JSON.stringify(matches))}, replaceRanges: function(checkId, matchesWithReplacements) { window.external.replaceRanges(checkId, JSON.stringify(matchesWithReplacements)) }, download: function(downloadInfo) { window.external.download(JSON.stringify(downloadInfo))}, openWindow: function(openWindowParameters) { window.external.openWindow(JSON.stringify(openWindowParameters)) }, openLogFile: function() {window.external.openLogFile()}}; " });
+            await sidebar.EvalAsync( "{window.bridge = chrome.webview.hostObjects.bridge; window.acrolinxStorage = { getItem: function(key) { return window.bridge.getItem(key); }, removeItem: function(key) { window.bridge.removeItem(key); }, setItem: function(key, data) { window.bridge.setItem(key, data); } } }" );
+            await sidebar.EvalAsync( "{window.bridge = chrome.webview.hostObjects.bridge; window.acrolinxPlugin =   {requestInit: function(){ window.bridge.requestInit()}, onInitFinished: function(finishResult) {window.bridge.onInitFinished(JSON.stringify(finishResult))}, configure: function(configuration) { window.bridge.configure(JSON.stringify(configuration)) }, requestGlobalCheck: function(options) { window.bridge.requestGlobalCheck(options) }, onCheckResult: function(checkResult) {window.bridge.onCheckResult(JSON.stringify(checkResult)) }, selectRanges: function(checkId, matches) { window.bridge.selectRanges(checkId, JSON.stringify(matches))}, replaceRanges: function(checkId, matchesWithReplacements) { window.bridge.replaceRanges(checkId, JSON.stringify(matchesWithReplacements)) }, download: function(downloadInfo) { window.bridge.download(JSON.stringify(downloadInfo))}, openWindow: function(openWindowParameters) { window.bridge.openWindow(JSON.stringify(openWindowParameters)) }, openLogFile: function() {window.bridge.openLogFile()}}; }" );
         }
 
         public void Log(params dynamic[] o)
@@ -127,7 +127,7 @@ namespace Acrolinx.Sdk.Sidebar
             return true;
         }
 
-        public async void requestInitAsync(params object[] o)
+        public async void requestInit(params object[] o)
         {
             Logger.AcroLog.Info("request init");
 
