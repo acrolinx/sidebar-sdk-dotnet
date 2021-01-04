@@ -105,7 +105,9 @@ namespace Acrolinx.Sdk.Sidebar
 
             InitializeComponent();
 
-            webBrowser.IsWebBrowserContextMenuEnabled = false;
+            //TODO: Figure out alternative soln in edge
+            // https://stackoverflow.com/questions/62624373/how-do-you-override-the-contextmenu-that-appears-when-right-clicking-on-webview2
+            // webBrowser.IsWebBrowserContextMenuEnabled = false;
         }
 
         private void RegisterComponents(Assembly callingAssembly)
@@ -118,22 +120,22 @@ namespace Acrolinx.Sdk.Sidebar
             RegisterClientComponent(typeof(JObject).Assembly, "Json.NET", AcrolinxSidebar.SoftwareComponentCategory.DETAIL);
             RegisterClientComponent(typeof(log4net.Core.ILogger).Assembly, "log4net", AcrolinxSidebar.SoftwareComponentCategory.DETAIL);
             RegisterClientComponent(typeof(WebBrowser).Assembly, "WebBrowser Control", AcrolinxSidebar.SoftwareComponentCategory.DETAIL);
-            RegisterClientComponent(typeof(WebBrowser).Assembly.GetName().Name + ".browser", "WebBrowser Control Browser", webBrowser.Version.Major + "." + webBrowser.Version.MajorRevision + "." + webBrowser.Version.Minor + "." + webBrowser.Version.MinorRevision, AcrolinxSidebar.SoftwareComponentCategory.DETAIL);
+            RegisterClientComponent(typeof(WebBrowser).Assembly.GetName().Name + ".browser", "WebBrowser Control Browser", webView2.ProductVersion, AcrolinxSidebar.SoftwareComponentCategory.DETAIL);
             var osInfo = Util.AssemblyUtil.OSInfo();
             var appInfo = Util.AssemblyUtil.AppInfo();
             RegisterClientComponent(osInfo["osId"], osInfo["osName"], osInfo["version"], AcrolinxSidebar.SoftwareComponentCategory.DEFAULT);
             RegisterClientComponent(appInfo["appId"], appInfo["productName"], appInfo["version"], AcrolinxSidebar.SoftwareComponentCategory.DEFAULT);
         }
-        public void Start()
+        public async System.Threading.Tasks.Task StartAsync()
         {
+            await this.StartAsync(null);
             RegisterComponents(Assembly.GetCallingAssembly());
-            this.Start(null);
         }
 
         /// <summary>
         /// Prefered way to start sidebar is Start(), this will enable server selector feature by default
         /// </summary>
-        public void Start(string serverAddress)
+        public async System.Threading.Tasks.Task StartAsync(string serverAddress)
         {
             if (this.DesignMode)
             {
@@ -145,12 +147,19 @@ namespace Acrolinx.Sdk.Sidebar
             SetDefaults(serverAddress);
 
             AutoScaleDimensions = new SizeF(96F, 96F);
+            await InitializeAsync();
 
-            var startpageUrl = GetStartPageURL();
+            // TODO: Construct relative url
+            var startpageUrl = @"C:\git\sidebar-sdk-dotnet\Acrolinx.Sidebar\Startpage\index.html";
             if (!string.IsNullOrEmpty(startpageUrl))
             {
-                webBrowser.Navigate(startpageUrl);
+                webView2.CoreWebView2.Navigate(startpageUrl);
             }
+        }
+
+         async System.Threading.Tasks.Task InitializeAsync()
+        {
+            await webView2.EnsureCoreWebView2Async(null);
         }
 
         private void SetDefaults(string serverAddress)
@@ -399,7 +408,7 @@ namespace Acrolinx.Sdk.Sidebar
             Logger.AcroLog.Info(name + "\t" + version);
         }
 
-        public String Check(IDocument document)
+        public async System.Threading.Tasks.Task<string> CheckAsync(IDocument document)
         {
             acrolinxPlugin.Document = document;
             Logger.AcroLog.Debug("Content: " + document.Content);
@@ -408,14 +417,13 @@ namespace Acrolinx.Sdk.Sidebar
                 + "return acrolinxSidebar.checkGlobal(c, {inputFormat:'" + document.Format.ToString().ToUpper() + "', requestDescription:{documentReference: '"
                 + document.Reference.Replace("\\", "\\\\").Replace("'", "\\'").Replace("\n", "").Replace("\r", "") + "'}, selection:{ranges:" + SerializeSelection(document.Selections) + "}})}();";
 
-            dynamic check = Eval(code);
-            string checkId = check.checkId;
-            return checkId;
+            var check = await EvalAsync(code);
+            return check.GetValue("checkId").ToString();
         }
-        public void CancelCheck()
+        public async void CancelCheckAsync()
         {
             var code = "acrolinxSidebar.onGlobalCheckRejected();";
-            Eval(code);
+            await EvalAsync(code);
             Logger.AcroLog.Info("Check canceled by Acrolinx Integration.");
         }
 
@@ -429,11 +437,11 @@ namespace Acrolinx.Sdk.Sidebar
             return "[" + String.Join(",", selections.Select(s => "[" + s.Start + ", " + s.End + "]")) + "]";
         }
 
-        internal dynamic Eval(string code)
+        internal async System.Threading.Tasks.Task<JObject> EvalAsync(string code)
         {
             Logger.AcroLog.Debug("eval(" + code + ")");
-            dynamic result = webBrowser.Document.InvokeScript("eval", new object[] { code });
-            return result;
+            var result = await webView2.ExecuteScriptAsync(code);
+            return JObject.Parse(result);
         }
 
         internal void FireRequestCheck(ICheckOptions options)
@@ -494,112 +502,14 @@ namespace Acrolinx.Sdk.Sidebar
             return !args.Cancel;
         }
 
-        private void webBrowser_Navigated(object sender, WebBrowserNavigatedEventArgs e)
-        {
-            webBrowser.ScriptErrorsSuppressed = true;
-            webBrowser.IsWebBrowserContextMenuEnabled = false;
-        }
-
-        private void webBrowser_DocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)
-        {
-            Logger.AcroLog.Debug("Sidebar navigated to: " + String.Format("{0}{1}{2}{3}", e.Url.Scheme, Uri.SchemeDelimiter, e.Url.Authority, e.Url.AbsolutePath));
-
-            bool sidebarRevisionFound = false;
-            foreach (HtmlElement element in webBrowser.Document.GetElementsByTagName("meta"))
-            {
-                if ("sidebar-revision".Equals(("" + element.GetAttribute("name")).ToLower()))
-                {
-                    sidebarRevisionFound = true;
-                    break;
-                }
-            }
-
-            if (!sidebarRevisionFound)
-            {
-                Logger.AcroLog.Warn("Could not find sidebar at URL: " + e.Url);
-
-                string internalUrl = GetInternalUrl();
-
-                if (internalUrl.StartsWith("res://ieframe.dll/"))
-                {
-                    Logger.AcroLog.Error("Loaded page seems to be an IE error page. URL: " + e.Url + " / " + internalUrl);
-
-                    SidebarSourceNotReachable?.Invoke(this, new SidebarUrlEvenArgs(e.Url));
-                    return;
-                }
-                Logger.AcroLog.Error("The server doesn't seem to be responding. Is the address (" + internalUrl + ") correct?");
-                Logger.AcroLog.Error("A communication error occurred may be connection refused due to network problem.");
-            }
-
-            labelImage.Visible = false;
-
-            if (FixFocusWorkaround && webBrowser.Document?.Body != null)
-            {
-                webBrowser.Document.Body.MouseEnter += MouseEnteredSidebar;
-                webBrowser.Document.Body.MouseLeave += MouseLeftSidebar;
-                webBrowser.Document.Body.MouseUp += MouseUpInSidebar;
-
-                foreach (HtmlWindow frame in webBrowser.Document.Window.Frames)
-                {
-                    frame.Document.LosingFocus += LosingFocusInSidebar;
-                }
-            }
-
-            DocumentLoaded?.Invoke(this, new SidebarDocumentLoadedEvenArgs(sidebarRevisionFound, e.Url));
-            if (!sidebarRevisionFound)
-            {
-                return;
-            }
-
-            if (webBrowser.ObjectForScripting == null)
-            {
-                acrolinxPlugin = new AcrolinxPlugin(webBrowser, this);
-                webBrowser.ObjectForScripting = acrolinxPlugin;
-                acrolinxPlugin.OnAfterObjectSet();
-            }
-
-            SidebarLoaded?.Invoke(this, new SidebarUrlEvenArgs(e.Url));
-
-            AdjustSidebarZoomLevelByWidth();
-        }
-
-        private void LosingFocusInSidebar(object sender, EventArgs e)
-        {
-            foreach (HtmlWindow frame in webBrowser.Document.Window.Frames)
-            {
-                frame.Document.Body.MouseUp += MouseUpInSidebar;
-                frame.Document.LosingFocus -= LosingFocusInSidebar;
-            }
-        }
-
-        private void MouseLeftSidebar(object sender, HtmlElementEventArgs e)
-        {
-            mouseEnteredSidebar = false;
-        }
-
-        private void MouseUpInSidebar(object sender, HtmlElementEventArgs e)
-        {
-            if (!mouseEnteredSidebar)
-            {
-                return;
-            }
-            mouseEnteredSidebar = false;
-
-            FixFocusTimer.Enabled = true;
-        }
-
         private bool mouseEnteredSidebar = false;
-        private void MouseEnteredSidebar(object sender, HtmlElementEventArgs e)
-        {
-            mouseEnteredSidebar = true;
-        }
 
         private string GetInternalUrl()
         {
-            return "" + webBrowser?.Document?.Window?.Url?.AbsoluteUri;
+            return webView2.CoreWebView2.Source;
         }
 
-        public void InvalidateRanges(String checkId, IReadOnlyList<Match> matches)
+        public async void InvalidateRangesAsync(String checkId, IReadOnlyList<Match> matches)
         {
             Contract.Requires(matches != null);
             Contract.Requires(!string.IsNullOrWhiteSpace(checkId));
@@ -617,30 +527,8 @@ namespace Acrolinx.Sdk.Sidebar
             }
 
             var code = "new function(){ return acrolinxSidebar.invalidateRanges(" + invalidRanges.ToString() + ")}();";
-            Eval(code);
+            await EvalAsync(code);
 
-        }
-
-        private void OnFixFocusTimerTick(object sender, EventArgs e)
-        {
-            if (webBrowser.Document.Window.Frames.Count == 0 && webBrowser.Document?.ActiveElement != null)
-            {
-                webBrowser.Focus();
-                webBrowser.Document.ActiveElement.Focus();
-            }
-            else
-            {
-                foreach (HtmlWindow frame in webBrowser.Document.Window.Frames)
-                {
-                    if (frame.Document?.ActiveElement != null)
-                    {
-                        webBrowser.Focus();
-                        frame.Document.ActiveElement.Focus();
-                        break;
-                    }
-                }
-            }
-            FixFocusTimer.Enabled = false;
         }
 
         private void ShowHideServerSelectorIfServerAddressParameterSet(string serverAddress)
@@ -664,35 +552,59 @@ namespace Acrolinx.Sdk.Sidebar
 
         private void AcrolinxSidebar_Resize(object sender, EventArgs e)
         {
-            AdjustSidebarZoomLevelByWidth();
+            // TODO handle window resize
         }
 
-        private void AdjustSidebarZoomLevelByWidth()
+        private void webView2_NavigationStarting(object sender, Microsoft.Web.WebView2.Core.CoreWebView2NavigationStartingEventArgs e)
         {
-            try
+            Logger.AcroLog.Debug("Sidebar navigating to: " + e.Uri);
+
+            //TODO: Check if this call should in naviagate complete?
+            SidebarLoaded?.Invoke(this, new SidebarUrlEvenArgs(new Uri(e.Uri)));
+
+            // TODO: Disable context menu. Javascript way event handling.
+        }
+
+        private void webView2_NavigationCompletedAsync(object sender, Microsoft.Web.WebView2.Core.CoreWebView2NavigationCompletedEventArgs e)
+        {
+            if (!e.IsSuccess)
             {
-                if (webBrowser.ReadyState != WebBrowserReadyState.Complete)
-                {
-                    return;
-                }
-
-                object ax = webBrowser.ActiveXInstance;
-                if (ax == null)
-                {
-                    return;
-                }
-
-                dynamic activeX = ax;
-                const int OLECMDID_OPTICAL_ZOOM = 63;
-                const int OLECMDEXECOPT_DONTPROMPTUSER = 2;
-                int zoomFactor = (int)(this.Width * 100 * Util.GraphicUtil.GetScaling() / 300);
-
-                activeX.ExecWB(OLECMDID_OPTICAL_ZOOM, OLECMDEXECOPT_DONTPROMPTUSER, zoomFactor, IntPtr.Zero);
+                Logger.AcroLog.Error("The server doesn't seem to be responding. Is the address correct? Error code: " + e.WebErrorStatus.ToString());
             }
-            catch (Exception e)
+
+            acrolinxPlugin = new AcrolinxPlugin(webView2, this);
+            webView2.CoreWebView2.AddHostObjectToScript("bridge", acrolinxPlugin);
+            acrolinxPlugin.OnAfterObjectSetAsync();
+
+            //TODO: Implement zooming..
+            //TODO: Think if we need more error handling..
+        }
+
+
+
+        private void CoreWebView2_FrameNavigationStarting(object sender, Microsoft.Web.WebView2.Core.CoreWebView2NavigationStartingEventArgs e)
+        {
+            Logger.AcroLog.Debug("Sidebar navigating to: " + e.Uri);
+
+            //TODO: Check if this call should in naviagate complete?
+            SidebarLoaded?.Invoke(this, new SidebarUrlEvenArgs(new Uri(e.Uri)));
+
+            // TODO: Disable context menu. Javascript way event handling.
+        }
+
+        private void CoreWebView2_FrameNavigationCompleted(object sender, Microsoft.Web.WebView2.Core.CoreWebView2NavigationCompletedEventArgs e)
+        {
+            if (!e.IsSuccess)
             {
-                Logger.AcroLog.Warn(e.Message);
+                Logger.AcroLog.Error("The server doesn't seem to be responding. Is the address correct? Error code: " + e.WebErrorStatus.ToString());
             }
+
+            acrolinxPlugin = new AcrolinxPlugin(webView2, this);
+            webView2.CoreWebView2.AddHostObjectToScript("bridge", acrolinxPlugin);
+            acrolinxPlugin.OnAfterObjectSetAsync();
+
+            //TODO: Implement zooming..
+            //TODO: Think if we need more error handling..
         }
     }
 }

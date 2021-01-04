@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Xml;
 
 namespace Acrolinx.Sdk.Sidebar
@@ -56,21 +57,21 @@ namespace Acrolinx.Sdk.Sidebar
         bool SupportCheckSelection { get; set; }
         string StartPageSourceLocation { get; set; }
 
-        string Check(IDocument document);
+        System.Threading.Tasks.Task<string> CheckAsync(IDocument document);
 
-        void CancelCheck();
+        void CancelCheckAsync();
     }
 
     [ContractClassFor(typeof(ISidebar))]
     public abstract class ISidebarContract : ISidebar
     {
-        public string Check(IDocument document)
+        public Task<string> CheckAsync(IDocument document)
         {
             Contract.Requires(document != null);
-            return "";
+            return Task.Run(() => string.Empty);
         }
 
-        public void CancelCheck()
+        public void CancelCheckAsync()
         {
             throw new NotImplementedException();
         }

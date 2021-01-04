@@ -9,35 +9,39 @@ using Acrolinx.Sdk.Sidebar.Util.Logging;
 using System.IO;
 using System.Diagnostics;
 using Newtonsoft.Json;
+using System.Runtime.InteropServices;
+using System.Threading.Tasks;
 
 namespace Acrolinx.Sdk.Sidebar
 {
-    [System.Runtime.InteropServices.ComVisibleAttribute(true)]
+    [ClassInterface(ClassInterfaceType.AutoDual)]
+    [ComVisible(true)]
     public class AcrolinxPlugin
     {
-        private readonly System.Windows.Forms.WebBrowser webBrowser;
+        private readonly Microsoft.Web.WebView2.WinForms.WebView2 webView2;
         private readonly AcrolinxSidebar sidebar;
 
-        internal AcrolinxPlugin(System.Windows.Forms.WebBrowser webBrowser, AcrolinxSidebar sidebar)
+        internal AcrolinxPlugin(Microsoft.Web.WebView2.WinForms.WebView2 webView2, AcrolinxSidebar sidebar)
         {
-            Contract.Requires(webBrowser != null);
+            Contract.Requires(webView2 != null);
             Contract.Requires(sidebar != null);
 
             this.Document = new Document();
-            this.webBrowser = webBrowser;
+            this.webView2 = webView2;
             this.sidebar = sidebar;
         }
 
 
-        public void OnAfterObjectSet()
+        public async Task OnAfterObjectSetAsync()
         {
             Logger.AcroLog.Debug ("OnAfterObjectSet");
 
-            sidebar.Eval("if (!window.console) { window.console = {} }; window.console.logOld = window.console.log; window.console.log = function(msg) { window.external.Log(msg); }" );
-            sidebar.Eval( "window.onerror = function(msg, url, line, col, error) { window.external.OnError(msg, url, line, col, error); }" );
+            await sidebar.EvalAsync("window.bridge = chrome.webview.hostObjects.bridge; if (!window.console) { window.console = {} }; window.console.logOld = window.console.log; window.console.log = function(msg) { window.bridge.Log(msg); }");
+            await sidebar.EvalAsync("window.bridge = chrome.webview.hostObjects.bridge; window.onerror = function(msg, url, line, col, error) { window.bridge.OnError(msg, url, line, col, error); }");
             //The next line would have the effect that the sidebar exchanges objects instead of strings. This seem to fail in case of .NET internet explorer web control...
-            webBrowser.Document.InvokeScript("eval", new object[] { "window.acrolinxStorage = { getItem: function(key) { return window.external.getItem(key); }, removeItem: function(key) { window.external.removeItem(key); }, setItem: function(key, data) { window.external.setItem(key, data); } }" });
-            webBrowser.Document.InvokeScript("eval", new object[] { "window.acrolinxPlugin =   {requestInit: function(){ window.external.requestInit()}, onInitFinished: function(finishResult) {window.external.onInitFinished(JSON.stringify(finishResult))}, configure: function(configuration) { window.external.configure(JSON.stringify(configuration)) }, requestGlobalCheck: function(options) { window.external.requestGlobalCheck(options) }, onCheckResult: function(checkResult) {window.external.onCheckResult(JSON.stringify(checkResult)) }, selectRanges: function(checkId, matches) { window.external.selectRanges(checkId, JSON.stringify(matches))}, replaceRanges: function(checkId, matchesWithReplacements) { window.external.replaceRanges(checkId, JSON.stringify(matchesWithReplacements)) }, download: function(downloadInfo) { window.external.download(JSON.stringify(downloadInfo))}, openWindow: function(openWindowParameters) { window.external.openWindow(JSON.stringify(openWindowParameters)) }, openLogFile: function() {window.external.openLogFile()}}; " });
+
+            // webBrowser.Document.InvokeScript("eval", new object[] { "window.acrolinxStorage = { getItem: function(key) { return window.external.getItem(key); }, removeItem: function(key) { window.external.removeItem(key); }, setItem: function(key, data) { window.external.setItem(key, data); } }" });
+            // webBrowser.Document.InvokeScript("eval", new object[] { "window.acrolinxPlugin =   {requestInit: function(){ window.external.requestInit()}, onInitFinished: function(finishResult) {window.external.onInitFinished(JSON.stringify(finishResult))}, configure: function(configuration) { window.external.configure(JSON.stringify(configuration)) }, requestGlobalCheck: function(options) { window.external.requestGlobalCheck(options) }, onCheckResult: function(checkResult) {window.external.onCheckResult(JSON.stringify(checkResult)) }, selectRanges: function(checkId, matches) { window.external.selectRanges(checkId, JSON.stringify(matches))}, replaceRanges: function(checkId, matchesWithReplacements) { window.external.replaceRanges(checkId, JSON.stringify(matchesWithReplacements)) }, download: function(downloadInfo) { window.external.download(JSON.stringify(downloadInfo))}, openWindow: function(openWindowParameters) { window.external.openWindow(JSON.stringify(openWindowParameters)) }, openLogFile: function() {window.external.openLogFile()}}; " });
         }
 
         public void Log(params dynamic[] o)
@@ -123,13 +127,13 @@ namespace Acrolinx.Sdk.Sidebar
             return true;
         }
 
-        public void requestInit(params object[] o)
+        public async void requestInitAsync(params object[] o)
         {
             Logger.AcroLog.Info("request init");
 
             var initParams = sidebar.InitParameters.ToString();
 
-            sidebar.Eval("acrolinxSidebar.init(" + initParams + ")");
+            await sidebar.EvalAsync("acrolinxSidebar.init(" + initParams + ")");
         }
 
         public void onInitFinished(params object[] o)
