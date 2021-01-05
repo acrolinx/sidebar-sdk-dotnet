@@ -411,7 +411,7 @@ namespace Acrolinx.Sdk.Sidebar
             acrolinxPlugin.Document = document;
             Logger.AcroLog.Debug("Content: " + document.Content);
 
-            var code = "new function(){var c = window.external.getContent(); "
+            var code = "new function(){window.bridge = chrome.webview.hostObjects.bridge; var c = window.bridge.getContent(); "
                 + "return acrolinxSidebar.checkGlobal(c, {inputFormat:'" + document.Format.ToString().ToUpper() + "', requestDescription:{documentReference: '"
                 + document.Reference.Replace("\\", "\\\\").Replace("'", "\\'").Replace("\n", "").Replace("\r", "") + "'}, selection:{ranges:" + SerializeSelection(document.Selections) + "}})}();";
 
@@ -439,7 +439,10 @@ namespace Acrolinx.Sdk.Sidebar
         {
             Logger.AcroLog.Debug("eval(" + code + ")");
             var result = await webView2.ExecuteScriptAsync(code);
-            return JObject.Parse(result);
+            if (result != "null") {
+                return JObject.Parse(result);
+            }
+            return null;
         }
 
         internal void FireRequestCheck(ICheckOptions options)
@@ -574,7 +577,7 @@ namespace Acrolinx.Sdk.Sidebar
             webView2.CoreWebView2.AddHostObjectToScript("bridge", acrolinxPlugin);
 
             // TODO: Stay void? Does returning task make sense here?
-            // await acrolinxPlugin.OnAfterObjectSetAsync();
+            await acrolinxPlugin.OnAfterObjectSetAsync();
 
             //TODO: Implement zooming..
             //TODO: Think if we need more error handling..
@@ -603,7 +606,7 @@ namespace Acrolinx.Sdk.Sidebar
             webView2.CoreWebView2.AddHostObjectToScript("bridge", acrolinxPlugin);
 
             // TODO: Stay void? Does returning task make sense here?
-            // await acrolinxPlugin.OnAfterObjectSetAsync();
+            await acrolinxPlugin.OnAfterObjectSetAsync();
 
             //TODO: Implement zooming..
             //TODO: Think if we need more error handling..
