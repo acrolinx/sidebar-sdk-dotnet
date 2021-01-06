@@ -46,6 +46,7 @@ namespace Acrolinx.Sdk.Sidebar.Util.Logging
                 else
                 {
                     XmlDocument docConfig = new XmlDocument();
+                    docConfig.XmlResolver = null;
                     docConfig.LoadXml(Properties.Config.Config_Resource_log4net);
                     XmlElement eleConfig = docConfig.DocumentElement;
                     XmlConfigurator.Configure(eleConfig);

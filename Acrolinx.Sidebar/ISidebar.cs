@@ -299,6 +299,7 @@ namespace Acrolinx.Sdk.Sidebar
         public string GetEmbedCheckDataAsEmbeddableString(Format inputFormat = Format.Auto)
         {
             XmlDocument doc = new XmlDocument();
+            doc.XmlResolver = null;
             var keyValueString = EmbedCheckToString(EmbedCheckInformation, "=", " ");
 
             inputFormat = (inputFormat == Format.Auto) ? InputFormat : inputFormat;
