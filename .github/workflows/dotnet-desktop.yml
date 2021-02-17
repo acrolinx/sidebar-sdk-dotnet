@@ -1,0 +1,77 @@
+name: .NET Sidebar SDK
+
+on:
+  push:
+    branches: [master]
+  schedule:
+    - cron: "* 12 * * *"
+
+jobs:
+  build:
+    runs-on:
+      windows-latest # For a list of available runner types, refer to
+      # https://help.github.com/en/actions/reference/workflow-syntax-for-github-actions#jobsjob_idruns-on
+
+    env:
+      Solution_Name: Acrolinx.Sidebar.Net.sln
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: mkdir download
+        run: mkdir download
+
+      - name: download sonar
+        run: powershell Invoke-WebRequest -Uri "https://github.com/SonarSource/sonar-scanner-msbuild/releases/download/4.10.0.19059/sonar-scanner-msbuild-4.10.0.19059-net46.zip" -OutFile ".\download\sonarmsbuild.zip"
+
+      - name: extract sonar
+        run: powershell Expand-Archive .\download\sonarmsbuild.zip .\sonar-msbuild\
+
+      # Install the .NET Core workload
+      - name: Install .NET 5.0.x
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 5.0.x
+
+      - name: Nuget restore
+        uses: nuget/setup-nuget@v1
+      - run: nuget restore $env:Solution_Name
+
+      # Add  MSBuild to the PATH: https://github.com/microsoft/setup-msbuild
+      - name: Setup MSBuild.exe
+        uses: microsoft/setup-msbuild@2008f912f56e61277eefaac6d1888b750582aa16
+        env:
+          ACTIONS_ALLOW_UNSECURE_COMMANDS: true
+
+      - name: Set up JDK 11 - required by sonar
+        uses: actions/setup-java@v1
+        with:
+          java-version: 1.11
+
+      - name: begin sonar
+        run: sonar-msbuild\SonarScanner.MSBuild.exe begin /o:"acrolinx" /k:"acrolinx_sidebar-sdk-dotnet" /d:sonar.host.url="https://sonarcloud.io"
+
+      # Restore the application to populate the obj folder with RuntimeIdentifiers
+
+      - name: Restore the application
+        run: msbuild $env:Solution_Name /t:Restore /p:Configuration=Release
+
+      - name: Build the application
+        run: msbuild $env:Solution_Name /p:Configuration=Release
+
+      - name: end sonar
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: sonar-msbuild\SonarScanner.MSBuild.exe end
+
+      - name: tree
+        run: tree
+
+      - uses: actions/upload-artifact@master
+        with:
+          name: build-artifact
+          path: .\Acrolinx.Sidebar\bin\Release\
