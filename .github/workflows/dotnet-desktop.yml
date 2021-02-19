@@ -72,7 +72,7 @@ jobs:
         env:
             CERTIFICATE: ${{ secrets.CERTIFICATE }}
             CERTIFICATE_PASSWORD: ${{ secrets.CERTIFICATE_PASSWORD }}
-            BINARY: ".\Acrolinx.Sidebar\bin\Release\Acrolinx.Sidebar.dll"
+            BINARY: "./Acrolinx.Sidebar/bin/Release/Acrolinx.Sidebar.dll"
             SIGNTOOL: "C:/Program Files (x86)/Windows Kits/10/bin/10.0.17763.0/x86/signtool.exe"
         shell: powershell
         run : |
