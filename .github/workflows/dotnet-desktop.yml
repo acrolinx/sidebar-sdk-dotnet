@@ -79,7 +79,7 @@ jobs:
           $ErrorActionPreference = 'stop'
           $env:CERTIFICATE | Out-File -FilePath .\Certificate
           certutil -decode Certificate AcrolinxCertificate.pfx
-          & $env:SIGNTOOL sign /f AcrolinxCertificate.pfx /p $env:CERTIFICATE_PASSWORD /tr http://timestamp.comodoca.com/authenticode /td sha256 /fd sha256 $env:BINARY
+          & $env:SIGNTOOL sign /f AcrolinxCertificate.pfx /p $env:CERTIFICATE_PASSWORD /tr http://timestamp.digicert.com /td sha256 /fd sha256 $env:BINARY
           del .\Certificate
           del AcrolinxCertificate.pfx
 
