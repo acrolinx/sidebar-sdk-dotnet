@@ -87,7 +87,7 @@ jobs:
         run: nuget pack ".\Acrolinx.Sidebar\Acrolinx.Sidebar.csproj" -properties Configuration=Release -symbols
 
       - name: Add nuget source to github (replacement for nexus)
-        run: nuget source Add -Name "Acrolinx Siderbar SDK(.NET)" -Source "https://nuget.pkg.github.com/acrolinx/sidebar-sdk-dotnet/" -UserName ${{ github.actor }} -Password ${{ secrets.GITHUB_TOKEN }}
+        run: nuget source Add -Name "Acrolinx Siderbar SDK(.NET)" -Source "https://nuget.pkg.github.com/acrolinx/index.json" -UserName ${{ github.actor }} -Password ${{ secrets.GITHUB_TOKEN }}
 
       - name: Push package to github
         shell: powershell
