@@ -93,7 +93,7 @@ jobs:
         shell: powershell
         run: |
           $NugetPackage  = Get-ChildItem .\*.nupkg -Exclude *.symbols.nupkg -name
-          nuget push $NugetPackage -source "GitHub"
+          nuget push $NugetPackage -source "Acrolinx Siderbar SDK(.NET)"
 
       - name: tree
         run: tree
