@@ -89,11 +89,11 @@ jobs:
       - name: Add nuget source to github (replacement for nexus)
         run: nuget source Add -Name "GitHub" -Source "https://nuget.pkg.github.com/acrolinx/index.json" -UserName ${{ github.actor }} -Password ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Push package to github
-        shell: powershell
-        run: |
-          $NugetPackage  = Get-ChildItem .\*.nupkg -Exclude *.symbols.nupkg -name
-          nuget push $NugetPackage -source "GitHub" -ApiKey ${{ secrets.GITHUB_TOKEN }}
+      # - name: Push package to github
+      #   shell: powershell
+      #   run: |
+      #     $NugetPackage  = Get-ChildItem .\*.nupkg -Exclude *.symbols.nupkg -name
+      #     nuget push $NugetPackage -source "GitHub" -ApiKey ${{ secrets.GITHUB_TOKEN }} 
 
       - name: tree
         run: tree
