@@ -83,6 +83,18 @@ jobs:
           del .\Certificate
           del AcrolinxCertificate.pfx
 
+      - name: Create nugget package
+        run: nuget pack "\Acrolinx.Sidebar\Acrolinx.Sidebar.csproj" -properties Configuration=Release -symbols
+
+      - name: Add source to nugget to github (replacement for nexus)
+        run: nuget source Add -Name "Acrolinx Siderbar SDK(.NET)" -Source "https://nuget.pkg.github.com/acrolinx/sidebar-sdk-dotnet/index.json"
+
+      - name: Push package to github
+        shell: powershell
+        run: |
+          $NugetPackage  = Get-ChildItem .\*.nupkg -Exclude *.symbols.nupkg -name
+          nuget push $NugetPackage -source "GitHub"
+
       - name: tree
         run: tree
 

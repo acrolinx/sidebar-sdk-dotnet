@@ -8,3 +8,5 @@ packages
 /.idea
 /acrolinx-sidebar-demo-dotnet.userprefs
 .vs
+nuget.exe
+Acrolinx.Sidebar.*.nupkg
