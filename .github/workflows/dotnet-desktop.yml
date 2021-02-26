@@ -86,7 +86,7 @@ jobs:
       - name: Patch version in nuget spec
         env:
             SHORT_SHA: git rev-parse --short HEAD
-        run:  ((Get-Content -path .\Acrolinx.Sidebar\Acrolinx.Sidebar.nuspec -Raw) -replace '\$version\$',"`$version`$-$env.SHORT_SHA") | Set-Content -Path .\Acrolinx.Sidebar\Acrolinx.Sidebar.nuspec
+        run:  ((Get-Content -path .\Acrolinx.Sidebar\Acrolinx.Sidebar.nuspec -Raw) -replace '\$version\$',"`$version`$-$env:SHORT_SHA") | Set-Content -Path .\Acrolinx.Sidebar\Acrolinx.Sidebar.nuspec
       
       - name: Create nuget package
         run: nuget pack ".\Acrolinx.Sidebar\Acrolinx.Sidebar.csproj" -properties Configuration=Release -symbols
@@ -101,7 +101,7 @@ jobs:
           nuget push $NugetPackage -source "GitHub" -ApiKey ${{ secrets.GITHUB_TOKEN }} 
 
       - name: Restore nuget spec
-        run:  ((Get-Content -path .\Acrolinx.Sidebar\Acrolinx.Sidebar.nuspec -Raw) -replace ('\$version\$-'+$SHORT_SHA), "`$version`$") | Set-Content -Path .\Acrolinx.Sidebar\Acrolinx.Sidebar.nuspec
+        run:  ((Get-Content -path .\Acrolinx.Sidebar\Acrolinx.Sidebar.nuspec -Raw) -replace ('\$version\$-'+$env:SHORT_SHA), "`$version`$") | Set-Content -Path .\Acrolinx.Sidebar\Acrolinx.Sidebar.nuspec
 
       - name: tree
         run: tree
