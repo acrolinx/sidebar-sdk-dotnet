@@ -14,7 +14,7 @@ jobs:
 
     env:
       Solution_Name: Acrolinx.Sidebar.Net.sln
-      SHORT_SHA: ${GITHUB_SHA:7}
+      SHA: ${{ github.sha }}
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -84,7 +84,9 @@ jobs:
           del AcrolinxCertificate.pfx
 
       - name: Patch version in nuget spec
-        run:  ((Get-Content -path .\Acrolinx.Sidebar\Acrolinx.Sidebar.nuspec -Raw) -replace '\$version\$',"`$version`$-$env:SHORT_SHA") | Set-Content -Path .\Acrolinx.Sidebar\Acrolinx.Sidebar.nuspec
+        run:  |
+          $SHORT_SHA = $env:SHA.substring(0,7)
+          ((Get-Content -path .\Acrolinx.Sidebar\Acrolinx.Sidebar.nuspec -Raw) -replace '\$version\$',"`$version`$-$SHORT_SHA") | Set-Content -Path .\Acrolinx.Sidebar\Acrolinx.Sidebar.nuspec
       
       - name: Create nuget package
         run: nuget pack ".\Acrolinx.Sidebar\Acrolinx.Sidebar.csproj" -properties Configuration=Release -symbols
@@ -99,7 +101,9 @@ jobs:
           nuget push $NugetPackage -source "GitHub" -ApiKey ${{ secrets.GITHUB_TOKEN }} 
 
       - name: Restore nuget spec
-        run:  ((Get-Content -path .\Acrolinx.Sidebar\Acrolinx.Sidebar.nuspec -Raw) -replace ('\$version\$-'+$env:SHORT_SHA), "`$version`$") | Set-Content -Path .\Acrolinx.Sidebar\Acrolinx.Sidebar.nuspec
+        run:  |
+          $SHORT_SHA = $env:SHA.substring(0,7)
+          ((Get-Content -path .\Acrolinx.Sidebar\Acrolinx.Sidebar.nuspec -Raw) -replace ('\$version\$-'+$SHORT_SHA), "`$version`$") | Set-Content -Path .\Acrolinx.Sidebar\Acrolinx.Sidebar.nuspec
 
       - name: tree
         run: tree
