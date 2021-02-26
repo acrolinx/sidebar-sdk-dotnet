@@ -46,13 +46,13 @@ jobs:
         env:
           ACTIONS_ALLOW_UNSECURE_COMMANDS: true
 
-      # - name: Set up JDK 11 - required by sonar
-      #   uses: actions/setup-java@v1
-      #   with:
-      #     java-version: 1.11
+      - name: Set up JDK 11 - required by sonar
+        uses: actions/setup-java@v1
+        with:
+          java-version: 1.11
 
-      # - name: begin sonar
-      #   run: sonar-msbuild\SonarScanner.MSBuild.exe begin /o:"acrolinx" /k:"acrolinx_sidebar-sdk-dotnet" /d:sonar.host.url="https://sonarcloud.io"
+      - name: begin sonar
+        run: sonar-msbuild\SonarScanner.MSBuild.exe begin /o:"acrolinx" /k:"acrolinx_sidebar-sdk-dotnet" /d:sonar.host.url="https://sonarcloud.io"
 
       # Restore the application to populate the obj folder with RuntimeIdentifiers
 
@@ -62,11 +62,11 @@ jobs:
       - name: Build the application
         run: msbuild $env:Solution_Name /p:Configuration=Release
 
-      # - name: end sonar
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      #     SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-      #   run: sonar-msbuild\SonarScanner.MSBuild.exe end
+      - name: end sonar
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: sonar-msbuild\SonarScanner.MSBuild.exe end
 
       - name: Code signing
         env:
@@ -83,17 +83,25 @@ jobs:
           del .\Certificate
           del AcrolinxCertificate.pfx
 
+      - name: Patch version in nuget spec
+        env:
+            SHORT_SHA: git rev-parse --short HEAD
+        run:  ((Get-Content -path .\Acrolinx.Sidebar\Acrolinx.Sidebar.nuspec -Raw) -replace '\$version\$',"`$version`$-$env.SHORT_SHA") | Set-Content -Path .\Acrolinx.Sidebar\Acrolinx.Sidebar.nuspec
+      
       - name: Create nuget package
         run: nuget pack ".\Acrolinx.Sidebar\Acrolinx.Sidebar.csproj" -properties Configuration=Release -symbols
 
       - name: Add nuget source to github (replacement for nexus)
         run: nuget source Add -Name "GitHub" -Source "https://nuget.pkg.github.com/acrolinx/index.json" -UserName ${{ github.actor }} -Password ${{ secrets.GITHUB_TOKEN }}
 
-      # - name: Push package to github
-      #   shell: powershell
-      #   run: |
-      #     $NugetPackage  = Get-ChildItem .\*.nupkg -Exclude *.symbols.nupkg -name
-      #     nuget push $NugetPackage -source "GitHub" -ApiKey ${{ secrets.GITHUB_TOKEN }} 
+      - name: Push package to github
+        shell: powershell
+        run: |
+          $NugetPackage  = Get-ChildItem .\*.nupkg -Exclude *.symbols.nupkg -name
+          nuget push $NugetPackage -source "GitHub" -ApiKey ${{ secrets.GITHUB_TOKEN }} 
+
+      - name: Restore nuget spec
+        run:  ((Get-Content -path .\Acrolinx.Sidebar\Acrolinx.Sidebar.nuspec -Raw) -replace ('\$version\$-'+$SHORT_SHA), "`$version`$") | Set-Content -Path .\Acrolinx.Sidebar\Acrolinx.Sidebar.nuspec
 
       - name: tree
         run: tree
