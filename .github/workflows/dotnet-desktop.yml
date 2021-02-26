@@ -14,7 +14,7 @@ jobs:
 
     env:
       Solution_Name: Acrolinx.Sidebar.Net.sln
-
+      SHORT_SHA: ${GITHUB_SHA:7}
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -84,8 +84,6 @@ jobs:
           del AcrolinxCertificate.pfx
 
       - name: Patch version in nuget spec
-        env:
-            SHORT_SHA: git rev-parse --short HEAD
         run:  ((Get-Content -path .\Acrolinx.Sidebar\Acrolinx.Sidebar.nuspec -Raw) -replace '\$version\$',"`$version`$-$env:SHORT_SHA") | Set-Content -Path .\Acrolinx.Sidebar\Acrolinx.Sidebar.nuspec
       
       - name: Create nuget package
