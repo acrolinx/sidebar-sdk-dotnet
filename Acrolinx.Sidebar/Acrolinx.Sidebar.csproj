@@ -204,6 +204,8 @@
     <Compile Include="Util\FileUtil.cs" />
     <Compile Include="Util\GraphicUtil.cs" />
     <Compile Include="Util\Logging\Logger.cs" />
+    <Compile Include="Util\Message\Message.cs" />
+    <Compile Include="Util\Message\MessageType.cs" />
     <EmbeddedResource Include="Properties\Config.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Config.Designer.cs</LastGenOutput>
@@ -239,7 +241,9 @@
     <EmbeddedResource Include="loading.png" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Acrolinx.Startpage.dll" />
+    <Content Include="Acrolinx.Startpage.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Config.Resource.log4net.xml" />
     <Content Include="Acrolinx.Sidebar.log4net.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

@@ -419,6 +419,23 @@ namespace Acrolinx.Sdk.Sidebar
             Logger.AcroLog.Info("Check canceled by Acrolinx Integration.");
         }
 
+        /// <summary>
+        /// Show a message in the Sidebar.
+        /// Supported since Acrolinx Platform 2021.2 (Sidebar version 14.28).
+        /// </summary>
+        public void ShowMessage(Util.Message.Message message)
+        {
+            var title = GetJavaScriptFriendlyString(message.Title);
+            var text = GetJavaScriptFriendlyString(message.Text);
+            var code = $"acrolinxSidebar.showMessage({{type: '{message.Type.ToString().ToLowerInvariant()}', title: '{title}', text: '{text}'}});";
+            Eval(code);
+        }
+
+        private string GetJavaScriptFriendlyString(string input)
+        {
+            return input.Replace("\\", "\\\\").Replace("'", "\\'").Replace("\n", "").Replace("\r", "");
+        }
+
         private string SerializeSelection(IReadOnlyList<IRange> selections)
         {
             if (selections == null)
