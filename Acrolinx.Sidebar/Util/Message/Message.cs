@@ -1,4 +1,4 @@
-﻿/* Copyright (c) 2021 Acrolinx GmbH */
+﻿/* Copyright 2021-present Acrolinx GmbH */
 
 namespace Acrolinx.Sdk.Sidebar.Util.Message
 {
