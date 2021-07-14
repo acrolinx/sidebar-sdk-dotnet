@@ -425,13 +425,14 @@ namespace Acrolinx.Sdk.Sidebar
         /// </summary>
         public void ShowMessage(Util.Message.Message message)
         {
-            var title = GetJavaScriptFriendlyString(message.Title);
-            var text = GetJavaScriptFriendlyString(message.Text);
+            var title = GetJavaScriptFriendlyParameterString(message.Title);
+            var text = GetJavaScriptFriendlyParameterString(message.Text);
             var code = $"acrolinxSidebar.showMessage({{type: '{message.Type.ToString().ToLowerInvariant()}', title: '{title}', text: '{text}'}});";
+            Logger.AcroLog.Info($"Show message on sidebar: {message.Type}: {message.Title} - {message.Text}");
             Eval(code);
         }
 
-        private string GetJavaScriptFriendlyString(string input)
+        private string GetJavaScriptFriendlyParameterString(string input)
         {
             return input.Replace("\\", "\\\\").Replace("'", "\\'").Replace("\n", "").Replace("\r", "");
         }
