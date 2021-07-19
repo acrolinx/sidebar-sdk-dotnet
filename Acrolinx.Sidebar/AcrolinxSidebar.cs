@@ -406,7 +406,7 @@ namespace Acrolinx.Sdk.Sidebar
 
             var code = "new function(){var c = window.external.getContent(); "
                 + "return acrolinxSidebar.checkGlobal(c, {inputFormat:'" + document.Format.ToString().ToUpper() + "', requestDescription:{documentReference: '"
-                + document.Reference.Replace("\\", "\\\\").Replace("'", "\\'").Replace("\n", "").Replace("\r", "") + "'}, selection:{ranges:" + SerializeSelection(document.Selections) + "}})}();";
+                + GetJavaScriptFriendlyParameterString(document.Reference) + "'}, selection:{ranges:" + SerializeSelection(document.Selections) + "}})}();";
 
             dynamic check = Eval(code);
             string checkId = check.checkId;
@@ -417,6 +417,24 @@ namespace Acrolinx.Sdk.Sidebar
             var code = "acrolinxSidebar.onGlobalCheckRejected();";
             Eval(code);
             Logger.AcroLog.Info("Check canceled by Acrolinx Integration.");
+        }
+
+        /// <summary>
+        /// Show a message in the Sidebar.
+        /// Supported since Acrolinx Platform 2021.2 (Sidebar version 14.28).
+        /// </summary>
+        public void ShowMessage(Util.Message.Message message)
+        {
+            var title = GetJavaScriptFriendlyParameterString(message.Title);
+            var text = GetJavaScriptFriendlyParameterString(message.Text);
+            var code = $"acrolinxSidebar.showMessage({{type: '{message.Type.ToString().ToLowerInvariant()}', title: '{title}', text: '{text}'}});";
+            Logger.AcroLog.Info($"Show message on sidebar: {message.Type}: {message.Title} - {message.Text}");
+            Eval(code);
+        }
+
+        private string GetJavaScriptFriendlyParameterString(string input)
+        {
+            return input.Replace("\\", "\\\\").Replace("'", "\\'").Replace("\n", "").Replace("\r", "");
         }
 
         private string SerializeSelection(IReadOnlyList<IRange> selections)
