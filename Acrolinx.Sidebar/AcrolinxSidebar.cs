@@ -406,7 +406,7 @@ namespace Acrolinx.Sdk.Sidebar
 
             var code = "new function(){var c = window.external.getContent(); "
                 + "return acrolinxSidebar.checkGlobal(c, {inputFormat:'" + document.Format.ToString().ToUpper() + "', requestDescription:{documentReference: '"
-                + document.Reference.Replace("\\", "\\\\").Replace("'", "\\'").Replace("\n", "").Replace("\r", "") + "'}, selection:{ranges:" + SerializeSelection(document.Selections) + "}})}();";
+                + GetJavaScriptFriendlyParameterString(document.Reference) + "'}, selection:{ranges:" + SerializeSelection(document.Selections) + "}})}();";
 
             dynamic check = Eval(code);
             string checkId = check.checkId;
