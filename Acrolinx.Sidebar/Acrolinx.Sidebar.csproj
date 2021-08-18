@@ -206,6 +206,7 @@
     <Compile Include="Util\Logging\Logger.cs" />
     <Compile Include="Util\Message\Message.cs" />
     <Compile Include="Util\Message\MessageType.cs" />
+    <Compile Include="Util\NetFrameworkVersionUtil.cs" />
     <EmbeddedResource Include="Properties\Config.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Config.Designer.cs</LastGenOutput>

@@ -15,6 +15,7 @@ using Newtonsoft.Json.Linq;
 using System.Globalization;
 using Acrolinx.Sdk.Sidebar.Storage;
 using System.IO;
+using Acrolinx.Sdk.Sidebar.Util;
 
 namespace Acrolinx.Sdk.Sidebar
 {
@@ -530,6 +531,12 @@ namespace Acrolinx.Sdk.Sidebar
                     sidebarRevisionFound = true;
                     break;
                 }
+            }
+
+            var isNet45OrAboveIsInstalled = NetFrameworkVersionUtil.IsNetFramework45PlusInstalled();
+            if (!isNet45OrAboveIsInstalled)
+            {
+                Logger.AcroLog.Warn("DotNet Framework Version 4.5 or above is not installed locally. The plugin might not work properly.");
             }
 
             if (!sidebarRevisionFound)
