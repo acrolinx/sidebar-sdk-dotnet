@@ -51,6 +51,13 @@ Visual Studio downloads the required dependencies and compiles the Acrolinx .NET
 
 *Note: The dependency download may fail on the first build. This problem can usually be solved by building a second time.*
 
+## Releasing
+
+1. Increment version number in [AssemblyInfo.cs](https://github.com/acrolinx/sidebar-sdk-dotnet/blob/main/Acrolinx.Sidebar/Properties/AssemblyInfo.cs) file.
+2. Commit and push your changes to `main` branch
+3. Create a tag with the same version number.
+4. GitHub Action will run and publish the new version to nuget.org
+
 ## Using the SDK
 
 Have a look at the sample source code provided in the [Acrolinx Sidebar .NET Demo](https://github.com/acrolinx/acrolinx-sidebar-demo-dotnet).
@@ -60,12 +67,12 @@ Use the [Acrolinx Sidebar .NET SDK NuGet package](https://www.nuget.org/packages
 
 1. **Document Model** - Provides [lookup](https://github.com/acrolinx/acrolinx-coding-guidance/blob/master/topics/text-lookup.md)
    functionality.
-2. **Start page** - Provides interactive way to sign in to Acrolinx with built-in error handling.
+2. **Start page** - Provides an interactive way to sign in to Acrolinx with built-in error handling.
 3. **Logger** - Provides [logging](https://github.com/acrolinx/sidebar-sdk-dotnet/blob/master/Acrolinx.Sidebar/Util/Logging/Logger.cs)
    using Log4net.
 4. **Acrolinx Storage**: Applications using the Internet Explorer web browser control may be denied to access LocalStorage.
    The SDK uses its own [storage](https://github.com/acrolinx/sidebar-sdk-dotnet/blob/master/Acrolinx.Sidebar/Storage/RegistryAcrolinxStorage.cs)
-   mechanism using Windows registry:
+   mechanism using the Windows registry:
    + **Registry path**: `HKCU\Software\Acrolinx\Plugins\Storage\[KEY]`
    + **Fallback path**: `HKLM\Software\Acrolinx\Plugins\Storage\[KEY]`
 
