@@ -30,23 +30,11 @@ namespace Acrolinx.Sdk.Sidebar
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AcrolinxSidebar));
-            this.webBrowser = new System.Windows.Forms.WebBrowser();
             this.labelImage = new System.Windows.Forms.Label();
-            this.FixFocusTimer = new System.Windows.Forms.Timer(this.components);
+            this.webView2 = new Microsoft.Web.WebView2.WinForms.WebView2();
+            ((System.ComponentModel.ISupportInitialize)(this.webView2)).BeginInit();
             this.SuspendLayout();
-            // 
-            // webBrowser
-            // 
-            this.webBrowser.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.webBrowser.Location = new System.Drawing.Point(0, 0);
-            this.webBrowser.MinimumSize = new System.Drawing.Size(20, 20);
-            this.webBrowser.Name = "webBrowser";
-            this.webBrowser.Size = new System.Drawing.Size(300, 450);
-            this.webBrowser.TabIndex = 0;
-            this.webBrowser.DocumentCompleted += new System.Windows.Forms.WebBrowserDocumentCompletedEventHandler(this.webBrowser_DocumentCompleted);
-            this.webBrowser.Navigated += new System.Windows.Forms.WebBrowserNavigatedEventHandler(this.webBrowser_Navigated);
             // 
             // labelImage
             // 
@@ -54,31 +42,44 @@ namespace Acrolinx.Sdk.Sidebar
             this.labelImage.Dock = System.Windows.Forms.DockStyle.Fill;
             this.labelImage.Image = ((System.Drawing.Image)(resources.GetObject("labelImage.Image")));
             this.labelImage.Location = new System.Drawing.Point(0, 0);
+            this.labelImage.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.labelImage.Name = "labelImage";
-            this.labelImage.Size = new System.Drawing.Size(300, 450);
+            this.labelImage.Size = new System.Drawing.Size(320, 443);
             this.labelImage.TabIndex = 1;
             // 
-            // FixFocusTimer
+            // webView2
             // 
-            this.FixFocusTimer.Tick += new System.EventHandler(this.OnFixFocusTimerTick);
+            this.webView2.AllowExternalDrop = true;
+            this.webView2.CreationProperties = null;
+            this.webView2.DefaultBackgroundColor = System.Drawing.Color.White;
+            this.webView2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.webView2.Location = new System.Drawing.Point(0, 0);
+            this.webView2.Margin = new System.Windows.Forms.Padding(4);
+            this.webView2.Name = "webView2";
+            this.webView2.Size = new System.Drawing.Size(320, 443);
+            this.webView2.TabIndex = 2;
+            this.webView2.ZoomFactor = 1D;
+            this.webView2.CoreWebView2InitializationCompleted += new System.EventHandler<Microsoft.Web.WebView2.Core.CoreWebView2InitializationCompletedEventArgs>(this.webView2_CoreWebView2InitializationCompleted);
+            this.webView2.NavigationStarting += new System.EventHandler<Microsoft.Web.WebView2.Core.CoreWebView2NavigationStartingEventArgs>(this.webView2_NavigationStarting_1);
+            this.webView2.NavigationCompleted += new System.EventHandler<Microsoft.Web.WebView2.Core.CoreWebView2NavigationCompletedEventArgs>(this.webView2_NavigationCompleted);
             // 
             // AcrolinxSidebar
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.webView2);
             this.Controls.Add(this.labelImage);
-            this.Controls.Add(this.webBrowser);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "AcrolinxSidebar";
-            this.Size = new System.Drawing.Size(300, 450);
+            this.Size = new System.Drawing.Size(320, 443);
             this.Resize += new System.EventHandler(this.AcrolinxSidebar_Resize);
+            ((System.ComponentModel.ISupportInitialize)(this.webView2)).EndInit();
             this.ResumeLayout(false);
 
         }
 
         #endregion
-
-        private System.Windows.Forms.WebBrowser webBrowser;
         private System.Windows.Forms.Label labelImage;
-        private System.Windows.Forms.Timer FixFocusTimer;
+        private Microsoft.Web.WebView2.WinForms.WebView2 webView2;
     }
 }
