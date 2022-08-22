@@ -19,7 +19,7 @@ namespace Acrolinx.Sdk.Sidebar.Properties {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class Config {
@@ -62,14 +62,17 @@ namespace Acrolinx.Sdk.Sidebar.Properties {
         
         /// <summary>
         ///   Looks up a localized string similar to   &lt;log4net&gt;
-        ///    &lt;appender name=&quot;LogFileAppender&quot; type=&quot;log4net.Appender.RollingFileAppender&quot;&gt;
-        ///      &lt;file type=&quot;log4net.Util.PatternString&quot; value=&quot;${TMP}\Acrolinx\logs\%date{yyyy}-%date{MM}-%date{dd}-%property{appname}.log&quot; /&gt;
-        ///      &lt;appendToFile value=&quot;true&quot; /&gt;
-        ///      &lt;rollingStyle value=&quot;Size&quot; /&gt;
-        ///      &lt;maxSizeRollBackups value=&quot;5&quot; /&gt;
-        ///      &lt;maximumFileSize value=&quot;10MB&quot; /&gt;
+        ///    &lt;appender name=&quot;SysTrace&quot; type=&quot;log4net.Appender.TraceAppender, log4net&quot;&gt;
+        ///      &lt;immediateFlush value=&quot;true&quot; /&gt;
         ///      &lt;layout type=&quot;log4net.Layout.PatternLayout&quot;&gt;
-        ///        &lt;conversionPattern value=&quot;%date | [%-5level] %type{1}: %message%newl [rest of string was truncated]&quot;;.
+        ///        &lt;conversionPattern value=&quot;%date | [%-5level] %type{1}: %message%newline&quot; /&gt;
+        ///      &lt;/layout&gt;
+        ///    &lt;/appender&gt;
+        ///    &lt;root&gt;
+        ///      &lt;level value=&quot;Info&quot; /&gt;
+        ///      &lt;appender-ref ref=&quot;SysTrace&quot; /&gt;
+        ///    &lt;/root&gt;
+        ///  &lt;/log4net&gt;.
         /// </summary>
         internal static string Config_Resource_log4net {
             get {
