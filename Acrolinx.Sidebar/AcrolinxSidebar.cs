@@ -148,7 +148,7 @@ namespace Acrolinx.Sdk.Sidebar
             await Initialize();
 
             // TODO: Construct relative url
-            var startpageUrl = @"https://www.google.com";
+            var startpageUrl = @"C:\Users\abhijeetnarvekar\git\sidebar-sdk-dotnet\Acrolinx.Sidebar\Startpage\index.html";
             if (!string.IsNullOrEmpty(startpageUrl))
             {
                 webView2.CoreWebView2.Navigate(startpageUrl);

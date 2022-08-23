@@ -229,6 +229,8 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <None Include="App.config" />
+    <None Include="package-lock.json" />
+    <None Include="package.json" />
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
@@ -241,6 +243,15 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <None Include="Startpage\fonts\roboto-700.woff">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Startpage\fonts\roboto-regular.woff">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Startpage\version.properties">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="toolbox.bmp" />
@@ -256,6 +267,24 @@
     <Content Include="Acrolinx.Sidebar.log4net.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Startpage\files.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Startpage\images\acrolinx-logo.svg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Startpage\index.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Startpage\scripts\main.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Startpage\styles\fonts.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Startpage\styles\index.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Microsoft.Web.WebView2.1.0.1340-prerelease\build\Microsoft.Web.WebView2.targets" Condition="Exists('..\packages\Microsoft.Web.WebView2.1.0.1340-prerelease\build\Microsoft.Web.WebView2.targets')" />
@@ -265,6 +294,16 @@
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\Microsoft.Web.WebView2.1.0.1340-prerelease\build\Microsoft.Web.WebView2.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Web.WebView2.1.0.1340-prerelease\build\Microsoft.Web.WebView2.targets'))" />
   </Target>
+  <Target Name="RunNpmInstall" BeforeTargets="RunStartPageCopy">
+    <Exec Command="npm install" />
+  </Target>
+  <Target Name="RunStartPageCopy" BeforeTargets="PrepareForBuild">
+    <Exec Command="xcopy /S /Y $(ProjectDir)\node_modules\@acrolinx\sidebar-startpage\dist\dist-offline\*.*  $(ProjectDir)\Startpage\" />
+  </Target>
+  <PropertyGroup>
+    <PreBuildEvent>
+    </PreBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
