@@ -148,7 +148,7 @@ namespace Acrolinx.Sdk.Sidebar
             await Initialize();
 
             // TODO: Construct relative url
-            var startpageUrl = @"C:\Users\abhijeetnarvekar\git\sidebar-sdk-dotnet\Acrolinx.Sidebar\Startpage\index.html";
+            var startpageUrl = GetStartPageURL();
             if (!string.IsNullOrEmpty(startpageUrl))
             {
                 webView2.CoreWebView2.Navigate(startpageUrl);
@@ -176,11 +176,11 @@ namespace Acrolinx.Sdk.Sidebar
 
         private string GetStartPageURL()
         {
-            var assemblyLocation = "";
+            string indexHtmlLocation;
             if (string.IsNullOrEmpty(StartPageSourceLocation))
             {
                 Logger.AcroLog.Debug("Default start page source location is used");
-                assemblyLocation = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + @"\Acrolinx.Startpage.dll";
+                indexHtmlLocation = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + @"\Startpage\index.html";
             }
             else
             {
@@ -188,39 +188,11 @@ namespace Acrolinx.Sdk.Sidebar
                 {
                     StartPageSourceLocation = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), StartPageSourceLocation);
                 }
-                assemblyLocation = ((Path.GetFileName(StartPageSourceLocation) != "Acrolinx.Startpage.dll"))
-                    ? StartPageSourceLocation + @"\Acrolinx.Startpage.dll" : StartPageSourceLocation;
+                indexHtmlLocation = ((Path.GetFileName(StartPageSourceLocation) != "index,html"))
+                    ? StartPageSourceLocation + @"\Startpage\index.html" : StartPageSourceLocation;
             }
 
-            var resUrl = BuildResUrl(assemblyLocation);
-            if (string.IsNullOrEmpty(resUrl))
-            {
-                Logger.AcroLog.Error("Failed to locate " + assemblyLocation);
-                SetUiError();
-            }
-            return resUrl;
-        }
-
-        private string BuildResUrl(string assemblyLocation)
-        {
-            Contract.Requires(!string.IsNullOrEmpty(assemblyLocation));
-            var version = Util.FileUtil.GetFileVersion(assemblyLocation);
-            if (!string.IsNullOrEmpty(version))
-            {
-                if (!assemblyLocation.StartsWith(@"\\"))
-                {
-                    return @"res://" + assemblyLocation + "//index.html";
-                }
-
-                var userTempPath = Path.GetTempPath()
-                            + "Acrolinx.Startpage_" + version + ".dll";
-
-
-                return (Util.FileUtil.CopyFileWithRetries(assemblyLocation, userTempPath, 5))
-                    ? @"res://" + userTempPath + "//index.html"
-                    : null;
-            }
-            return null;
+            return indexHtmlLocation;
         }
 
         private void GuessMainComponentAndHostApplication(Assembly callingAssembly)
