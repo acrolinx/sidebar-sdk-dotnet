@@ -607,8 +607,10 @@ namespace Acrolinx.Sdk.Sidebar
         }
 
         private void webView2_CoreWebView2InitializationCompleted(object sender, Microsoft.Web.WebView2.Core.CoreWebView2InitializationCompletedEventArgs e)
-        {
-
+        { 
+            // TODO: Enable after dev work is done
+            // webView2.CoreWebView2.Settings.AreBrowserAcceleratorKeysEnabled = false;
+            // webView2.CoreWebView2.Settings.AreDefaultContextMenusEnabled = false;
         }
     }
 }
