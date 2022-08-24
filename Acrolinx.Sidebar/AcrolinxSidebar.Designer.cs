@@ -62,6 +62,7 @@ namespace Acrolinx.Sdk.Sidebar
             this.webView2.CoreWebView2InitializationCompleted += new System.EventHandler<Microsoft.Web.WebView2.Core.CoreWebView2InitializationCompletedEventArgs>(this.webView2_CoreWebView2InitializationCompleted);
             this.webView2.NavigationStarting += new System.EventHandler<Microsoft.Web.WebView2.Core.CoreWebView2NavigationStartingEventArgs>(this.webView2_NavigationStarting_1);
             this.webView2.NavigationCompleted += new System.EventHandler<Microsoft.Web.WebView2.Core.CoreWebView2NavigationCompletedEventArgs>(this.webView2_NavigationCompleted);
+            this.webView2.Resize += new System.EventHandler(this.webView2_Resize);
             // 
             // AcrolinxSidebar
             // 
