@@ -16,6 +16,7 @@ using System.Globalization;
 using Acrolinx.Sdk.Sidebar.Storage;
 using System.IO;
 using System.Threading.Tasks;
+using Microsoft.Web.WebView2.Core;
 
 namespace Acrolinx.Sdk.Sidebar
 {
@@ -156,9 +157,37 @@ namespace Acrolinx.Sdk.Sidebar
             }
         }
 
-        async System.Threading.Tasks.Task Initialize()
+        async System.Threading.Tasks.Task Initialize(string tempDir = @"C:\Temp")
         {
-            await webView2.EnsureCoreWebView2Async();
+            CoreWebView2Environment webView2Environment = null;
+
+            //set value
+            string tempDir2 = tempDir;
+
+            if (String.IsNullOrEmpty(tempDir2))
+            {
+                //get fully-qualified path to user's temp folder
+                tempDir2 = Path.GetTempPath();
+            }//if
+
+            // webView2.CoreWebView2Ready += WebView2Ctl_CoreWebView2Ready;
+
+            CoreWebView2EnvironmentOptions options = null;
+            //options = new CoreWebView2EnvironmentOptions("--disk-cache-size=200");
+            //options = new CoreWebView2EnvironmentOptions("–incognito ");
+
+            //set webView2 temp folder. The temp folder is used to store webView2
+            //cached objects. If not specified, the folder where the executable
+            //was started will be used. If the user doesn't have write permissions
+            //on that folder, such as C:\Program Files\<your application folder>\,
+            //then webView2 will fail. 
+
+            //webView2Environment = await CoreWebView2Environment.CreateAsync(@"C:\Program Files (x86)\Microsoft\Edge Dev\Application\85.0.564.8", tempDir2, options);
+            webView2Environment = await CoreWebView2Environment.CreateAsync(null, tempDir2, options);
+
+
+
+            await webView2.EnsureCoreWebView2Async(webView2Environment);
         }
 
         private void SetDefaults(string serverAddress)
@@ -614,8 +643,8 @@ namespace Acrolinx.Sdk.Sidebar
             //
             // Core WebView 2
             //
-            this.webView2.CoreWebView2.FrameNavigationStarting += new System.EventHandler<Microsoft.Web.WebView2.Core.CoreWebView2NavigationStartingEventArgs>(this.CoreWebView2_FrameNavigationStarting);
-            this.webView2.CoreWebView2.FrameNavigationCompleted += new System.EventHandler<Microsoft.Web.WebView2.Core.CoreWebView2NavigationCompletedEventArgs>(this.CoreWebView2_FrameNavigationCompletedAsync);
+            //this.webView2.CoreWebView2.FrameNavigationStarting += new System.EventHandler<Microsoft.Web.WebView2.Core.CoreWebView2NavigationStartingEventArgs>(this.CoreWebView2_FrameNavigationStarting);
+            //this.webView2.CoreWebView2.FrameNavigationCompleted += new System.EventHandler<Microsoft.Web.WebView2.Core.CoreWebView2NavigationCompletedEventArgs>(this.CoreWebView2_FrameNavigationCompletedAsync);
 
             // TODO: Enable after dev work is done
             // webView2.CoreWebView2.Settings.AreBrowserAcceleratorKeysEnabled = false;
@@ -624,8 +653,8 @@ namespace Acrolinx.Sdk.Sidebar
 
         private void webView2_Resize(object sender, EventArgs e)
         {
-            webView2.Size = webView2.Parent.ClientSize -  new System.Drawing.Size(webView2.Location);
-            webView2.ZoomFactor = Convert.ToDouble( webView2.Parent.ClientSize.Width) / Convert.ToDouble(300);
+           // webView2.Size = webView2.Parent.ClientSize -  new System.Drawing.Size(webView2.Location);
+            webView2.ZoomFactor = Convert.ToDouble( webView2.Parent.ClientSize.Width) / Convert.ToDouble(600);
         }
     }
 }
