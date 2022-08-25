@@ -127,7 +127,7 @@ namespace Acrolinx.Sdk.Sidebar
             return true;
         }
 
-        public async void requestInit(params object[] o)
+        public async Task requestInit(params object[] o)
         {
             Logger.AcroLog.Info("request init");
 

@@ -15,6 +15,7 @@ using Newtonsoft.Json.Linq;
 using System.Globalization;
 using Acrolinx.Sdk.Sidebar.Storage;
 using System.IO;
+using System.Threading.Tasks;
 
 namespace Acrolinx.Sdk.Sidebar
 {
@@ -402,7 +403,7 @@ namespace Acrolinx.Sdk.Sidebar
         /// Show a message in the Sidebar.
         /// Supported since Acrolinx Platform 2021.2 (Sidebar version 14.28).
         /// </summary>
-        public async void ShowMessage(Util.Message.Message message)
+        public async Task ShowMessage(Util.Message.Message message)
         {
             var title = GetJavaScriptFriendlyParameterString(message.Title);
             var text = GetJavaScriptFriendlyParameterString(message.Text);
@@ -501,7 +502,7 @@ namespace Acrolinx.Sdk.Sidebar
             return webView2.CoreWebView2.Source;
         }
 
-        public async void InvalidateRanges(String checkId, IReadOnlyList<Match> matches)
+        public async Task InvalidateRanges(String checkId, IReadOnlyList<Match> matches)
         {
             Contract.Requires(matches != null);
             Contract.Requires(!string.IsNullOrWhiteSpace(checkId));
