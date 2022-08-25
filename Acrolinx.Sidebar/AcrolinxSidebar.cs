@@ -189,7 +189,7 @@ namespace Acrolinx.Sdk.Sidebar
                 {
                     StartPageSourceLocation = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), StartPageSourceLocation);
                 }
-                indexHtmlLocation = ((Path.GetFileName(StartPageSourceLocation) != "index,html"))
+                indexHtmlLocation = (Path.GetFileName(StartPageSourceLocation) != "index,html")
                     ? StartPageSourceLocation + @"\Startpage\index.html" : StartPageSourceLocation;
             }
 
