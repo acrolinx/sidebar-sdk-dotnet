@@ -157,18 +157,11 @@ namespace Acrolinx.Sdk.Sidebar
             }
         }
 
-        async System.Threading.Tasks.Task Initialize(string tempDir = @"C:\Temp")
+        async System.Threading.Tasks.Task Initialize()
         {
-            CoreWebView2Environment webView2Environment = null;
+            CoreWebView2Environment webView2Environment;
 
-            //set value
-            string tempDir2 = tempDir;
-
-            if (String.IsNullOrEmpty(tempDir2))
-            {
-                //get fully-qualified path to user's temp folder
-                tempDir2 = Path.GetTempPath();
-            }//if
+            var userTempDir = Path.GetTempPath();
 
             // webView2.CoreWebView2Ready += WebView2Ctl_CoreWebView2Ready;
 
@@ -182,10 +175,7 @@ namespace Acrolinx.Sdk.Sidebar
             //on that folder, such as C:\Program Files\<your application folder>\,
             //then webView2 will fail. 
 
-            //webView2Environment = await CoreWebView2Environment.CreateAsync(@"C:\Program Files (x86)\Microsoft\Edge Dev\Application\85.0.564.8", tempDir2, options);
-            webView2Environment = await CoreWebView2Environment.CreateAsync(null, tempDir2, options);
-
-
+            webView2Environment = await CoreWebView2Environment.CreateAsync(null, userTempDir, options);
 
             await webView2.EnsureCoreWebView2Async(webView2Environment);
         }
@@ -574,7 +564,7 @@ namespace Acrolinx.Sdk.Sidebar
 
         private void AcrolinxSidebar_Resize(object sender, EventArgs e)
         {
-            // TODO handle window resize
+            AdjustSidebarZoomLevelByWidth();
         }
 
         private void webView2_NavigationStarting_1(object sender, Microsoft.Web.WebView2.Core.CoreWebView2NavigationStartingEventArgs e)
@@ -584,78 +574,86 @@ namespace Acrolinx.Sdk.Sidebar
             //TODO: Check if this call should in naviagate complete?
             SidebarLoaded?.Invoke(this, new SidebarUrlEvenArgs(new Uri(e.Uri)));
 
-            // TODO: Disable context menu. Javascript way event handling.
         }
 
         private async void webView2_NavigationCompleted(object sender, Microsoft.Web.WebView2.Core.CoreWebView2NavigationCompletedEventArgs e)
         {
+            string internalUrl = GetInternalUrl();
+
             if (!e.IsSuccess)
             {
-                Logger.AcroLog.Error("The server doesn't seem to be responding. Is the address correct? Error code: " + e.WebErrorStatus.ToString());
+                Logger.AcroLog.Error("WebView error status: " + e.WebErrorStatus.ToString());
+                Logger.AcroLog.Error("Webview naviagation HTTP status code: " + e.HttpStatusCode);
+                Logger.AcroLog.Error("WebView naviagtion ID: " + e.NavigationId);
+                Logger.AcroLog.Error("Failed to load startpage at: " + internalUrl);
+
+                return;
+            }
+
+            var html = await webView2.ExecuteScriptAsync("document.documentElement.outerHTML");
+            bool startPageRevisionFound = html.Contains("sidebar-revision");
+
+            if (!startPageRevisionFound)
+            {
+                Logger.AcroLog.Error("Failed to load startpage at: " + internalUrl);
+                SidebarSourceNotReachable?.Invoke(this, new SidebarUrlEvenArgs(new Uri(internalUrl)));
+
+                return;
             }
 
             acrolinxPlugin = new AcrolinxPlugin(webView2, this);
             webView2.CoreWebView2.AddHostObjectToScript("bridge", acrolinxPlugin);
 
-            // TODO: Stay void? Does returning task make sense here?
             await acrolinxPlugin.OnAfterObjectSet();
 
-            //TODO: Implement zooming..
-            //TODO: Think if we need more error handling..
         }
-
 
 
         private void CoreWebView2_FrameNavigationStarting(object sender, Microsoft.Web.WebView2.Core.CoreWebView2NavigationStartingEventArgs e)
         {
-           // Logger.AcroLog.Debug("Sidebar navigating to: " + e.Uri);
+            Logger.AcroLog.Debug("Sidebar navigating to: " + e.Uri);
 
-            //TODO: Check if this call should in naviagate complete?
-            //SidebarLoaded?.Invoke(this, new SidebarUrlEvenArgs(new Uri(e.Uri)));
 
-            // TODO: Disable context menu. Javascript way event handling.
+            foreach (var header in e.RequestHeaders)
+            {
+                Logger.AcroLog.Debug("Header Name: " + header.Key + " Header Value: " + header.Value);
+            }
         }
 
-        private async void CoreWebView2_FrameNavigationCompletedAsync(object sender, Microsoft.Web.WebView2.Core.CoreWebView2NavigationCompletedEventArgs e)
+        private void CoreWebView2_FrameNavigationCompletedAsync(object sender, Microsoft.Web.WebView2.Core.CoreWebView2NavigationCompletedEventArgs e)
         {
-            //if (!e.IsSuccess)
-           // {
-           //     Logger.AcroLog.Error("The server doesn't seem to be responding. Is the address correct? Error code: " + e.WebErrorStatus.ToString());
-           // }
-
-           // acrolinxPlugin = new AcrolinxPlugin(webView2, this);
-           // webView2.CoreWebView2.AddHostObjectToScript("bridge", acrolinxPlugin);
-
-            // TODO: Stay void? Does returning task make sense here?
-           // await acrolinxPlugin.OnAfterObjectSet();
-
-            //TODO: Implement zooming..
-            //TODO: Think if we need more error handling..
-        }
-
-        private void OnFixFocusTimerTick(object sender, EventArgs e)
-        {
-
+            if (!e.IsSuccess)
+            {
+                 Logger.AcroLog.Error("The server doesn't seem to be responding. Is the address correct? Error code: " + e.WebErrorStatus.ToString());
+            }
         }
 
         private void webView2_CoreWebView2InitializationCompleted(object sender, Microsoft.Web.WebView2.Core.CoreWebView2InitializationCompletedEventArgs e)
         {
-            //
-            // Core WebView 2
-            //
-            //this.webView2.CoreWebView2.FrameNavigationStarting += new System.EventHandler<Microsoft.Web.WebView2.Core.CoreWebView2NavigationStartingEventArgs>(this.CoreWebView2_FrameNavigationStarting);
-            //this.webView2.CoreWebView2.FrameNavigationCompleted += new System.EventHandler<Microsoft.Web.WebView2.Core.CoreWebView2NavigationCompletedEventArgs>(this.CoreWebView2_FrameNavigationCompletedAsync);
+            // Access web view instance only after intialization is complete
 
-            // TODO: Enable after dev work is done
-            // webView2.CoreWebView2.Settings.AreBrowserAcceleratorKeysEnabled = false;
-            // webView2.CoreWebView2.Settings.AreDefaultContextMenusEnabled = false;
+            string filter = "*/sidebar/v??/index.html*";
+            webView2.CoreWebView2.AddWebResourceRequestedFilter(filter, CoreWebView2WebResourceContext.All);
+
+            webView2.CoreWebView2.WebResourceRequested += CoreWebView2_WebResourceRequested;
+
+            this.webView2.CoreWebView2.FrameNavigationStarting += new System.EventHandler<Microsoft.Web.WebView2.Core.CoreWebView2NavigationStartingEventArgs>(this.CoreWebView2_FrameNavigationStarting);
+            this.webView2.CoreWebView2.FrameNavigationCompleted += new System.EventHandler<Microsoft.Web.WebView2.Core.CoreWebView2NavigationCompletedEventArgs>(this.CoreWebView2_FrameNavigationCompletedAsync);
+
+            webView2.CoreWebView2.Settings.AreBrowserAcceleratorKeysEnabled = false;
+            webView2.CoreWebView2.Settings.AreDefaultContextMenusEnabled = false;
+
+            AdjustSidebarZoomLevelByWidth();
+        }
+
+        private void CoreWebView2_WebResourceRequested(object sender, CoreWebView2WebResourceRequestedEventArgs e)
+        {
+            Logger.AcroLog.Info("Sidebar requested from: " + e.Request.Uri.ToString());
         }
 
         private void webView2_Resize(object sender, EventArgs e)
         {
-           // webView2.Size = webView2.Parent.ClientSize -  new System.Drawing.Size(webView2.Location);
            AdjustSidebarZoomLevelByWidth();
-           
         }
 
         private void AdjustSidebarZoomLevelByWidth()
