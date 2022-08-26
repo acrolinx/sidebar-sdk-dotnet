@@ -654,7 +654,15 @@ namespace Acrolinx.Sdk.Sidebar
         private void webView2_Resize(object sender, EventArgs e)
         {
            // webView2.Size = webView2.Parent.ClientSize -  new System.Drawing.Size(webView2.Location);
-            webView2.ZoomFactor = Convert.ToDouble( webView2.Parent.ClientSize.Width) / Convert.ToDouble(600);
+           AdjustSidebarZoomLevelByWidth();
+           
+        }
+
+        private void AdjustSidebarZoomLevelByWidth()
+        {
+            var scaling = Util.GraphicUtil.GetScaling();
+            var sidebarConstantWidth = 300;
+            webView2.ZoomFactor = webView2.Parent.ClientSize.Width / (sidebarConstantWidth * scaling);
         }
     }
 }
