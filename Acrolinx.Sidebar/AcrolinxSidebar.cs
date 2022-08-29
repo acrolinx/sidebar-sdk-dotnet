@@ -601,6 +601,8 @@ namespace Acrolinx.Sdk.Sidebar
                 return;
             }
 
+            labelImage.Visible = false;
+
             acrolinxPlugin = new AcrolinxPlugin(webView2, this);
             webView2.CoreWebView2.AddHostObjectToScript("bridge", acrolinxPlugin);
 
