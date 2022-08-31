@@ -149,7 +149,6 @@ namespace Acrolinx.Sdk.Sidebar
             AutoScaleDimensions = new SizeF(96F, 96F);
             await Initialize();
 
-            // TODO: Construct relative url
             var startpageUrl = GetStartPageURL();
             if (!string.IsNullOrEmpty(startpageUrl))
             {
@@ -160,22 +159,8 @@ namespace Acrolinx.Sdk.Sidebar
         async System.Threading.Tasks.Task Initialize()
         {
             CoreWebView2Environment webView2Environment;
-
-            var userTempDir = Path.GetTempPath();
-
-            // webView2.CoreWebView2Ready += WebView2Ctl_CoreWebView2Ready;
-
-            CoreWebView2EnvironmentOptions options = null;
-            //options = new CoreWebView2EnvironmentOptions("--disk-cache-size=200");
-            //options = new CoreWebView2EnvironmentOptions("–incognito ");
-
-            //set webView2 temp folder. The temp folder is used to store webView2
-            //cached objects. If not specified, the folder where the executable
-            //was started will be used. If the user doesn't have write permissions
-            //on that folder, such as C:\Program Files\<your application folder>\,
-            //then webView2 will fail. 
-
-            webView2Environment = await CoreWebView2Environment.CreateAsync(null, userTempDir, options);
+            var userTempDir = Path.GetTempPath() + @"\Acrolinx\webview-" + Util.AssemblyUtil.GetApplicationName();
+            webView2Environment = await CoreWebView2Environment.CreateAsync(null, userTempDir, null);
 
             await webView2.EnsureCoreWebView2Async(webView2Environment);
         }
@@ -196,23 +181,16 @@ namespace Acrolinx.Sdk.Sidebar
 
         private string GetStartPageURL()
         {
-            string indexHtmlLocation;
-            if (string.IsNullOrEmpty(StartPageSourceLocation))
-            {
-                Logger.AcroLog.Debug("Default start page source location is used");
-                indexHtmlLocation = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + @"\Startpage\index.html";
-            }
-            else
-            {
-                if (!Path.IsPathRooted(StartPageSourceLocation))
-                {
-                    StartPageSourceLocation = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), StartPageSourceLocation);
-                }
-                indexHtmlLocation = (Path.GetFileName(StartPageSourceLocation) != "index,html")
-                    ? StartPageSourceLocation + @"\Startpage\index.html" : StartPageSourceLocation;
-            }
+            var archiveFileName = Path.GetTempPath() + @"\Acrolinx\startpage.zip";
+            Util.FileUtil.WriteResourceToFile("Acrolinx.Sdk.Sidebar.startpage.zip", archiveFileName);
 
-            return indexHtmlLocation;
+            var extractPath = Path.GetTempPath() + @"\Acrolinx\startpage-" + Util.AssemblyUtil.GetApplicationName().ToLower();
+            Util.FileUtil.ExtractZipFile(archiveFileName, extractPath, true);
+
+            var hostName = "acrolinx.startpage";
+            webView2.CoreWebView2.SetVirtualHostNameToFolderMapping(hostName, extractPath, CoreWebView2HostResourceAccessKind.Allow);
+
+            return "https://" + hostName + "/dist-offline/index.html";
         }
 
         private void GuessMainComponentAndHostApplication(Assembly callingAssembly)
@@ -633,7 +611,7 @@ namespace Acrolinx.Sdk.Sidebar
         private void webView2_CoreWebView2InitializationCompleted(object sender, Microsoft.Web.WebView2.Core.CoreWebView2InitializationCompletedEventArgs e)
         {
             // Access web view instance only after intialization is complete
-
+      
             string filter = "*/sidebar/v??/index.html*";
             webView2.CoreWebView2.AddWebResourceRequestedFilter(filter, CoreWebView2WebResourceContext.All);
 
@@ -662,7 +640,16 @@ namespace Acrolinx.Sdk.Sidebar
         {
             var scaling = Util.GraphicUtil.GetScaling();
             var sidebarConstantWidth = 300;
-            webView2.ZoomFactor = webView2.Parent.ClientSize.Width / (sidebarConstantWidth * scaling);
+            var width = webView2.Parent.ClientSize.Width;
+            if (width > 0) {
+                webView2.ZoomFactor = webView2.Parent.ClientSize.Width / (sidebarConstantWidth * scaling);
+            }
+        }
+
+        public void Quit()
+        {
+            webView2.Stop();
+            webView2.Dispose();
         }
     }
 }
