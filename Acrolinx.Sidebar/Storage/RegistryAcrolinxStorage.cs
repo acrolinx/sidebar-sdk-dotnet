@@ -66,6 +66,11 @@ namespace Acrolinx.Sdk.Sidebar.Storage
             foreach (var key in keys)
             {
                 var value = regKey?.GetValue(key) as string;
+                if (storage.ContainsKey(key))
+                {
+                    storage.Remove(key);
+                }
+               
                 storage.Add(key, value);
             }
 
