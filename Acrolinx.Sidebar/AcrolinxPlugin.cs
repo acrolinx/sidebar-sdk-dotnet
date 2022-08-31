@@ -39,12 +39,12 @@ namespace Acrolinx.Sdk.Sidebar
             await sidebar.Eval("window.bridge = chrome.webview.hostObjects.bridge; if (!window.console) { window.console = {} }; window.console.logOld = window.console.log; window.console.log = function(msg) { window.bridge.Log(msg); }");
             await sidebar.Eval("window.bridge = chrome.webview.hostObjects.bridge; window.onerror = function(msg, url, line, col, error) { window.bridge.OnError(msg, url, line, col, error); }");
 
-            await InitAcrolinxStorage();
+            await InitAsyncAcrolinxStorage();
 
             await sidebar.Eval("{window.bridge = chrome.webview.hostObjects.bridge; window.acrolinxPlugin =   {requestInit: function(){ window.bridge.requestInit()}, onInitFinished: function(finishResult) {window.bridge.onInitFinished(JSON.stringify(finishResult))}, configure: function(configuration) { window.bridge.configure(JSON.stringify(configuration)) }, requestGlobalCheck: function(options) { window.bridge.requestGlobalCheck(options) }, onCheckResult: function(checkResult) {window.bridge.onCheckResult(JSON.stringify(checkResult)) }, selectRanges: function(checkId, matches) { window.bridge.selectRanges(checkId, JSON.stringify(matches))}, replaceRanges: function(checkId, matchesWithReplacements) { window.bridge.replaceRanges(checkId, JSON.stringify(matchesWithReplacements)) }, download: function(downloadInfo) { window.bridge.download(JSON.stringify(downloadInfo))}, openWindow: function(openWindowParameters) { window.bridge.openWindow(JSON.stringify(openWindowParameters)) }, openLogFile: function() {window.bridge.openLogFile()}}; }");
         }
 
-        private async Task InitAcrolinxStorage()
+        private async Task InitAsyncAcrolinxStorage()
         {
             var storage = sidebar.Storage.GetAllItems();
             var storageJsonStr = storage.ToString();
@@ -55,7 +55,12 @@ namespace Acrolinx.Sdk.Sidebar
                 "removeItem: async function(key) {  window.memoryStorage.delete(key); window.bridge.removeItem(key); }, " +
                 "setItem: async function(key, data) {  window.memoryStorage.set(key, data); await window.bridge.setItem(key, data); } } }");
 
-            Logger.AcroLog.Info("Local storage intialized");
+            if (result == null)
+            {
+                Logger.AcroLog.Error("Local storage intialized failed. ");
+                Logger.AcroLog.Debug("Async storage script: " + storageJsonStr);
+            }
+            
         }
 
         public void Log(params dynamic[] o)
