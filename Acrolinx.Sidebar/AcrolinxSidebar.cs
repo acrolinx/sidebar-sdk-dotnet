@@ -17,6 +17,7 @@ using Acrolinx.Sdk.Sidebar.Storage;
 using System.IO;
 using System.Threading.Tasks;
 using Microsoft.Web.WebView2.Core;
+using System.Diagnostics;
 
 namespace Acrolinx.Sdk.Sidebar
 {
@@ -624,6 +625,14 @@ namespace Acrolinx.Sdk.Sidebar
             webView2.CoreWebView2.Settings.AreDefaultContextMenusEnabled = false;
 
             AdjustSidebarZoomLevelByWidth();
+            EnableWebViewContextMenu();
+        }
+
+        [ConditionalAttribute("DEBUG")]
+        public void EnableWebViewContextMenu()
+        {
+            webView2.CoreWebView2.Settings.AreBrowserAcceleratorKeysEnabled = true;
+            webView2.CoreWebView2.Settings.AreDefaultContextMenusEnabled = true;
         }
 
         private void CoreWebView2_WebResourceRequested(object sender, CoreWebView2WebResourceRequestedEventArgs e)
