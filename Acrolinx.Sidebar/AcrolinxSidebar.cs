@@ -493,12 +493,10 @@ namespace Acrolinx.Sdk.Sidebar
             return !args.Cancel;
         }
 
-        private bool mouseEnteredSidebar = false;
-
         private string GetInternalUrl()
-        {
+        { 
             return webView2.CoreWebView2.Source;
-        }
+        } 
 
         public async Task InvalidateRanges(String checkId, IReadOnlyList<Match> matches)
         {
