@@ -605,14 +605,14 @@ namespace Acrolinx.Sdk.Sidebar
         {
             if (!e.IsSuccess)
             {
-                 Logger.AcroLog.Error("The server doesn't seem to be responding. Is the address correct? Error code: " + e.WebErrorStatus.ToString());
+                Logger.AcroLog.Error("The server doesn't seem to be responding. Is the address correct? Error code: " + e.WebErrorStatus.ToString());
             }
         }
 
         private void webView2_CoreWebView2InitializationCompleted(object sender, Microsoft.Web.WebView2.Core.CoreWebView2InitializationCompletedEventArgs e)
         {
             // Access web view instance only after intialization is complete
-      
+
             string filter = "*/sidebar/v??/index.html*";
             webView2.CoreWebView2.AddWebResourceRequestedFilter(filter, CoreWebView2WebResourceContext.All);
 
@@ -642,7 +642,7 @@ namespace Acrolinx.Sdk.Sidebar
 
         private void webView2_Resize(object sender, EventArgs e)
         {
-           AdjustSidebarZoomLevelByWidth();
+            AdjustSidebarZoomLevelByWidth();
         }
 
         private void AdjustSidebarZoomLevelByWidth()
@@ -650,7 +650,8 @@ namespace Acrolinx.Sdk.Sidebar
             var scaling = Util.GraphicUtil.GetScaling();
             var sidebarConstantWidth = 300;
             var width = webView2.Parent.ClientSize.Width;
-            if (width > 0) {
+            if (width > 0)
+            {
                 webView2.ZoomFactor = webView2.Parent.ClientSize.Width / (sidebarConstantWidth * scaling);
             }
         }
@@ -661,4 +662,4 @@ namespace Acrolinx.Sdk.Sidebar
             webView2.Dispose();
         }
     }
-}
+}         
