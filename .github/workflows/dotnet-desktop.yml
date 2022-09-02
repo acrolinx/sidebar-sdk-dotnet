@@ -61,6 +61,9 @@ jobs:
         with:
           java-version: 1.11
 
+      - name: begin sonar
+        run: sonar-msbuild\SonarScanner.MSBuild.exe begin /o:"acrolinx" /k:"acrolinx_sidebar-sdk-dotnet" /d:sonar.host.url="https://sonarcloud.io"
+
       # Restore the application to populate the obj folder with RuntimeIdentifiers
 
       - name: Restore the application
@@ -75,16 +78,11 @@ jobs:
       - name: Set up MS Test
         run:  '& "$(vswhere -property installationPath)\Common7\IDE\MSTest.exe" /testcontainer:"Acrolinx.Sidebar.Tests\bin\Release\Acrolinx.Sidebar.Tests.dll" /resultsfile:"Acrolinx.Sidebar\bin\Release\testResult.xml"'
 
-      - name: Setup SonarCloud Scan
-        uses: sonarsource/sonarcloud-github-action@master
-        with:
-          args: >
-            -Dsonar.organization=acrolinx
-            -Dsonar.projectKey=acrolinx_sidebar-sdk-dotnet
-            -Dsonar.cs.vscoveragexml.reportsPaths=Acrolinx.Sidebar\bin\Release\testResult.xmlcoverage.xml
+      - name: end sonar
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          SONAR_TOKEN: ${{ secrets.SONARCLOUD_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: sonar-msbuild\SonarScanner.MSBuild.exe end
 
       - name: Code signing
         env:
