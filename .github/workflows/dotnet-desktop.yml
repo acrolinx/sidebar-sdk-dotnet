@@ -74,6 +74,9 @@ jobs:
           $version = git describe --abbrev=0 --tags
           $version = $version.substring(1) + "." + $env:BUILD_NUMBER
           msbuild $env:Solution_Name /p:Configuration=Release /p:Version=$version
+      
+      - name: Run a one-line script
+        run:  '& "$(vswhere -property installationPath)\Common7\IDE\MSTest.exe" /help'
 
       - name: end sonar
         env:
