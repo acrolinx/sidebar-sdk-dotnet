@@ -50,10 +50,11 @@ namespace Acrolinx.Sdk.Sidebar
             var storageJsonStr = storage.ToString();
 
             var result = await sidebar.Eval("{window.bridge = chrome.webview.hostObjects.bridge; " +
-                "window.memoryStorage = new Map(Object.entries(" + storageJsonStr + ")); " +
-                "window.acrolinxStorage = { getItem: function(key) { return window.memoryStorage.get(key); }, " +
-                "removeItem: async function(key) {  window.memoryStorage.delete(key); window.bridge.removeItem(key); }, " +
-                "setItem: async function(key, data) {  window.memoryStorage.set(key, data); await window.bridge.setItem(key, data); } } }");
+                "window.acrolinxStorage = { " +
+                "memoryStorage: new Map(Object.entries(" + storageJsonStr + ")), " +
+                "getItem: function(key) { return this.memoryStorage.get(key); }, " +
+                "removeItem: async function(key) {  this.memoryStorage.delete(key); await window.bridge.removeItem(key); }, " +
+                "setItem: async function(key, data) {  this.memoryStorage.set(key, data); await window.bridge.setItem(key, data); } } }");
 
             if (result == null)
             {
