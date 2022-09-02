@@ -18,6 +18,7 @@ using System.IO;
 using System.Threading.Tasks;
 using Microsoft.Web.WebView2.Core;
 using System.Diagnostics;
+using Acrolinx.Sdk.Sidebar.Util;
 
 namespace Acrolinx.Sdk.Sidebar
 {
@@ -576,6 +577,11 @@ namespace Acrolinx.Sdk.Sidebar
                 SidebarSourceNotReachable?.Invoke(this, new SidebarUrlEvenArgs(new Uri(internalUrl)));
 
                 return;
+            }
+
+            if (!NetFrameworkVersionUtil.IsDotNetFramework472PlusInstalled())
+            {
+                Logger.AcroLog.Warn("DotNet Framework Version 4.7.2 or above is not installed locally. The plugin might not work properly.");
             }
 
             labelImage.Visible = false;

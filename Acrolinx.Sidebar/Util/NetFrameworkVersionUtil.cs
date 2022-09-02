@@ -1,35 +1,30 @@
 ﻿/* Copyright 2021-present Acrolinx GmbH */
 
 using Microsoft.Win32;
+using System;
 
 namespace Acrolinx.Sdk.Sidebar.Util
 {
     internal static class NetFrameworkVersionUtil
     {
-        internal static bool IsNetFramework45PlusInstalled()
-        {
-            // .NET Framework 4.5 or above settings are stored in the following regedit
-            const string subkey = @"SOFTWARE\Microsoft\NET Framework Setup\NDP\v4\Full\";
 
-            using (RegistryKey ndpKey = Registry.LocalMachine.OpenSubKey(subkey))
+        internal static bool IsDotNetFramework472PlusInstalled()
+        {
+
+            using (RegistryKey ndpKey = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry32).OpenSubKey("SOFTWARE\\Microsoft\\NET Framework Setup\\NDP\\v4\\Full\\"))
             {
-                if (ndpKey == null)
-                {
-                    return false;
-                }
-                if (ndpKey.GetValue("Version") != null)
+                int releaseKey = Convert.ToInt32(ndpKey.GetValue("Release"));
+
+                // Value obtained from official MS docs
+                // https://docs.microsoft.com/en-us/dotnet/framework/migration-guide/how-to-determine-which-versions-are-installed?redirectedfrom=MSDN#minimum-version
+                if (releaseKey >= 461808)
                 {
                     return true;
                 }
-                else
-                {
-                    if (ndpKey != null && ndpKey.GetValue("Release") != null)
-                    {
-                        return true;
-                    }
-                }
+                return false;
             }
-            return false;
         }
     }
 }
+
+
