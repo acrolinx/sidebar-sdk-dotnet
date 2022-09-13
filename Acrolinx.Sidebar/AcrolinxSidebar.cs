@@ -106,10 +106,6 @@ namespace Acrolinx.Sdk.Sidebar
             InitParameters.Add("supported", new JObject());
 
             InitializeComponent();
-
-            //TODO: Figure out alternative soln in edge
-            // https://stackoverflow.com/questions/62624373/how-do-you-override-the-contextmenu-that-appears-when-right-clicking-on-webview2
-            // webBrowser.IsWebBrowserContextMenuEnabled = false;
         }
 
         private void RegisterComponents(Assembly callingAssembly)
@@ -632,11 +628,26 @@ namespace Acrolinx.Sdk.Sidebar
             EnableWebViewContextMenu();
         }
 
-        [ConditionalAttribute("DEBUG")]
         public void EnableWebViewContextMenu()
         {
-            webView2.CoreWebView2.Settings.AreBrowserAcceleratorKeysEnabled = true;
-            webView2.CoreWebView2.Settings.AreDefaultContextMenusEnabled = true;
+            var value = RegistryUtil.ReadHKCU(@"Software\Acrolinx\PlugIns", "EnableContextMenu");
+
+            if (value == null)
+            {
+                return;
+            }
+
+            try 
+            {
+                if (Convert.ToInt32(value) > 0)
+                {
+                    webView2.CoreWebView2.Settings.AreBrowserAcceleratorKeysEnabled = true;
+                    webView2.CoreWebView2.Settings.AreDefaultContextMenusEnabled = true;
+                }
+            }
+            catch (Exception e) {
+                Logger.AcroLog.Error("Unable to parser EnableContextMenu to integer." + e.Message);
+            }
         }
 
         private void CoreWebView2_WebResourceRequested(object sender, CoreWebView2WebResourceRequestedEventArgs e)
@@ -651,6 +662,11 @@ namespace Acrolinx.Sdk.Sidebar
 
         private void AdjustSidebarZoomLevelByWidth()
         {
+            if (webView2.Parent == null)
+            {
+                return;
+            }
+
             var scaling = Util.GraphicUtil.GetScaling();
             var sidebarConstantWidth = 300;
             var width = webView2.Parent.ClientSize.Width;
@@ -665,5 +681,6 @@ namespace Acrolinx.Sdk.Sidebar
             webView2.Stop();
             webView2.Dispose();
         }
+
     }
 }         

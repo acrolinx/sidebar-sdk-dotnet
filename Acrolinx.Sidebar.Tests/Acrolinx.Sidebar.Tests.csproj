@@ -123,6 +123,7 @@
     <Compile Include="MultiAdapterTest.cs" />
     <Compile Include="LookupTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RegistryUtilTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Acrolinx.Sidebar\Acrolinx.Sidebar.csproj">
