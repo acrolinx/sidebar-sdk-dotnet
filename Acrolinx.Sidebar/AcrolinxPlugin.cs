@@ -18,7 +18,6 @@ namespace Acrolinx.Sdk.Sidebar
     [ComVisible(true)]
     public class AcrolinxPlugin
     {
-        private readonly Microsoft.Web.WebView2.WinForms.WebView2 webView2;
         private readonly AcrolinxSidebar sidebar;
 
         internal AcrolinxPlugin(Microsoft.Web.WebView2.WinForms.WebView2 webView2, AcrolinxSidebar sidebar)
@@ -27,7 +26,6 @@ namespace Acrolinx.Sdk.Sidebar
             Contract.Requires(sidebar != null);
 
             this.Document = new Document();
-            this.webView2 = webView2;
             this.sidebar = sidebar;
         }
 

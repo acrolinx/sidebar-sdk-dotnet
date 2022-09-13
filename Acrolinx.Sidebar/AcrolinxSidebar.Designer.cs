@@ -44,19 +44,19 @@ namespace Acrolinx.Sdk.Sidebar
             this.labelImage.Location = new System.Drawing.Point(0, 0);
             this.labelImage.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.labelImage.Name = "labelImage";
-            this.labelImage.Size = new System.Drawing.Size(320, 443);
+            this.labelImage.Size = new System.Drawing.Size(300, 450);
             this.labelImage.TabIndex = 1;
             // 
             // webView2
             // 
-            this.webView2.AllowExternalDrop = true;
+            this.webView2.AllowExternalDrop = false;
             this.webView2.CreationProperties = null;
             this.webView2.DefaultBackgroundColor = System.Drawing.Color.White;
             this.webView2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.webView2.Location = new System.Drawing.Point(0, 0);
             this.webView2.Margin = new System.Windows.Forms.Padding(4);
             this.webView2.Name = "webView2";
-            this.webView2.Size = new System.Drawing.Size(320, 443);
+            this.webView2.Size = new System.Drawing.Size(300, 450);
             this.webView2.TabIndex = 2;
             this.webView2.ZoomFactor = 1D;
             this.webView2.CoreWebView2InitializationCompleted += new System.EventHandler<Microsoft.Web.WebView2.Core.CoreWebView2InitializationCompletedEventArgs>(this.webView2_CoreWebView2InitializationCompleted);
@@ -66,13 +66,13 @@ namespace Acrolinx.Sdk.Sidebar
             // 
             // AcrolinxSidebar
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.labelImage);
             this.Controls.Add(this.webView2);
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "AcrolinxSidebar";
-            this.Size = new System.Drawing.Size(320, 443);
+            this.Size = new System.Drawing.Size(300, 450);
             this.Resize += new System.EventHandler(this.AcrolinxSidebar_Resize);
             ((System.ComponentModel.ISupportInitialize)(this.webView2)).EndInit();
             this.ResumeLayout(false);
