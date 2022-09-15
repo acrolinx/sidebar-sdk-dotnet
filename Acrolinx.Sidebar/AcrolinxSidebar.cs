@@ -661,11 +661,5 @@ namespace Acrolinx.Sdk.Sidebar
             }
         }
 
-        public void Quit()
-        {
-            webView2.Stop();
-            webView2.Dispose();
-        }
-
     }
 }         
