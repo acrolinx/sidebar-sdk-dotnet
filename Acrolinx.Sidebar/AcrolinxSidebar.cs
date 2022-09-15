@@ -385,10 +385,10 @@ namespace Acrolinx.Sdk.Sidebar
                 + "return acrolinxSidebar.checkGlobal(c, {inputFormat:'" + document.Format.ToString().ToUpper() + "', requestDescription:{documentReference: '"
                 + document.Reference.Replace("\\", "\\\\").Replace("'", "\\'").Replace("\n", "").Replace("\r", "") + "'}, selection:{ranges:" + SerializeSelection(document.Selections) + "}})})();";
 
-            var check = await Eval(code);
-            return "id0";
-            // TODO: Async eval doesn't return value.
-            //return check.GetValue("checkId").ToString();
+            await Eval(code);
+
+            return "id0" + DateTime.Now.ToString();
+            
         }
         public async void CancelCheck()
         {
