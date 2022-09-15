@@ -423,15 +423,11 @@ namespace Acrolinx.Sdk.Sidebar
             return "[" + String.Join(",", selections.Select(s => "[" + s.Start + ", " + s.End + "]")) + "]";
         }
 
-        internal async System.Threading.Tasks.Task<JObject> Eval(string code)
+        internal async System.Threading.Tasks.Task<dynamic> Eval(string code)
         {
             Logger.AcroLog.Debug("eval(" + code + ")");
-            var result = await webView2.ExecuteScriptAsync(code);
-            if (result != "null")
-            {
-                return JObject.Parse(result);
-            }
-            return null;
+            dynamic result = await webView2.ExecuteScriptAsync(code);
+            return result;
         }
 
         internal void FireRequestCheck(ICheckOptions options)
