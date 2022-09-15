@@ -576,8 +576,12 @@ namespace Acrolinx.Sdk.Sidebar
                 return;
             }
 
+            
+
             var html = await webView2.ExecuteScriptAsync("document.documentElement.outerHTML");
             bool startPageRevisionFound = html.Contains("sidebar-revision");
+
+            DocumentLoaded?.Invoke(this, new SidebarDocumentLoadedEvenArgs(startPageRevisionFound, new Uri(internalUrl)));
 
             if (!startPageRevisionFound)
             {
