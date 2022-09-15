@@ -595,18 +595,6 @@ namespace Acrolinx.Sdk.Sidebar
 
         }
 
-
-        private void CoreWebView2_FrameNavigationStarting(object sender, Microsoft.Web.WebView2.Core.CoreWebView2NavigationStartingEventArgs e)
-        {
-            Logger.AcroLog.Debug("Sidebar navigating to: " + e.Uri);
-
-
-            foreach (var header in e.RequestHeaders)
-            {
-                Logger.AcroLog.Debug("Header Name: " + header.Key + " Header Value: " + header.Value);
-            }
-        }
-
         private void CoreWebView2_FrameNavigationCompletedAsync(object sender, Microsoft.Web.WebView2.Core.CoreWebView2NavigationCompletedEventArgs e)
         {
             if (!e.IsSuccess)
@@ -624,7 +612,6 @@ namespace Acrolinx.Sdk.Sidebar
 
             webView2.CoreWebView2.WebResourceRequested += CoreWebView2_WebResourceRequested;
 
-            this.webView2.CoreWebView2.FrameNavigationStarting += new System.EventHandler<Microsoft.Web.WebView2.Core.CoreWebView2NavigationStartingEventArgs>(this.CoreWebView2_FrameNavigationStarting);
             this.webView2.CoreWebView2.FrameNavigationCompleted += new System.EventHandler<Microsoft.Web.WebView2.Core.CoreWebView2NavigationCompletedEventArgs>(this.CoreWebView2_FrameNavigationCompletedAsync);
 
             webView2.CoreWebView2.Settings.AreBrowserAcceleratorKeysEnabled = false;
