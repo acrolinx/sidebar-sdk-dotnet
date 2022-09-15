@@ -550,6 +550,7 @@ namespace Acrolinx.Sdk.Sidebar
             string filter = "*/sidebar/v??/index.html*";
             webView2.CoreWebView2.AddWebResourceRequestedFilter(filter, CoreWebView2WebResourceContext.All);
             webView2.CoreWebView2.WebResourceRequested += CoreWebView2_WebResourceRequested;
+            this.webView2.CoreWebView2.FrameNavigationCompleted += new System.EventHandler<Microsoft.Web.WebView2.Core.CoreWebView2NavigationCompletedEventArgs>(this.CoreWebView2_FrameNavigationCompleted);
 
             webView2.CoreWebView2.Settings.AreBrowserAcceleratorKeysEnabled = false;
             webView2.CoreWebView2.Settings.AreDefaultContextMenusEnabled = false;
@@ -560,11 +561,7 @@ namespace Acrolinx.Sdk.Sidebar
 
         private void webView2_NavigationStarting(object sender, Microsoft.Web.WebView2.Core.CoreWebView2NavigationStartingEventArgs e)
         {
-            Logger.AcroLog.Debug("Sidebar navigating to: " + e.Uri);
-
-            //TODO: Check if this call should in naviagate complete?
-            SidebarLoaded?.Invoke(this, new SidebarUrlEvenArgs(new Uri(e.Uri)));
-
+            Logger.AcroLog.Debug("Loading startpage from: " + e.Uri);
         }
 
         private async void webView2_NavigationCompleted(object sender, Microsoft.Web.WebView2.Core.CoreWebView2NavigationCompletedEventArgs e)
@@ -607,12 +604,26 @@ namespace Acrolinx.Sdk.Sidebar
             webView2.CoreWebView2.AddHostObjectToScript("bridge", acrolinxPlugin);
 
             await acrolinxPlugin.OnAfterObjectSet();
-
         }
 
         private void CoreWebView2_WebResourceRequested(object sender, CoreWebView2WebResourceRequestedEventArgs e)
         {
             Logger.AcroLog.Info("Sidebar requested from: " + e.Request.Uri.ToString());
+        }
+
+        private void CoreWebView2_FrameNavigationCompleted(object sender, CoreWebView2NavigationCompletedEventArgs e)
+        {
+            if (!e.IsSuccess)
+            {
+                Logger.AcroLog.Error("Sidebar navigation status code: " + e.HttpStatusCode);
+
+                https://docs.microsoft.com/en-us/dotnet/api/microsoft.web.webview2.core.corewebview2weberrorstatus?view=webview2-dotnet-1.0.1343.22#fields
+                Logger.AcroLog.Error("Sidebar navigation failed reason: " + e.WebErrorStatus.ToString());
+
+                return;
+            }
+
+            SidebarLoaded?.Invoke(this, new SidebarUrlEvenArgs(new Uri(GetInternalUrl())));
         }
 
         public void EnableWebViewContextMenu()
