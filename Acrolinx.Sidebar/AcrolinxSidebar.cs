@@ -563,6 +563,8 @@ namespace Acrolinx.Sdk.Sidebar
                 Logger.AcroLog.Error("WebView naviagtion ID: " + e.NavigationId);
                 Logger.AcroLog.Error("Failed to load startpage at: " + internalUrl);
 
+                SetUiError();
+
                 return;
             }
 
@@ -573,6 +575,8 @@ namespace Acrolinx.Sdk.Sidebar
             {
                 Logger.AcroLog.Error("Failed to load startpage at: " + internalUrl);
                 SidebarSourceNotReachable?.Invoke(this, new SidebarUrlEvenArgs(new Uri(internalUrl)));
+
+                SetUiError();
 
                 return;
             }
