@@ -5,9 +5,10 @@ namespace Acrolinx.Sdk.Sidebar.Util
 {
     public class RegistryUtil
     {
+        private static string regKeyPath = @"Software\Acrolinx\PlugIns";
         public static object ReadHKCU(string keyPath, string key)
         {
-            RegistryKey sk = Registry.CurrentUser.OpenSubKey(keyPath);
+            RegistryKey sk = Registry.CurrentUser.OpenSubKey(regKeyPath + keyPath);
             return sk?.GetValue(key);
         }
     }

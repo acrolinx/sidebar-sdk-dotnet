@@ -13,7 +13,7 @@ namespace Acrolinx.Sdk.Sidebar.Tests
         [TestMethod]
         public void ReadKeyFromHKCU()
         {
-            var value = RegistryUtil.ReadHKCU(@"Software\Acrolinx\PlugIns", "randomKey465762");
+            var value = RegistryUtil.ReadHKCU("", "randomKey465762");
             Assert.IsNull(value);
         }
     }

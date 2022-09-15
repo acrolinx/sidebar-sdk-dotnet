@@ -16,6 +16,7 @@ namespace Acrolinx.Sdk.Sidebar
         event SidebarLoadedEventHandler SidebarLoaded;
         event SidebarInitFinishedEventHandler InitFinished;
         event SidebarSourceNotReachableEventHandler SidebarSourceNotReachable;
+        event SidebarDocumentLoadedEventHandler DocumentLoaded;
         event SidebarCheckedEventHandler Checked;
         event SidebarCheckRequestedEventHandler RequestCheck;
         event SidebarSelectRangesEventHandler SelectRanges;
@@ -78,6 +79,8 @@ namespace Acrolinx.Sdk.Sidebar
         public event SidebarInitFinishedEventHandler InitFinished;
 
         public event SidebarSourceNotReachableEventHandler SidebarSourceNotReachable;
+
+        public event SidebarDocumentLoadedEventHandler DocumentLoaded;
 
         public event SidebarCheckedEventHandler Checked;
 

@@ -31,6 +31,8 @@ namespace Acrolinx.Sdk.Sidebar
         public event SidebarInitFinishedEventHandler InitFinished;
         [Description("Called when the sidebar was not able to download its source. Maybe the URL is wrong or the user is offline..."), Category("Sidebar")]
         public event SidebarSourceNotReachableEventHandler SidebarSourceNotReachable;
+        [Description("Called when any kind of html was download. See Eventargs is the downloaded HTML was a valid Acrolinx Sidebar."), Category("Sidebar")]
+        public event SidebarDocumentLoadedEventHandler DocumentLoaded;
         [Description("Called when the sidebar has finished a check."), Category("Sidebar")]
         public event SidebarCheckedEventHandler Checked;
         [Description("Called when sidebar.Check() should be called with extracted document."), Category("Sidebar")]
@@ -630,7 +632,7 @@ namespace Acrolinx.Sdk.Sidebar
 
         public void EnableWebViewContextMenu()
         {
-            var value = RegistryUtil.ReadHKCU(@"Software\Acrolinx\PlugIns", "EnableContextMenu");
+            var value = RegistryUtil.ReadHKCU("", "EnableContextMenu");
 
             if (value == null)
             {
