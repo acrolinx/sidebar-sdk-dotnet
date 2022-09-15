@@ -543,6 +543,22 @@ namespace Acrolinx.Sdk.Sidebar
             AdjustSidebarZoomLevelByWidth();
         }
 
+        private void webView2_CoreWebView2InitializationCompleted(object sender, Microsoft.Web.WebView2.Core.CoreWebView2InitializationCompletedEventArgs e)
+        {
+            // Access web view instance only after intialization is complete
+
+            string filter = "*/sidebar/v??/index.html*";
+            webView2.CoreWebView2.AddWebResourceRequestedFilter(filter, CoreWebView2WebResourceContext.All);
+
+            this.webView2.CoreWebView2.FrameNavigationCompleted += new System.EventHandler<Microsoft.Web.WebView2.Core.CoreWebView2NavigationCompletedEventArgs>(this.CoreWebView2_FrameNavigationCompleted);
+
+            webView2.CoreWebView2.Settings.AreBrowserAcceleratorKeysEnabled = false;
+            webView2.CoreWebView2.Settings.AreDefaultContextMenusEnabled = false;
+
+            AdjustSidebarZoomLevelByWidth();
+            EnableWebViewContextMenu();
+        }
+
         private void webView2_NavigationStarting(object sender, Microsoft.Web.WebView2.Core.CoreWebView2NavigationStartingEventArgs e)
         {
             Logger.AcroLog.Debug("Sidebar navigating to: " + e.Uri);
@@ -595,28 +611,12 @@ namespace Acrolinx.Sdk.Sidebar
 
         }
 
-        private void CoreWebView2_FrameNavigationCompletedAsync(object sender, Microsoft.Web.WebView2.Core.CoreWebView2NavigationCompletedEventArgs e)
+        private void CoreWebView2_FrameNavigationCompleted(object sender, Microsoft.Web.WebView2.Core.CoreWebView2NavigationCompletedEventArgs e)
         {
             if (!e.IsSuccess)
             {
                 Logger.AcroLog.Error("The server doesn't seem to be responding. Is the address correct? Error code: " + e.WebErrorStatus.ToString());
             }
-        }
-
-        private void webView2_CoreWebView2InitializationCompleted(object sender, Microsoft.Web.WebView2.Core.CoreWebView2InitializationCompletedEventArgs e)
-        {
-            // Access web view instance only after intialization is complete
-
-            string filter = "*/sidebar/v??/index.html*";
-            webView2.CoreWebView2.AddWebResourceRequestedFilter(filter, CoreWebView2WebResourceContext.All);
-
-            this.webView2.CoreWebView2.FrameNavigationCompleted += new System.EventHandler<Microsoft.Web.WebView2.Core.CoreWebView2NavigationCompletedEventArgs>(this.CoreWebView2_FrameNavigationCompletedAsync);
-
-            webView2.CoreWebView2.Settings.AreBrowserAcceleratorKeysEnabled = false;
-            webView2.CoreWebView2.Settings.AreDefaultContextMenusEnabled = false;
-
-            AdjustSidebarZoomLevelByWidth();
-            EnableWebViewContextMenu();
         }
 
         public void EnableWebViewContextMenu()
