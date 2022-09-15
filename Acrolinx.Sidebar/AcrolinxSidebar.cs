@@ -549,7 +549,9 @@ namespace Acrolinx.Sdk.Sidebar
 
             string filter = "*/sidebar/v??/index.html*";
             webView2.CoreWebView2.AddWebResourceRequestedFilter(filter, CoreWebView2WebResourceContext.All);
+            webView2.CoreWebView2.WebResourceRequested += CoreWebView2_WebResourceRequested;
 
+            this.webView2.CoreWebView2.FrameNavigationStarting += new System.EventHandler<Microsoft.Web.WebView2.Core.CoreWebView2NavigationStartingEventArgs>(this.CoreWebView2_FrameNavigationStarting);
             this.webView2.CoreWebView2.FrameNavigationCompleted += new System.EventHandler<Microsoft.Web.WebView2.Core.CoreWebView2NavigationCompletedEventArgs>(this.CoreWebView2_FrameNavigationCompleted);
 
             webView2.CoreWebView2.Settings.AreBrowserAcceleratorKeysEnabled = false;
@@ -611,12 +613,9 @@ namespace Acrolinx.Sdk.Sidebar
 
         }
 
-        private void CoreWebView2_FrameNavigationCompleted(object sender, Microsoft.Web.WebView2.Core.CoreWebView2NavigationCompletedEventArgs e)
+        private void CoreWebView2_WebResourceRequested(object sender, CoreWebView2WebResourceRequestedEventArgs e)
         {
-            if (!e.IsSuccess)
-            {
-                Logger.AcroLog.Error("The server doesn't seem to be responding. Is the address correct? Error code: " + e.WebErrorStatus.ToString());
-            }
+            Logger.AcroLog.Info("Sidebar requested from: " + e.Request.Uri.ToString());
         }
 
         public void EnableWebViewContextMenu()
