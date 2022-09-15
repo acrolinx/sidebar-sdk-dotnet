@@ -610,8 +610,6 @@ namespace Acrolinx.Sdk.Sidebar
             string filter = "*/sidebar/v??/index.html*";
             webView2.CoreWebView2.AddWebResourceRequestedFilter(filter, CoreWebView2WebResourceContext.All);
 
-            webView2.CoreWebView2.WebResourceRequested += CoreWebView2_WebResourceRequested;
-
             this.webView2.CoreWebView2.FrameNavigationCompleted += new System.EventHandler<Microsoft.Web.WebView2.Core.CoreWebView2NavigationCompletedEventArgs>(this.CoreWebView2_FrameNavigationCompletedAsync);
 
             webView2.CoreWebView2.Settings.AreBrowserAcceleratorKeysEnabled = false;
@@ -640,11 +638,6 @@ namespace Acrolinx.Sdk.Sidebar
             catch (Exception e) {
                 Logger.AcroLog.Error("Unable to parser EnableContextMenu to integer." + e.Message);
             }
-        }
-
-        private void CoreWebView2_WebResourceRequested(object sender, CoreWebView2WebResourceRequestedEventArgs e)
-        {
-            Logger.AcroLog.Info("Sidebar requested from: " + e.Request.Uri.ToString());
         }
 
         private void webView2_Resize(object sender, EventArgs e)
