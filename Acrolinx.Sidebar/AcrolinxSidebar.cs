@@ -128,8 +128,8 @@ namespace Acrolinx.Sdk.Sidebar
         }
         public async System.Threading.Tasks.Task Start()
         {
-            await this.Start(null);
             RegisterComponents(Assembly.GetCallingAssembly());
+            await this.Start(null);
         }
 
         /// <summary>

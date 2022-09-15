@@ -56,7 +56,7 @@ namespace Acrolinx.Sdk.Sidebar
 
             if (result == null)
             {
-                Logger.AcroLog.Error("Local storage intialized failed. ");
+                Logger.AcroLog.Error("Local storage initialization failed. ");
                 Logger.AcroLog.Debug("Async storage script: " + storageJsonStr);
             }
             
