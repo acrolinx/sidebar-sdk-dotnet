@@ -617,7 +617,7 @@ namespace Acrolinx.Sdk.Sidebar
             {
                 Logger.AcroLog.Error("Sidebar navigation status code: " + e.HttpStatusCode);
 
-                https://docs.microsoft.com/en-us/dotnet/api/microsoft.web.webview2.core.corewebview2weberrorstatus?view=webview2-dotnet-1.0.1343.22#fields
+                // https://docs.microsoft.com/en-us/dotnet/api/microsoft.web.webview2.core.corewebview2weberrorstatus
                 Logger.AcroLog.Error("Sidebar navigation failed reason: " + e.WebErrorStatus.ToString());
 
                 return;
