@@ -543,7 +543,7 @@ namespace Acrolinx.Sdk.Sidebar
             AdjustSidebarZoomLevelByWidth();
         }
 
-        private void webView2_NavigationStarting_1(object sender, Microsoft.Web.WebView2.Core.CoreWebView2NavigationStartingEventArgs e)
+        private void webView2_NavigationStarting(object sender, Microsoft.Web.WebView2.Core.CoreWebView2NavigationStartingEventArgs e)
         {
             Logger.AcroLog.Debug("Sidebar navigating to: " + e.Uri);
 
