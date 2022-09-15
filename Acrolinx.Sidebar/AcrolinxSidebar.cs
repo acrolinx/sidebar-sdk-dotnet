@@ -551,9 +551,6 @@ namespace Acrolinx.Sdk.Sidebar
             webView2.CoreWebView2.AddWebResourceRequestedFilter(filter, CoreWebView2WebResourceContext.All);
             webView2.CoreWebView2.WebResourceRequested += CoreWebView2_WebResourceRequested;
 
-            this.webView2.CoreWebView2.FrameNavigationStarting += new System.EventHandler<Microsoft.Web.WebView2.Core.CoreWebView2NavigationStartingEventArgs>(this.CoreWebView2_FrameNavigationStarting);
-            this.webView2.CoreWebView2.FrameNavigationCompleted += new System.EventHandler<Microsoft.Web.WebView2.Core.CoreWebView2NavigationCompletedEventArgs>(this.CoreWebView2_FrameNavigationCompleted);
-
             webView2.CoreWebView2.Settings.AreBrowserAcceleratorKeysEnabled = false;
             webView2.CoreWebView2.Settings.AreDefaultContextMenusEnabled = false;
 
