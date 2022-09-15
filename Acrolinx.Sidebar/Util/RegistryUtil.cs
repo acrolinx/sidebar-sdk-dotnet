@@ -3,7 +3,7 @@ using Microsoft.Win32;
 
 namespace Acrolinx.Sdk.Sidebar.Util
 {
-    public class RegistryUtil
+    public static class RegistryUtil
     {
         private static string regKeyPath = @"Software\Acrolinx\PlugIns";
         public static object ReadHKCU(string keyPath, string key)

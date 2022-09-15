@@ -55,11 +55,11 @@ namespace Acrolinx.Sdk.Sidebar.Storage
             return storage;
         }
 
-        private JObject PopulateStorage(RegistryKey regKey, JObject storage)
+        private void PopulateStorage(RegistryKey regKey, JObject storage)
         {
             if (regKey == null)
             {
-                return storage;
+                return;
             }
 
             var keys = regKey.GetValueNames();
@@ -74,7 +74,6 @@ namespace Acrolinx.Sdk.Sidebar.Storage
                 storage.Add(key, value);
             }
 
-            return storage;
         }
 
         public void RemoveItem(string key)
