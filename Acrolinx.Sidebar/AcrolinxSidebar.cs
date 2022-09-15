@@ -634,7 +634,6 @@ namespace Acrolinx.Sdk.Sidebar
             {
                 if (Convert.ToInt32(value) > 0)
                 {
-                    webView2.CoreWebView2.Settings.AreBrowserAcceleratorKeysEnabled = true;
                     webView2.CoreWebView2.Settings.AreDefaultContextMenusEnabled = true;
                 }
             }
