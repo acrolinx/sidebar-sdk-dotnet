@@ -387,7 +387,7 @@ namespace Acrolinx.Sdk.Sidebar
 
             await Eval(code);
 
-            return "id0" + DateTime.Now.ToString();
+            return "id0-" + DateTime.Now.ToString();
             
         }
         public async void CancelCheck()
