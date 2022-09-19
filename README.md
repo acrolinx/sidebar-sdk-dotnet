@@ -37,6 +37,18 @@ Before you start developing your own integration, you might benefit from looking
 * the [Acrolinx SDKs](https://github.com/acrolinx?q=sdk), and
 * the [Acrolinx Demo Projects](https://github.com/acrolinx?q=demo).
 
+
+## Requirements
+
+This SDK uses Microsoft WebView 2 based on Edge Chromoium to render the Sidebar.
+
+The Evergreen WebView2 Runtime will be included as part of the Windows 11 operating system.
+
+For prior operating systems - Please install WebView 2 evergreen runtime.
+
+Download and install "Evergreen Standalone Installer" from [Microsoft](https://developer.microsoft.com/en-us/microsoft-edge/webview2/)
+
+
 ## Getting Started
 
 ## Build Locally

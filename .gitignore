@@ -10,3 +10,13 @@ packages
 .vs
 nuget.exe
 Acrolinx.Sidebar.*.nupkg
+/Acrolinx.Sidebar/Startpage/fonts/roboto-700.woff
+/Acrolinx.Sidebar/Startpage/fonts/roboto-regular.woff
+/Acrolinx.Sidebar/Startpage/images/acrolinx-logo.svg
+/Acrolinx.Sidebar/Startpage/scripts/main.js
+/Acrolinx.Sidebar/Startpage/styles/fonts.css
+/Acrolinx.Sidebar/Startpage/styles/index.css
+/Acrolinx.Sidebar/Startpage/files.txt
+/Acrolinx.Sidebar/Startpage/index.html
+/Acrolinx.Sidebar/Startpage/version.properties
+/Acrolinx.Sidebar/startpage.zip

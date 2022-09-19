@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Xml;
 
 namespace Acrolinx.Sdk.Sidebar
@@ -56,7 +57,7 @@ namespace Acrolinx.Sdk.Sidebar
         bool SupportCheckSelection { get; set; }
         string StartPageSourceLocation { get; set; }
 
-        string Check(IDocument document);
+        System.Threading.Tasks.Task<string> Check(IDocument document);
 
         void CancelCheck();
     }
@@ -64,10 +65,10 @@ namespace Acrolinx.Sdk.Sidebar
     [ContractClassFor(typeof(ISidebar))]
     public abstract class ISidebarContract : ISidebar
     {
-        public string Check(IDocument document)
+        public Task<string> Check(IDocument document)
         {
             Contract.Requires(document != null);
-            return "";
+            return Task.Run(() => string.Empty);
         }
 
         public void CancelCheck()
@@ -281,7 +282,7 @@ namespace Acrolinx.Sdk.Sidebar
 
     public class ProcessEmbedCheckDataEventArgs : EventArgs
     {
-        internal ProcessEmbedCheckDataEventArgs(IDictionary<string,string> embedCheckInformation, Format inputFormat)
+        internal ProcessEmbedCheckDataEventArgs(IDictionary<string, string> embedCheckInformation, Format inputFormat)
         {
             EmbedCheckInformation = embedCheckInformation;
             InputFormat = inputFormat;
@@ -343,5 +344,5 @@ namespace Acrolinx.Sdk.Sidebar
     public delegate void SidebarSelectRangesEventHandler(object sender, MatchesEventArgs e);
     public delegate void SidebarReplaceRangesEventHandler(object sender, MatchesWithReplacementEventArgs e);
     public delegate void SidebarProcessEmbedCheckDataEventHandler(object sender, ProcessEmbedCheckDataEventArgs e);
-    public delegate void SidebarOpenBrowserEventHandler(object sender, OpenBrowserEventArgs e); 
+    public delegate void SidebarOpenBrowserEventHandler(object sender, OpenBrowserEventArgs e);
 }

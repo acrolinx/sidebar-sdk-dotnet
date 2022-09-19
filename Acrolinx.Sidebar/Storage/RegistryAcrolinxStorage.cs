@@ -1,5 +1,6 @@
 ﻿using Acrolinx.Sdk.Sidebar.Util.Logging;
 using Microsoft.Win32;
+using Newtonsoft.Json.Linq;
 using System;
 
 namespace Acrolinx.Sdk.Sidebar.Storage
@@ -40,6 +41,41 @@ namespace Acrolinx.Sdk.Sidebar.Storage
             }
             return value;
         }
+
+        public JObject GetAllItems()
+        {
+            var storage = new JObject();
+            
+            RegistryKey lsk = Registry.LocalMachine.OpenSubKey(keyPath);
+            PopulateStorage(lsk, storage);
+
+            RegistryKey csk = Registry.CurrentUser.OpenSubKey(keyPath);
+            PopulateStorage(csk, storage);
+
+            return storage;
+        }
+
+        private void PopulateStorage(RegistryKey regKey, JObject storage)
+        {
+            if (regKey == null)
+            {
+                return;
+            }
+
+            var keys = regKey.GetValueNames();
+            foreach (var key in keys)
+            {
+                var value = regKey?.GetValue(key) as string;
+                if (storage.ContainsKey(key))
+                {
+                    storage.Remove(key);
+                }
+               
+                storage.Add(key, value);
+            }
+
+        }
+
         public void RemoveItem(string key)
         {
             RegistryKey sk = Registry.CurrentUser.OpenSubKey(keyPath, true);
@@ -57,6 +93,8 @@ namespace Acrolinx.Sdk.Sidebar.Storage
             RegistryKey sk = Registry.CurrentUser.CreateSubKey(keyPath);
             sk.SetValue(key, value);
         }
+
+        
 
     }
 }

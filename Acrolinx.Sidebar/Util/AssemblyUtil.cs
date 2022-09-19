@@ -115,5 +115,11 @@ namespace Acrolinx.Sdk.Sidebar.Util
 
             return appInfo;
         }
+
+        public static string GetApplicationName()
+        {
+            FileVersionInfo fvi = FileVersionInfo.GetVersionInfo(System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName);
+            return fvi.OriginalFilename;
+        }
     }
 }

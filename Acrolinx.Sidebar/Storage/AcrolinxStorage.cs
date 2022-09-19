@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Newtonsoft.Json.Linq;
 
 namespace Acrolinx.Sdk.Sidebar.Storage
 {
@@ -13,5 +9,7 @@ namespace Acrolinx.Sdk.Sidebar.Storage
         void RemoveItem(string key);
 
         void SetItem(string key, string data);
+
+        JObject GetAllItems();
     }
 }

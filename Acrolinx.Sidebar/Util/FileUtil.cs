@@ -4,6 +4,7 @@ using System;
 using System.Diagnostics;
 using System.Diagnostics.Contracts;
 using System.IO;
+using System.Reflection;
 using System.Threading;
 using Acrolinx.Sdk.Sidebar.Util.Logging;
 
@@ -39,6 +40,19 @@ namespace Acrolinx.Sdk.Sidebar.Util
             return false;
         }
 
+        public static void CopyStream(Stream stream, string destPath)
+        {
+            using (var fileStream = new FileStream(destPath, FileMode.Create, FileAccess.Write))
+            {
+                stream.CopyTo(fileStream);
+            }
+        }
+
+        public static string GetAppDataPath()
+        {
+            return Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+        }
+
         public static string GetFileVersion(string filePath)
         {
             Contract.Requires(!string.IsNullOrEmpty(filePath));
@@ -52,6 +66,38 @@ namespace Acrolinx.Sdk.Sidebar.Util
                 Logger.AcroLog.Debug(ex.Message);
             }
             return version;
+        }
+
+        public static void WriteResourceToFile(string resourceName, string fileName)
+        {
+            using (var resource = Assembly.GetExecutingAssembly().GetManifestResourceStream(resourceName))
+            {
+                using (var file = new FileStream(fileName, FileMode.Create, FileAccess.Write))
+                {
+                    resource.CopyTo(file);
+                }
+            }
+        }
+
+        public static void ExtractZipFile(string sourcePath, string destinationPath, bool overwrite = false)
+        {
+            if (overwrite)
+            {
+                System.IO.DirectoryInfo di = new DirectoryInfo(destinationPath);
+
+                if (di.Exists)
+                {
+                    foreach (FileInfo file in di.GetFiles())
+                    {
+                        file.Delete();
+                    }
+                    foreach (DirectoryInfo dir in di.GetDirectories())
+                    {
+                        dir.Delete(true);
+                    }
+                }
+            }
+            System.IO.Compression.ZipFile.ExtractToDirectory(sourcePath, destinationPath);
         }
     }
 }

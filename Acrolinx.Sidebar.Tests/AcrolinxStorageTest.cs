@@ -31,6 +31,27 @@ namespace Acrolinx.Sdk.Sidebar.Tests
         }
 
         [TestMethod]
+        public void GetAllItems()
+        {
+            RegistryAcrolinxStorage storage = RegistryAcrolinxStorage.Instance;
+
+            storage.SetItem("acro.test.token1", "tokendata1");
+            storage.SetItem("acro.test.token2", "tokendata2");
+            storage.SetItem("acro.test.token3", "tokendata3");
+            storage.SetItem("acro.test.token4", "tokendata4");
+            storage.SetItem("acro.test.token5", "tokendata5");
+
+
+            var items = storage.GetAllItems();
+
+            Assert.AreEqual(items.GetValue("acro.test.token1"), "tokendata1");
+            Assert.AreEqual(items.GetValue("acro.test.token2"), "tokendata2");
+            Assert.AreEqual(items.GetValue("acro.test.token3"), "tokendata3");
+            Assert.AreEqual(items.GetValue("acro.test.token4"), "tokendata4");
+            Assert.AreEqual(items.GetValue("acro.test.token5"), "tokendata5");
+        }
+
+        [TestMethod]
         public void GetItemFromHKLM()
         {
             RegistryAcrolinxStorage storage = RegistryAcrolinxStorage.Instance;
