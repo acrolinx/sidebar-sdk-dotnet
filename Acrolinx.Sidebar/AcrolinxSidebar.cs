@@ -550,6 +550,7 @@ namespace Acrolinx.Sdk.Sidebar
 
             webView2.CoreWebView2.Settings.AreBrowserAcceleratorKeysEnabled = false;
             webView2.CoreWebView2.Settings.AreDefaultContextMenusEnabled = false;
+            webView2.CoreWebView2.Settings.IsStatusBarEnabled = false;
 
             AdjustSidebarZoomLevelByWidth();
             EnableWebViewContextMenu();
