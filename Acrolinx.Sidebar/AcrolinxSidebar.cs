@@ -104,7 +104,7 @@ namespace Acrolinx.Sdk.Sidebar
             InitParameters.Add("clientLocale", "");
             InitParameters.Add("logFileLocation", Logger.Directory);
             InitParameters.Add("clientComponents", new JArray());
-            InitParameters.Add("minimumSidebarVersion", "14.5.0");
+            InitParameters.Add("minimumSidebarVersion", "15.0.0");
             InitParameters.Add("supported", new JObject());
 
             InitializeComponent();
