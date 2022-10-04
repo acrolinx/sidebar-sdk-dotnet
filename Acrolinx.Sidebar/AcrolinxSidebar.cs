@@ -187,7 +187,7 @@ namespace Acrolinx.Sdk.Sidebar
             var extractPath = Path.GetTempPath() + @"\Acrolinx\startpage-" + Util.AssemblyUtil.GetApplicationName().ToLower();
             Util.FileUtil.ExtractZipFile(archiveFileName, extractPath, true);
 
-            var hostName = "acrolinx.sdk";
+            var hostName = "extensions.acrolinx.cloud";
             webView2.CoreWebView2.SetVirtualHostNameToFolderMapping(hostName, extractPath, CoreWebView2HostResourceAccessKind.Allow);
 
             return "https://" + hostName + "/dist-offline/index.html";
