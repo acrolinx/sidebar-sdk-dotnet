@@ -1,4 +1,6 @@
-﻿namespace Acrolinx.Sdk.Sidebar.Documents
+﻿using Newtonsoft.Json.Linq;
+
+namespace Acrolinx.Sdk.Sidebar.Documents
 {
     public class CheckOptionsProxy : ICheckOptions
     {
@@ -10,7 +12,7 @@
 
         public CheckOptionsProxy(dynamic options)
         {
-            this.options = options;
+            this.options = JObject.Parse(options);
         }
         public bool Selection
         {

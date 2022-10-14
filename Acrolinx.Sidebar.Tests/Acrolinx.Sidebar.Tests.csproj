@@ -126,12 +126,6 @@
     <Compile Include="RegistryUtilTest.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Acrolinx.Sidebar\Acrolinx.Sidebar.csproj">
-      <Project>{9af2b333-9701-4d7f-af9a-e05e929712c9}</Project>
-      <Name>Acrolinx.Sidebar</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config">
       <SubType>Designer</SubType>
@@ -139,6 +133,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="acrolinx.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Acrolinx.Sidebar\Acrolinx.Sidebar.csproj">
+      <Project>{9af2b333-9701-4d7f-af9a-e05e929712c9}</Project>
+      <Name>Acrolinx.Sidebar</Name>
+    </ProjectReference>
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
