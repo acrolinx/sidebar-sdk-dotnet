@@ -41,10 +41,10 @@ jobs:
           ACTIONS_ALLOW_UNSECURE_COMMANDS: true
       
       - name: SonarCloud Scan
-        uses: sonarsource/sonarcloud-github-action@master
+        uses: sonarsource/sonarcloud-github-action@v1.9.1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONARCLOUD_TOKEN }}
 
       # Install the .NET Core workload
       - name: Install .NET 6.0.x
