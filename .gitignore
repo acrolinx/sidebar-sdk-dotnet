@@ -20,3 +20,6 @@ Acrolinx.Sidebar.*.nupkg
 /Acrolinx.Sidebar/Startpage/index.html
 /Acrolinx.Sidebar/Startpage/version.properties
 /Acrolinx.Sidebar/startpage.zip
+
+# Eclipse
+.project

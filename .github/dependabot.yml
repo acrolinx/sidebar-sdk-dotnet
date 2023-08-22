@@ -1,0 +1,20 @@
+version: 2
+updates:
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "daily"
+    reviewers:
+      - abhijeetnarvekar
+  - package-ecosystem: "nuget"
+    directory: "/Acrolinx.Sidebar/"
+    schedule:
+      interval: "daily"
+    reviewers:
+      - abhijeetnarvekar
+  - package-ecosystem: "nuget"
+    directory: "/Acrolinx.Sidebar.Tests/"
+    schedule:
+      interval: "daily"
+    reviewers:
+      - abhijeetnarvekar
