@@ -6,15 +6,18 @@ updates:
       interval: "daily"
     reviewers:
       - abhijeetnarvekar
+      - mscc-sascha
   - package-ecosystem: "nuget"
     directory: "/Acrolinx.Sidebar/"
     schedule:
       interval: "daily"
     reviewers:
       - abhijeetnarvekar
+      - mscc-sascha
   - package-ecosystem: "nuget"
     directory: "/Acrolinx.Sidebar.Tests/"
     schedule:
       interval: "daily"
     reviewers:
       - abhijeetnarvekar
+      - mscc-sascha
