@@ -15,8 +15,8 @@
     <copyright>$copyright$</copyright>
     <tags>Acrolinx Sidebar SDK</tags>
     <dependencies>
-      <dependency id ="Newtonsoft.Json" version="13.0.1"/>
-      <dependency id ="log4net" version="2.0.12"/>
+      <dependency id ="Newtonsoft.Json" version="13.0.3"/>
+      <dependency id ="log4net" version="2.0.15"/>
     </dependencies>
   </metadata>
   <files>
