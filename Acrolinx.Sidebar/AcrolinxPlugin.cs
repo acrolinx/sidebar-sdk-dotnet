@@ -184,7 +184,7 @@ namespace Acrolinx.Sdk.Sidebar
 
         private ICheckOptions ConvertOptions(dynamic[] o)
         {
-            if (o.Length == 0)
+            if (o.Length == 0 || o[0] == null)
             {
                 return new CheckOptionsProxy();
             }
