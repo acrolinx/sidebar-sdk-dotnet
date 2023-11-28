@@ -22,7 +22,7 @@ namespace Acrolinx.Sdk.Sidebar.Tests
         }
 
         [TestMethod()]
-        public void requestGlobalCheckTest()
+        public void CheckRequestWithNoOptionsTest()
         {
             AcrolinxSidebar sidebar = new AcrolinxSidebar();
             WebView2 webView2 = new Microsoft.Web.WebView2.WinForms.WebView2();
