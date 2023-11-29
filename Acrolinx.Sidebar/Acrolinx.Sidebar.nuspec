@@ -14,10 +14,6 @@
     <releaseNotes>Promoting to NuGet</releaseNotes>
     <copyright>$copyright$</copyright>
     <tags>Acrolinx Sidebar SDK</tags>
-    <dependencies>
-      <dependency id ="Newtonsoft.Json" version="13.0.3"/>
-      <dependency id ="log4net" version="2.0.15"/>
-    </dependencies>
   </metadata>
   <files>
     <file src="Acrolinx.Sidebar.log4net.xml" target="lib\net45" />
