@@ -16,6 +16,6 @@
     <tags>Acrolinx Sidebar SDK</tags>
   </metadata>
   <files>
-    <file src="Acrolinx.Sidebar.log4net.xml" target="lib\net45" />
+    <file src="Acrolinx.Sidebar.log4net.xml" target="lib\net472" />
   </files>
 </package>
