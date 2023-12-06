@@ -108,7 +108,7 @@ namespace Acrolinx.Sdk.Sidebar.Util
             var appInfo = new Dictionary<string, string>();
             FileVersionInfo fvi = FileVersionInfo.GetVersionInfo(System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName);
             var architecture = (IntPtr.Size * 8).ToString() + " bit";
-            appInfo.Add("applicationName", fvi.FileDescription.Split(' ').Last());
+            appInfo.Add("applicationName", string.Join("-", fvi.FileDescription.Split(' ')));
             appInfo.Add("productName", fvi.FileDescription);
             appInfo.Add("version", fvi.FileVersion + " " + architecture);
             appInfo.Add("appId", fvi.FileDescription.Trim().Replace(" ", ".").ToLower());
