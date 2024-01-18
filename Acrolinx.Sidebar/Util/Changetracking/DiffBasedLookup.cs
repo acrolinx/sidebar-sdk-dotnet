@@ -10,13 +10,34 @@ using System.Linq;
 
 namespace Acrolinx.Sdk.Sidebar.Util.Changetracking
 {
+    public class DiffOptions
+    {
+        public int diffTimeout { get; set; } = 5; // seconds
+        public int diffEditCost { get; set; } = 4;
+        public short diffDualThreshold { get; set; } = 32;
+        public float matchThreshold { get; set; } = 0.5f;
+        public int matchDistance { get; set; } = 1000;
+        public float patchDeleteThreshold { get; set; } = 0.5f;
+        public short patchMargin { get; set; } = 4;
+        public int matchMaxBits { get; set; } = 32;
+    }
+
     public class DiffBasedLookup
     {
         private string originalText;
+        private readonly DiffOptions diffOptions;
         public DiffBasedLookup(string originalText)
         {
             Contract.Requires(originalText != null);
             this.originalText = originalText;
+            diffOptions = new DiffOptions();
+        }
+
+        public DiffBasedLookup(string originalText, DiffOptions diffOptions)
+        {
+            Contract.Requires(originalText != null);
+            this.originalText = originalText;
+            this.diffOptions = diffOptions;
         }
 
         public IReadOnlyList<IRange> TextDiffSearch(string currentText, IReadOnlyList<IRange> ranges)
@@ -28,7 +49,19 @@ namespace Acrolinx.Sdk.Sidebar.Util.Changetracking
             int offsetCountOld = 0;
             int currentDiffOffset = 0;
             List<Tuple<double, double>> offsetMappingList = new List<Tuple<double, double>>();
-            DiffMatchPatch.DiffMatchPatch dmp = DiffMatchPatchModule.Default;
+
+            DiffMatchPatch.DiffMatchPatch dmp =
+                new DiffMatchPatch.DiffMatchPatch(
+                    diffOptions.diffTimeout,
+                    diffOptions.diffDualThreshold,
+                    diffOptions.diffEditCost,
+                    diffOptions.matchThreshold,
+                    diffOptions.matchDistance,
+                    diffOptions.matchMaxBits,
+                    diffOptions.patchDeleteThreshold,
+                    diffOptions.patchMargin
+                );
+
             List<Diff> diff = dmp.DiffMain(originalText, currentText);
             diff.ForEach(d =>
             {
