@@ -10,22 +10,24 @@ using System.Linq;
 
 namespace Acrolinx.Sdk.Sidebar.Util.Changetracking
 {
-    public enum DIFF_INPUT_FORMAT
+    public enum DiffInputFormat
     {
-        HTML,
+        MARKUP,
         TEXT
     }
     public class DiffOptions
     {
         public int diffTimeout { get; set; } = 5; // seconds
         public int diffEditCost { get; set; } = 4;
-        public short diffDualThreshold { get; set; } = 32;
-        public float matchThreshold { get; set; } = 0.5f;
-        public int matchDistance { get; set; } = 1000;
-        public float patchDeleteThreshold { get; set; } = 0.5f;
-        public short patchMargin { get; set; } = 4;
-        public int matchMaxBits { get; set; } = 32;
-        public DIFF_INPUT_FORMAT diffInputFormat { get; set; } = DIFF_INPUT_FORMAT.TEXT;
+        public DiffInputFormat diffInputFormat { get; set; } = DiffInputFormat.TEXT;
+
+        internal short diffDualThreshold { get; } = 32;
+        internal float matchThreshold { get; set; } = 0.5f;
+        internal int matchDistance { get; set; } = 1000;
+        internal float patchDeleteThreshold { get; set; } = 0.5f;
+        internal short patchMargin { get; set; } = 4;
+        internal int matchMaxBits { get; set; } = 32;
+
     }
 
     public class DiffBasedLookup
@@ -56,7 +58,7 @@ namespace Acrolinx.Sdk.Sidebar.Util.Changetracking
             int currentDiffOffset = 0;
 
             Tuple<string, List<Tuple<double, double>>> cleaningResult =
-                this.diffOptions.diffInputFormat == DIFF_INPUT_FORMAT.HTML ?
+                this.diffOptions.diffInputFormat == DiffInputFormat.MARKUP ?
                 TextExtraction.extractText(originalText) :
                 new Tuple<string, List<Tuple<double, double>>>(originalText,
                     new List<Tuple<double, double>>());

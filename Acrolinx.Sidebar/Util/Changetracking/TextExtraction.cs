@@ -39,13 +39,10 @@ namespace Acrolinx.Sdk.Sidebar.Util.Changetracking
             string tagName = matches[1];
             string slash2 = matches[2];
 
-            if (!string.IsNullOrEmpty(tagName))
+            if (!string.IsNullOrEmpty(tagName) && (AUTO_SELF_CLOSING_LINE_TAGS.Contains(tagName) || (NEW_LINE_TAGS.Contains(tagName)
+                    && (!string.IsNullOrEmpty(slash1) || !string.IsNullOrEmpty(slash2)))))
             {
-                if (AUTO_SELF_CLOSING_LINE_TAGS.Contains(tagName) || (NEW_LINE_TAGS.Contains(tagName)
-                    && (!string.IsNullOrEmpty(slash1) || !string.IsNullOrEmpty(slash2))))
-                {
                     return "\n";
-                }
             }
             return string.Empty;
 

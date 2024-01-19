@@ -33,7 +33,7 @@ namespace Acrolinx.Sdk.Sidebar.Tests
         {
             int start = originalMarkup.IndexOf(match);
             var lookup = new Lookup(originalMarkup, Lookup.LookupStrategy.TEXTDIFF);
-            lookup.diffOptions.diffInputFormat = DIFF_INPUT_FORMAT.HTML;
+            lookup.diffOptions.diffInputFormat = DiffInputFormat.MARKUP;
             var ranges = new Range[] { new Range(start, start + match.Length) };
 
             Stopwatch stopwatch = new Stopwatch();
