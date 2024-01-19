@@ -117,7 +117,7 @@ namespace Acrolinx.Sdk.Sidebar.Util.Changetracking
             return result;
         }
 
-        private int FindNewIndex(List<Tuple<double, double>> offsetMappingList, int originalIndex)
+        internal int FindNewIndex(List<Tuple<double, double>> offsetMappingList, int originalIndex)
         {
             return originalIndex + FindDisplacement(offsetMappingList, originalIndex);
         }
