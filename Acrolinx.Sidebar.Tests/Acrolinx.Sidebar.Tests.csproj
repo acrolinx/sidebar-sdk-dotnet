@@ -122,6 +122,7 @@
     <Compile Include="AcrolinxStorageTest.cs" />
     <Compile Include="DocumentTest.cs" />
     <Compile Include="DiffBasedLookupTest.cs" />
+    <Compile Include="LookupPerformaceTests.cs" />
     <Compile Include="MultiAdapterTest.cs" />
     <Compile Include="LookupTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

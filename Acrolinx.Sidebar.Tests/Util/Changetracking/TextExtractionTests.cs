@@ -1,10 +1,8 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Acrolinx.Sdk.Sidebar.Util.Changetracking;
+﻿/* Copyright (c) 2024 Acrolinx GmbH */
+
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Acrolinx.Sdk.Sidebar.Util.Changetracking.Tests
 {
@@ -75,7 +73,7 @@ namespace Acrolinx.Sdk.Sidebar.Util.Changetracking.Tests
         }
 
         [TestMethod()]
-        public void ReplaceScriptsWithEmptyString ()
+        public void ReplaceScriptsWithEmptyString()
         {
             string html = "1<script>2</script>3";
             Tuple<string, List<Tuple<double, double>>> extraction = TextExtraction.extractText(html);
