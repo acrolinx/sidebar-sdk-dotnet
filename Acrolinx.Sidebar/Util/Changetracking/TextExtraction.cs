@@ -10,23 +10,25 @@ namespace Acrolinx.Sdk.Sidebar.Util.Changetracking
 {
     public static class TextExtraction
     {
-        private static string REPLACE_SCRIPTS_REGEXP = "<script\\b[^<]*(?:(?!<\\/script>)<[^<]*)*</script>";
-        private static string REPLACE_STYLES_REGEXP = "<style\\b[^<]*(?:(?!<\\/style>)<[^<]*)*</style>";
-        private static string REPLACE_TAG_REGEXP = "<([^>]+)>";
-        private static string REPLACE_ENTITY_REGEXP = "&.*?;";
+        private static readonly string REPLACE_SCRIPTS_REGEXP = "<script\\b[^<]*(?:(?!<\\/script>)<[^<]*)*</script>";
+        private static readonly string REPLACE_STYLES_REGEXP = "<style\\b[^<]*(?:(?!<\\/style>)<[^<]*)*</style>";
+        private static readonly string REPLACE_TAG_REGEXP = "<([^>]+)>";
+        private static readonly string REPLACE_ENTITY_REGEXP = "&.*?;";
 
-        private static string[] REPLACE_TAGS_PARTS = { REPLACE_SCRIPTS_REGEXP, REPLACE_STYLES_REGEXP, REPLACE_TAG_REGEXP, REPLACE_ENTITY_REGEXP };
-        private static string REPLACE_TAGS_REGEXP = '(' + string.Join("|", REPLACE_TAGS_PARTS) + ')';
+        private static readonly string[] REPLACE_TAGS_PARTS = { REPLACE_SCRIPTS_REGEXP, REPLACE_STYLES_REGEXP, REPLACE_TAG_REGEXP, REPLACE_ENTITY_REGEXP };
+        private static readonly string REPLACE_TAGS_REGEXP = '(' + string.Join("|", REPLACE_TAGS_PARTS) + ')';
 
-        private static HashSet<string> NEW_LINE_TAGS = new HashSet<string> { "BR", "P", "DIV" };
-        private static HashSet<string> AUTO_SELF_CLOSING_LINE_TAGS = new HashSet<string> { "BR" };
+        private static readonly HashSet<string> NEW_LINE_TAGS = new HashSet<string> { "BR", "P", "DIV" };
+        private static readonly HashSet<string> AUTO_SELF_CLOSING_LINE_TAGS = new HashSet<string> { "BR" };
+
+        private static readonly TimeSpan regexTimeout = TimeSpan.FromMilliseconds(1000);
 
         private static string getTagReplacement(string completeTag)
         {
-            Regex regex = new Regex(@"^<(\/?)(\w+)");
+            Regex regex = new Regex(@"^<(\/?)(\w+)", RegexOptions.IgnoreCase, regexTimeout);
 
             Match match = regex.Match(completeTag.ToUpper());
-            string[] matches = new string[3] {"","",""};
+            string[] matches = new string[3] { "", "", "" };
             for (int i = 0; i < match.Groups.Count; i++)
             {
                 if (i == 0)
@@ -53,7 +55,7 @@ namespace Acrolinx.Sdk.Sidebar.Util.Changetracking
         }
         public static Tuple<string, List<Tuple<double, double>>> extractText(string content)
         {
-            Regex regex = new Regex(REPLACE_TAGS_REGEXP, RegexOptions.IgnoreCase);
+            Regex regex = new Regex(REPLACE_TAGS_REGEXP, RegexOptions.IgnoreCase, regexTimeout);
             List<Tuple<double, double>> offsetMapping = new List<Tuple<double, double>>();
             int currentDiffOffset = 0;
             string resultText = regex.Replace(content, delegate (Match m)
