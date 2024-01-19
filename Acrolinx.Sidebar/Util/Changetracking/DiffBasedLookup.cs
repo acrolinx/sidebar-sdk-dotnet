@@ -22,11 +22,11 @@ namespace Acrolinx.Sdk.Sidebar.Util.Changetracking
         public DiffInputFormat diffInputFormat { get; set; } = DiffInputFormat.TEXT;
 
         internal short diffDualThreshold { get; } = 32;
-        internal float matchThreshold { get; set; } = 0.5f;
-        internal int matchDistance { get; set; } = 1000;
-        internal float patchDeleteThreshold { get; set; } = 0.5f;
-        internal short patchMargin { get; set; } = 4;
-        internal int matchMaxBits { get; set; } = 32;
+        internal float matchThreshold { get; } = 0.5f;
+        internal int matchDistance { get; } = 1000;
+        internal float patchDeleteThreshold { get; } = 0.5f;
+        internal short patchMargin { get; } = 4;
+        internal int matchMaxBits { get; } = 32;
 
     }
 
