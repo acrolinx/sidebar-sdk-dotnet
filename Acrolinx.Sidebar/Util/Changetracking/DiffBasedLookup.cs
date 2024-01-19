@@ -10,6 +10,11 @@ using System.Linq;
 
 namespace Acrolinx.Sdk.Sidebar.Util.Changetracking
 {
+    public enum DIFF_INPUT_FORMAT
+    {
+        HTML,
+        TEXT
+    }
     public class DiffOptions
     {
         public int diffTimeout { get; set; } = 5; // seconds
@@ -20,6 +25,7 @@ namespace Acrolinx.Sdk.Sidebar.Util.Changetracking
         public float patchDeleteThreshold { get; set; } = 0.5f;
         public short patchMargin { get; set; } = 4;
         public int matchMaxBits { get; set; } = 32;
+        public DIFF_INPUT_FORMAT diffInputFormat { get; set; } = DIFF_INPUT_FORMAT.TEXT;
     }
 
     public class DiffBasedLookup
@@ -48,6 +54,16 @@ namespace Acrolinx.Sdk.Sidebar.Util.Changetracking
 
             int offsetCountOld = 0;
             int currentDiffOffset = 0;
+
+            Tuple<string, List<Tuple<double, double>>> cleaningResult =
+                this.diffOptions.diffInputFormat == DIFF_INPUT_FORMAT.HTML ?
+                TextExtraction.extractText(originalText) :
+                new Tuple<string, List<Tuple<double, double>>>(originalText,
+                    new List<Tuple<double, double>>());
+
+            string cleanedCheckedDocument = cleaningResult.Item1;
+            List<Tuple<double, double>> cleaningOffsetMappingArray = cleaningResult.Item2;
+
             List<Tuple<double, double>> offsetMappingList = new List<Tuple<double, double>>();
 
             DiffMatchPatch.DiffMatchPatch dmp =
@@ -62,7 +78,7 @@ namespace Acrolinx.Sdk.Sidebar.Util.Changetracking
                     diffOptions.patchMargin
                 );
 
-            List<Diff> diff = dmp.DiffMain(originalText, currentText);
+            List<Diff> diff = dmp.DiffMain(cleanedCheckedDocument, currentText);
             diff.ForEach(d =>
             {
                 switch (d.Operation.ToString())
@@ -95,8 +111,11 @@ namespace Acrolinx.Sdk.Sidebar.Util.Changetracking
                 startOffest = range.Start;
                 endOffset = range.End;
 
-                int alignedBegin = FindNewIndex(offsetMappingList, startOffest);
-                int alignedEnd = FindNewIndex(offsetMappingList, endOffset);
+                int beginAfterCleaning = FindNewIndex(cleaningOffsetMappingArray, startOffest);
+                int endAfterCleaning = FindNewIndex(cleaningOffsetMappingArray, endOffset);
+                int alignedBegin = FindNewIndex(offsetMappingList, beginAfterCleaning);
+                int lastCharacterPos = endAfterCleaning - 1;
+                int alignedEnd = FindNewIndex(offsetMappingList, lastCharacterPos) + 1;
                 string originalMatchSurface = originalText.Substring(startOffest, range.Length);
                 string currentMatchSurface = string.Empty;
                 try
