@@ -137,18 +137,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="acrolinx.ico" />
-    <Content Include="testFiles\LookupXML_1_20KB.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="testFiles\LookupXML_1_20KB.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="testFiles\LookupXML_2_200KB.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="testFiles\LookupXML_2_200KB.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    <EmbeddedResource Include="testFiles\LookupXML_1_20KB.txt" />
+    <EmbeddedResource Include="testFiles\LookupXML_1_20KB.xml" />
+    <EmbeddedResource Include="testFiles\LookupXML_2_200KB.txt" />
+    <EmbeddedResource Include="testFiles\LookupXML_2_200KB.xml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Acrolinx.Sidebar\Acrolinx.Sidebar.csproj">

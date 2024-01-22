@@ -6,6 +6,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Diagnostics;
 using System.IO;
+using System.Reflection;
 
 namespace Acrolinx.Sdk.Sidebar.Tests
 {
@@ -15,8 +16,8 @@ namespace Acrolinx.Sdk.Sidebar.Tests
         [TestMethod]
         public void PerfromanceTestXML20KB()
         {
-            string xml = File.ReadAllText(@".\testFiles\LookupXML_1_20KB.xml");
-            string text = File.ReadAllText(@".\testFiles\LookupXML_1_20KB.txt");
+            string xml = readResource("Acrolinx.Sdk.Sidebar.Tests.testFiles.LookupXML_1_20KB.xml");
+            string text = readResource("Acrolinx.Sdk.Sidebar.Tests.testFiles.LookupXML_1_20KB.txt");
             string match = "acrolinx";
             performanceTestHelper(xml, text, match, 500);
         }
@@ -24,8 +25,8 @@ namespace Acrolinx.Sdk.Sidebar.Tests
         [TestMethod]
         public void PerfromanceTestXML200KB()
         {
-            string xml = File.ReadAllText(@".\testFiles\LookupXML_2_200KB.xml");
-            string text = File.ReadAllText(@".\testFiles\LookupXML_2_200KB.txt");
+            string xml = readResource("Acrolinx.Sdk.Sidebar.Tests.testFiles.LookupXML_2_200KB.xml");
+            string text = readResource("Acrolinx.Sdk.Sidebar.Tests.testFiles.LookupXML_2_200KB.txt");
             string match = "AcroMatch1";
             performanceTestHelper(xml, text, match, 500);
         }
@@ -52,6 +53,21 @@ namespace Acrolinx.Sdk.Sidebar.Tests
 
             Assert.IsTrue(stopwatch.ElapsedMilliseconds < expectedCompletionTimeInMs,
                 "Diff took more than " + expectedCompletionTimeInMs + "ms. Required Time: " + stopwatch.ElapsedMilliseconds);
+        }
+
+
+        private string readResource(string resourceName)
+        {
+            var assembly = Assembly.GetExecutingAssembly();
+            var x = assembly.GetManifestResourceNames();
+
+
+            using (Stream stream = assembly.GetManifestResourceStream(resourceName))
+            using (StreamReader reader = new StreamReader(stream))
+            {
+                string result = reader.ReadToEnd();
+                return result;
+            }
         }
     }
 }
