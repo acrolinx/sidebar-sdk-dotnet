@@ -10,13 +10,31 @@ using System.Linq;
 
 namespace Acrolinx.Sdk.Sidebar.Util.Changetracking
 {
+
     public class DiffBasedLookup
     {
+        private readonly short diffDualThreshold = 32;
+        private readonly float matchThreshold = 0.5f;
+        private readonly int matchDistance = 1000;
+        private readonly float patchDeleteThreshold = 0.5f;
+        private readonly short patchMargin = 4;
+        private readonly int matchMaxBits = 32;
+        private readonly int diffEditCost = 4;
+
         private string originalText;
+        private readonly DiffOptions diffOptions;
         public DiffBasedLookup(string originalText)
         {
             Contract.Requires(originalText != null);
             this.originalText = originalText;
+            diffOptions = new DiffOptions();
+        }
+
+        public DiffBasedLookup(string originalText, DiffOptions diffOptions)
+        {
+            Contract.Requires(originalText != null);
+            this.originalText = originalText;
+            this.diffOptions = diffOptions;
         }
 
         public IReadOnlyList<IRange> TextDiffSearch(string currentText, IReadOnlyList<IRange> ranges)
@@ -27,9 +45,31 @@ namespace Acrolinx.Sdk.Sidebar.Util.Changetracking
 
             int offsetCountOld = 0;
             int currentDiffOffset = 0;
+
+            Tuple<string, List<Tuple<double, double>>> cleaningResult =
+                this.diffOptions.diffInputFormat == DiffInputFormat.MARKUP ?
+                MarkupReducer.reduce(originalText) :
+                new Tuple<string, List<Tuple<double, double>>>(originalText,
+                    new List<Tuple<double, double>>());
+
+            string cleanedCheckedDocument = cleaningResult.Item1;
+            List<Tuple<double, double>> cleaningOffsetMappingArray = cleaningResult.Item2;
+
             List<Tuple<double, double>> offsetMappingList = new List<Tuple<double, double>>();
-            DiffMatchPatch.DiffMatchPatch dmp = DiffMatchPatchModule.Default;
-            List<Diff> diff = dmp.DiffMain(originalText, currentText);
+
+            DiffMatchPatch.DiffMatchPatch dmp =
+                new DiffMatchPatch.DiffMatchPatch(
+                    diffOptions.diffTimeoutInSeconds,
+                    diffDualThreshold,
+                    diffEditCost,
+                    matchThreshold,
+                    matchDistance,
+                    matchMaxBits,
+                    patchDeleteThreshold,
+                    patchMargin
+                );
+
+            List<Diff> diff = dmp.DiffMain(cleanedCheckedDocument, currentText);
             diff.ForEach(d =>
             {
                 switch (d.Operation.ToString())
@@ -62,8 +102,11 @@ namespace Acrolinx.Sdk.Sidebar.Util.Changetracking
                 startOffest = range.Start;
                 endOffset = range.End;
 
-                int alignedBegin = FindNewIndex(offsetMappingList, startOffest);
-                int alignedEnd = FindNewIndex(offsetMappingList, endOffset);
+                int beginAfterCleaning = FindNewIndex(cleaningOffsetMappingArray, startOffest);
+                int endAfterCleaning = FindNewIndex(cleaningOffsetMappingArray, endOffset);
+                int alignedBegin = FindNewIndex(offsetMappingList, beginAfterCleaning);
+                int lastCharacterPos = endAfterCleaning - 1;
+                int alignedEnd = FindNewIndex(offsetMappingList, lastCharacterPos) + 1;
                 string originalMatchSurface = originalText.Substring(startOffest, range.Length);
                 string currentMatchSurface = string.Empty;
                 try
@@ -84,7 +127,7 @@ namespace Acrolinx.Sdk.Sidebar.Util.Changetracking
             return result;
         }
 
-        private int FindNewIndex(List<Tuple<double, double>> offsetMappingList, int originalIndex)
+        internal int FindNewIndex(List<Tuple<double, double>> offsetMappingList, int originalIndex)
         {
             return originalIndex + FindDisplacement(offsetMappingList, originalIndex);
         }

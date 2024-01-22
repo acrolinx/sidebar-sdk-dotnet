@@ -15,6 +15,7 @@ namespace Acrolinx.Sdk.Sidebar.Util.Changetracking
     /// </summary>
     public class Lookup
     {
+        public DiffOptions diffOptions { get; } = new DiffOptions();
         public enum LookupStrategy
         {
             TEXTDIFF, SEARCH, NONE
@@ -57,7 +58,7 @@ namespace Acrolinx.Sdk.Sidebar.Util.Changetracking
             }
             if (Strategy == LookupStrategy.TEXTDIFF)
             {
-                DiffBasedLookup dbl = new DiffBasedLookup(OriginalText);
+                DiffBasedLookup dbl = new DiffBasedLookup(OriginalText, diffOptions);
                 return dbl.TextDiffSearch(currentText, new List<IRange>(ranges));
             }
             var regexSearchStr = new StringBuilder();

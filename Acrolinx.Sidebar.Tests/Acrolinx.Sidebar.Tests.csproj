@@ -122,10 +122,12 @@
     <Compile Include="AcrolinxStorageTest.cs" />
     <Compile Include="DocumentTest.cs" />
     <Compile Include="DiffBasedLookupTest.cs" />
+    <Compile Include="LookupPerformaceTests.cs" />
     <Compile Include="MultiAdapterTest.cs" />
     <Compile Include="LookupTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RegistryUtilTest.cs" />
+    <Compile Include="Util\Changetracking\MarkupReducerTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -135,6 +137,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="acrolinx.ico" />
+    <EmbeddedResource Include="testFiles\LookupXML_1_20KB.txt" />
+    <EmbeddedResource Include="testFiles\LookupXML_1_20KB.xml" />
+    <EmbeddedResource Include="testFiles\LookupXML_2_200KB.txt" />
+    <EmbeddedResource Include="testFiles\LookupXML_2_200KB.xml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Acrolinx.Sidebar\Acrolinx.Sidebar.csproj">
