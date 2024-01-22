@@ -10,28 +10,16 @@ using System.Linq;
 
 namespace Acrolinx.Sdk.Sidebar.Util.Changetracking
 {
-    public enum DiffInputFormat
-    {
-        MARKUP,
-        TEXT
-    }
-    public class DiffOptions
-    {
-        public int diffTimeout { get; set; } = 5; // seconds
-        public int diffEditCost { get; set; } = 4;
-        public DiffInputFormat diffInputFormat { get; set; } = DiffInputFormat.TEXT;
-
-        internal short diffDualThreshold { get; } = 32;
-        internal float matchThreshold { get; } = 0.5f;
-        internal int matchDistance { get; } = 1000;
-        internal float patchDeleteThreshold { get; } = 0.5f;
-        internal short patchMargin { get; } = 4;
-        internal int matchMaxBits { get; } = 32;
-
-    }
 
     public class DiffBasedLookup
     {
+        private short diffDualThreshold { get; } = 32;
+        private float matchThreshold { get; } = 0.5f;
+        private int matchDistance { get; } = 1000;
+        private float patchDeleteThreshold { get; } = 0.5f;
+        private short patchMargin { get; } = 4;
+        private int matchMaxBits { get; } = 32;
+
         private string originalText;
         private readonly DiffOptions diffOptions;
         public DiffBasedLookup(string originalText)
@@ -71,13 +59,13 @@ namespace Acrolinx.Sdk.Sidebar.Util.Changetracking
             DiffMatchPatch.DiffMatchPatch dmp =
                 new DiffMatchPatch.DiffMatchPatch(
                     diffOptions.diffTimeout,
-                    diffOptions.diffDualThreshold,
+                    diffDualThreshold,
                     diffOptions.diffEditCost,
-                    diffOptions.matchThreshold,
-                    diffOptions.matchDistance,
-                    diffOptions.matchMaxBits,
-                    diffOptions.patchDeleteThreshold,
-                    diffOptions.patchMargin
+                    matchThreshold,
+                    matchDistance,
+                    matchMaxBits,
+                    patchDeleteThreshold,
+                    patchMargin
                 );
 
             List<Diff> diff = dmp.DiffMain(cleanedCheckedDocument, currentText);

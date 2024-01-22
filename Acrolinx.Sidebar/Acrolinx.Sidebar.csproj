@@ -198,6 +198,8 @@
     <Compile Include="Documents\IRange.cs" />
     <Compile Include="Documents\MatchWithReplacement.cs" />
     <Compile Include="Util\Changetracking\DiffBasedLookup.cs" />
+    <Compile Include="Util\Changetracking\DiffInputFormat.cs" />
+    <Compile Include="Util\Changetracking\DiffOptions.cs" />
     <Compile Include="Util\Changetracking\RelativeRange.cs" />
     <Compile Include="Util\Changetracking\DocumentMap.cs" />
     <Compile Include="Util\Changetracking\DocumentModel.cs" />
