@@ -13,12 +13,12 @@ namespace Acrolinx.Sdk.Sidebar.Util.Changetracking
 
     public class DiffBasedLookup
     {
-        private short diffDualThreshold { get; } = 32;
-        private float matchThreshold { get; } = 0.5f;
-        private int matchDistance { get; } = 1000;
-        private float patchDeleteThreshold { get; } = 0.5f;
-        private short patchMargin { get; } = 4;
-        private int matchMaxBits { get; } = 32;
+        private readonly short diffDualThreshold = 32;
+        private readonly float matchThreshold = 0.5f;
+        private readonly int matchDistance = 1000;
+        private readonly float patchDeleteThreshold = 0.5f;
+        private readonly short patchMargin = 4;
+        private readonly int matchMaxBits = 32;
 
         private string originalText;
         private readonly DiffOptions diffOptions;
