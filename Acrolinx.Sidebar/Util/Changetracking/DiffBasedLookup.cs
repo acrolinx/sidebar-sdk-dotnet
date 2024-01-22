@@ -58,7 +58,7 @@ namespace Acrolinx.Sdk.Sidebar.Util.Changetracking
 
             DiffMatchPatch.DiffMatchPatch dmp =
                 new DiffMatchPatch.DiffMatchPatch(
-                    diffOptions.diffTimeout,
+                    diffOptions.diffTimeoutInSeconds,
                     diffDualThreshold,
                     diffOptions.diffEditCost,
                     matchThreshold,
