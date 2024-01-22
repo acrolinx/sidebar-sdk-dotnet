@@ -19,6 +19,7 @@ namespace Acrolinx.Sdk.Sidebar.Util.Changetracking
         private readonly float patchDeleteThreshold = 0.5f;
         private readonly short patchMargin = 4;
         private readonly int matchMaxBits = 32;
+        private readonly int diffEditCost = 4;
 
         private string originalText;
         private readonly DiffOptions diffOptions;
@@ -60,7 +61,7 @@ namespace Acrolinx.Sdk.Sidebar.Util.Changetracking
                 new DiffMatchPatch.DiffMatchPatch(
                     diffOptions.diffTimeoutInSeconds,
                     diffDualThreshold,
-                    diffOptions.diffEditCost,
+                    diffEditCost,
                     matchThreshold,
                     matchDistance,
                     matchMaxBits,
