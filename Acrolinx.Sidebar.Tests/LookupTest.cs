@@ -1,11 +1,9 @@
 ﻿/* Copyright (c) 2016 Acrolinx GmbH */
 
-using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Collections.Generic;
 using Acrolinx.Sdk.Sidebar.Util.Changetracking;
 using Acrolinx.Sdk.Sidebar.Documents;
-using System.Diagnostics;
+
 
 namespace Acrolinx.Sdk.Sidebar.Tests
 {
@@ -304,6 +302,5 @@ namespace Acrolinx.Sdk.Sidebar.Tests
 
             Assert.AreEqual(result[0], new Range(16, 21));
         }
-
     }
 }
