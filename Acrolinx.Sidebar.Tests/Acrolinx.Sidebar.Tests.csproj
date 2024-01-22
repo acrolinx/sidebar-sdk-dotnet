@@ -127,7 +127,7 @@
     <Compile Include="LookupTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RegistryUtilTest.cs" />
-    <Compile Include="Util\Changetracking\TextExtractionTests.cs" />
+    <Compile Include="Util\Changetracking\MarkupReducerTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

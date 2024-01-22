@@ -47,7 +47,7 @@ namespace Acrolinx.Sdk.Sidebar.Util.Changetracking
 
             Tuple<string, List<Tuple<double, double>>> cleaningResult =
                 this.diffOptions.diffInputFormat == DiffInputFormat.MARKUP ?
-                TextExtraction.extractText(originalText) :
+                MarkupReducer.reduce(originalText) :
                 new Tuple<string, List<Tuple<double, double>>>(originalText,
                     new List<Tuple<double, double>>());
 

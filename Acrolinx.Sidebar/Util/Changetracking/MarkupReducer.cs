@@ -5,7 +5,7 @@ using System.Web;
 
 namespace Acrolinx.Sdk.Sidebar.Util.Changetracking
 {
-    public static class TextExtraction
+    public static class MarkupReducer
     {
         private static readonly string REPLACE_SCRIPTS_REGEXP = "<script\\b[^<]*(?:(?!<\\/script>)<[^<]*)*</script>";
         private static readonly string REPLACE_STYLES_REGEXP = "<style\\b[^<]*(?:(?!<\\/style>)<[^<]*)*</style>";
@@ -47,7 +47,7 @@ namespace Acrolinx.Sdk.Sidebar.Util.Changetracking
             return string.Empty;
 
         }
-        public static Tuple<string, List<Tuple<double, double>>> extractText(string content)
+        public static Tuple<string, List<Tuple<double, double>>> reduce(string content)
         {
             Regex regex = new Regex(REPLACE_TAGS_REGEXP, RegexOptions.IgnoreCase, regexTimeout);
             List<Tuple<double, double>> offsetMapping = new List<Tuple<double, double>>();
