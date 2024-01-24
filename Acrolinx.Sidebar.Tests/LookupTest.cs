@@ -1,10 +1,9 @@
 ﻿/* Copyright (c) 2016 Acrolinx GmbH */
 
-using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Collections.Generic;
 using Acrolinx.Sdk.Sidebar.Util.Changetracking;
 using Acrolinx.Sdk.Sidebar.Documents;
+
 
 namespace Acrolinx.Sdk.Sidebar.Tests
 {
