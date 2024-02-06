@@ -47,7 +47,7 @@ jobs:
           dotnet-version: 6.0.x
 
       - name: Nuget restore
-        uses: nuget/setup-nuget@v1
+        uses: nuget/setup-nuget@v2
       - run: nuget restore $env:Solution_Name
 
       # Add  MSBuild to the PATH: https://github.com/microsoft/setup-msbuild
