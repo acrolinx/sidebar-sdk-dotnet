@@ -79,7 +79,7 @@ jobs:
       - name: VS Console Tests
         run: |
           $VSTest = "$(vswhere -property installationPath)\Common7\IDE\CommonExtensions\Microsoft\TestWindow\vstest.console.exe"
-          & $VSTest "Acrolinx.Sidebar.Tests\bin\Release\Acrolinx.Sidebar.Tests.dll" /settings:vstests.runsettings /Enablecodecoverage /Logger:trx;LogFileName=TestResult.trx
+          & $VSTest "Acrolinx.Sidebar.Tests\bin\Release\Acrolinx.Sidebar.Tests.dll" /settings:vstests.runsettings /Enablecodecoverage /Logger:junit;LogFileName=TestResult.xml
 
       - name: end sonar
         env:
@@ -153,5 +153,5 @@ jobs:
           path: |
             .\Acrolinx.Sidebar\bin\Release\
             .\TestResults\
-            .\TestResult.trx
+            .\TestResult.xml
 
