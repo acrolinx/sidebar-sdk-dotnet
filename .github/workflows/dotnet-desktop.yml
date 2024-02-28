@@ -19,9 +19,7 @@ on:
 jobs:
   build:
     runs-on:
-      windows-2019 # For a list of available runner types, refer to
-      # https://help.github.com/en/actions/reference/workflow-syntax-for-github-actions#jobsjob_idruns-on
-
+      windows-2019
     env:
       Solution_Name: Acrolinx.Sidebar.Net.sln
       BUILD_NUMBER: ${{ github.run_number }}
@@ -80,6 +78,9 @@ jobs:
       
       - name: Set up MS Test
         run:  '& "$(vswhere -property installationPath)\Common7\IDE\MSTest.exe" /testcontainer:"Acrolinx.Sidebar.Tests\bin\Release\Acrolinx.Sidebar.Tests.dll" /resultsfile:"Acrolinx.Sidebar\bin\Release\testResult.xml"'
+
+      - name: VS Test
+        run: vstest.console.exe 
 
       - name: end sonar
         env:
