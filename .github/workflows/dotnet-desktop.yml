@@ -152,6 +152,4 @@ jobs:
           name: build-artifact
           path: |
             .\Acrolinx.Sidebar\bin\Release\
-            .\TestResults\
-            .\TestResult.xml
-
+            .\testResults\
