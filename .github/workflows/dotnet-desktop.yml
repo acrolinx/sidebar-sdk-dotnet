@@ -79,6 +79,9 @@ jobs:
       - name: Set up MS Test
         run:  '& "$(vswhere -property installationPath)\Common7\IDE\MSTest.exe" /testcontainer:"Acrolinx.Sidebar.Tests\bin\Release\Acrolinx.Sidebar.Tests.dll" /resultsfile:"Acrolinx.Sidebar\bin\Release\testResult.xml"'
 
+      - name: Set up VS Console Test
+        run: '& "$(vswhere -property installationPath)\Common7\IDE\CommonExtensions\Microsoft\TestWindow\vstest.console.exe"'
+
       - name: end sonar
         env:
           SONAR_TOKEN: ${{ secrets.SONARCLOUD_TOKEN }}
