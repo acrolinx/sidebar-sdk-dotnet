@@ -37,7 +37,6 @@ Before you start developing your own integration, you might benefit from looking
 * the [Acrolinx SDKs](https://github.com/acrolinx?q=sdk), and
 * the [Acrolinx Demo Projects](https://github.com/acrolinx?q=demo).
 
-
 ## Requirements
 
 This SDK uses Microsoft WebView 2 based on Edge Chromoium to render the Sidebar.
@@ -47,7 +46,6 @@ The Evergreen WebView2 Runtime will be included as part of the Windows 11 operat
 For prior operating systems - Please install WebView 2 evergreen runtime.
 
 Download and install "Evergreen Standalone Installer" from [Microsoft](https://developer.microsoft.com/en-us/microsoft-edge/webview2/)
-
 
 ## Getting Started
 
@@ -87,6 +85,18 @@ Use the [Acrolinx Sidebar .NET SDK NuGet package](https://www.nuget.org/packages
    mechanism using the Windows registry:
    + **Registry path**: `HKCU\Software\Acrolinx\Plugins\Storage\[KEY]`
    + **Fallback path**: `HKLM\Software\Acrolinx\Plugins\Storage\[KEY]`
+
+### Deprecation
+
+> :warning: **Sidebar v14 is getting deprecated**
+
+The process to update your existing integration is straightforward and involves the following steps:
+
+1. Update to the Latest SDK Version: Please ensure that you’ve updated to the latest SDK version.
+The most recent version can be found on our Nuget package page [here](https://www.nuget.org/packages/Acrolinx.Sidebar).
+
+1. Remove the Initialization Config (Optional): If your current implementation includes the initialization config
+`MinimumSidebarVersion=14.x.x`, we recommend removing this configuration.
 
 ## References
 
