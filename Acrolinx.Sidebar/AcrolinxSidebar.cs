@@ -104,7 +104,6 @@ namespace Acrolinx.Sdk.Sidebar
             InitParameters.Add("clientLocale", "");
             InitParameters.Add("logFileLocation", Logger.Directory);
             InitParameters.Add("clientComponents", new JArray());
-            InitParameters.Add("minimumSidebarVersion", "15.0.0");
             InitParameters.Add("supported", new JObject());
 
             InitializeComponent();
@@ -226,6 +225,7 @@ namespace Acrolinx.Sdk.Sidebar
             }
         }
 
+        [Obsolete("This property isn’t needed anymore, and will be removed in future.")]
         [Description("The integration specifies the minimum Acrolinx Sidebar version required."), Category("Sidebar")]
         [DefaultValue("")]
         public string MinimumSidebarVersion
