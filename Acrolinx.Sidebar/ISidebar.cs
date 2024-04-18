@@ -31,6 +31,7 @@ namespace Acrolinx.Sdk.Sidebar
         }
         string MinimumSidebarVersion
         {
+            get;
             set;
         }
         string ServerAddress

@@ -230,6 +230,10 @@ namespace Acrolinx.Sdk.Sidebar
         [DefaultValue("")]
         public string MinimumSidebarVersion
         {
+            get
+            {
+                return InitParameters["minimumSidebarVersion"].Value<string>();
+            }
             set
             {
                 InitParameters["minimumSidebarVersion"] = value;
