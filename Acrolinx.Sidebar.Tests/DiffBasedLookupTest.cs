@@ -5,6 +5,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
 using Acrolinx.Sdk.Sidebar.Util.Changetracking;
 using Acrolinx.Sdk.Sidebar.Documents;
+using Range = Acrolinx.Sdk.Sidebar.Documents.Range;
 
 namespace Acrolinx.Sdk.Sidebar.Tests
 {

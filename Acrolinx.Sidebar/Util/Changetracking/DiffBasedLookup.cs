@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.Linq;
+using Range = Acrolinx.Sdk.Sidebar.Documents.Range;
 
 namespace Acrolinx.Sdk.Sidebar.Util.Changetracking
 {

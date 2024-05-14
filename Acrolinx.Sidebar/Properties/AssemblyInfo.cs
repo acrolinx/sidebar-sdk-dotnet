@@ -3,8 +3,12 @@
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+using System.Runtime.Versioning;
 
 [assembly: InternalsVisibleTo("Acrolinx.Sidebar.Tests")]
+#if NET8_0_OR_GREATER
+[assembly: SupportedOSPlatform("windows")]
+#endif
 
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
