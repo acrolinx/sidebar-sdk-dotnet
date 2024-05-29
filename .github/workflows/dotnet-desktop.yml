@@ -39,10 +39,10 @@ jobs:
         run: powershell Expand-Archive .\download\sonarmsbuild.zip .\sonar-msbuild\
 
       # Install the .NET Core workload
-      - name: Install .NET 6.0.x
+      - name: Install .NET 8.0.x
         uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: 6.0.x
+          dotnet-version: 8.0.x
 
       - name: Nuget restore
         uses: nuget/setup-nuget@v2
@@ -60,10 +60,10 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
-      - name: begin sonar
-        env:
-          SONAR_TOKEN: ${{ secrets.SONARCLOUD_TOKEN }}
-        run: sonar-msbuild\SonarScanner.MSBuild.exe begin /o:"acrolinx" /k:"acrolinx_sidebar-sdk-dotnet" /d:sonar.token=$env:SONAR_TOKEN /d:sonar.host.url="https://sonarcloud.io" /d:sonar.exclusions=Acrolinx.Sidebar.Tests\testFiles /d:sonar.cs.vscoveragexml.reportsPaths=Acrolinx.Sidebar\bin\Release\testResult.xmlcoverage.xml
+      #- name: begin sonar
+      #  env:
+      #    SONAR_TOKEN: ${{ secrets.SONARCLOUD_TOKEN }}
+      #  run: sonar-msbuild\SonarScanner.MSBuild.exe begin /o:"acrolinx" /k:"acrolinx_sidebar-sdk-dotnet" /d:sonar.token=$env:SONAR_TOKEN /d:sonar.host.url="https://sonarcloud.io" /d:sonar.exclusions=Acrolinx.Sidebar.Tests\testFiles /d:sonar.cs.vscoveragexml.reportsPaths=Acrolinx.Sidebar\bin\Release\testResult.xmlcoverage.xml
 
       # Restore the application to populate the obj folder with RuntimeIdentifiers
 
@@ -81,10 +81,10 @@ jobs:
           $VSTest = "$(vswhere -property installationPath)\Common7\IDE\CommonExtensions\Microsoft\TestWindow\vstest.console.exe"
           & $VSTest "Acrolinx.Sidebar.Tests\bin\Release\Acrolinx.Sidebar.Tests.dll" /settings:vstests.runsettings /Enablecodecoverage /Logger:"junit;LogFileName=TestResult.xml"
 
-      - name: end sonar
-        env:
-          SONAR_TOKEN: ${{ secrets.SONARCLOUD_TOKEN }}
-        run: sonar-msbuild\SonarScanner.MSBuild.exe end /d:sonar.token=$env:SONAR_TOKEN
+      #- name: end sonar
+      #  env:
+      #    SONAR_TOKEN: ${{ secrets.SONARCLOUD_TOKEN }}
+      #  run: sonar-msbuild\SonarScanner.MSBuild.exe end /d:sonar.token=$env:SONAR_TOKEN
 
       - name: Code signing
         env:
