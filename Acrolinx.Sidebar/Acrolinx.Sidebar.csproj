@@ -1,29 +1,15 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{9AF2B333-9701-4D7F-AF9A-E05E929712C9}</ProjectGuid>
+    <TargetFrameworks>net8.0-windows;net472</TargetFrameworks>
     <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Acrolinx.Sdk.Sidebar</RootNamespace>
-    <AssemblyName>Acrolinx.Sidebar</AssemblyName>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile />
     <CodeContractsAssemblyMode>0</CodeContractsAssemblyMode>
-    <NuGetPackageImportStamp>
-    </NuGetPackageImportStamp>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <UseWindowsForms>true</UseWindowsForms>
+    <ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>
+	  <GenerateResourceUsePreserializedResources>true</GenerateResourceUsePreserializedResources>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
     <RunCodeAnalysis>false</RunCodeAnalysis>
     <CodeContractsEnableRuntimeChecking>True</CodeContractsEnableRuntimeChecking>
     <CodeContractsRuntimeOnlyPublicSurface>False</CodeContractsRuntimeOnlyPublicSurface>
@@ -70,13 +56,6 @@
     <CodeContractsAnalysisWarningLevel>0</CodeContractsAnalysisWarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
     <DocumentationFile>
     </DocumentationFile>
     <CodeContractsEnableRuntimeChecking>True</CodeContractsEnableRuntimeChecking>
@@ -130,131 +109,13 @@
     <ApplicationIcon>acrolinx.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Diff.Match.Patch, Version=3.0.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Diff.Match.Patch.3.0.1\lib\netstandard2.0\Diff.Match.Patch.dll</HintPath>
-    </Reference>
-    <Reference Include="FSharp.Core, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\FSharp.Core.5.0.0\lib\netstandard2.0\FSharp.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="log4net, Version=2.0.15.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
-      <HintPath>..\packages\log4net.2.0.15\lib\net45\log4net.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Web.WebView2.Core, Version=1.0.2365.46, Culture=neutral, PublicKeyToken=2a8ab48044d2601e, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Web.WebView2.1.0.2365.46\lib\net45\Microsoft.Web.WebView2.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Web.WebView2.WinForms, Version=1.0.2365.46, Culture=neutral, PublicKeyToken=2a8ab48044d2601e, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Web.WebView2.1.0.2365.46\lib\net45\Microsoft.Web.WebView2.WinForms.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Web.WebView2.Wpf, Version=1.0.2365.46, Culture=neutral, PublicKeyToken=2a8ab48044d2601e, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Web.WebView2.1.0.2365.46\lib\net45\Microsoft.Web.WebView2.Wpf.dll</HintPath>
-    </Reference>
-    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.13.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.Configuration" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.IO.Compression.FileSystem" />
-    <Reference Include="System.IO.Compression.ZipFile, Version=4.0.2.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.IO.Compression.ZipFile.4.3.0\lib\net46\System.IO.Compression.ZipFile.dll</HintPath>
-      <Private>True</Private>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="System.Management" />
-    <Reference Include="System.Web" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Deployment" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Windows.Forms" />
-    <Reference Include="System.Xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="AcrolinxPlugin.cs" />
-    <Compile Include="Documents\CheckOptions.cs" />
-    <Compile Include="Documents\ICheckOptions.cs" />
-    <Compile Include="Exceptions\MatchesNotFoundException.cs" />
-    <Compile Include="Exceptions\RangesNotFoundException.cs" />
-    <Compile Include="Exceptions\AcrolinxException.cs" />
-    <Compile Include="Properties\Config.Designer.cs">
-      <DependentUpon>Config.resx</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Compile>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
-    <Compile Include="Storage\AcrolinxStorage.cs" />
-    <Compile Include="Storage\RegistryAcrolinxStorage.cs" />
-    <Compile Include="Util\AssemblyUtil.cs" />
-    <Compile Include="Util\Adapter\UniversalAdapter.cs" />
-    <Compile Include="Util\Adapter\IAdapter.cs" />
-    <Compile Include="Documents\Document.cs" />
-    <Compile Include="Documents\IDocument.cs" />
-    <Compile Include="Documents\IRange.cs" />
-    <Compile Include="Documents\MatchWithReplacement.cs" />
-    <Compile Include="Util\Changetracking\DiffBasedLookup.cs" />
-    <Compile Include="Util\Changetracking\DiffInputFormat.cs" />
-    <Compile Include="Util\Changetracking\DiffOptions.cs" />
-    <Compile Include="Util\Changetracking\RelativeRange.cs" />
-    <Compile Include="Util\Changetracking\DocumentMap.cs" />
-    <Compile Include="Util\Changetracking\DocumentModel.cs" />
-    <Compile Include="Util\Changetracking\Lookup.cs" />
-    <Compile Include="Util\Adapter\MultiAdapter.cs" />
-    <Compile Include="Documents\Format.cs" />
-    <Compile Include="Documents\Match.cs" />
-    <Compile Include="Documents\Range.cs" />
-    <Compile Include="ISidebar.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="AcrolinxSidebar.cs">
+    <Compile Update="AcrolinxSidebar.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="AcrolinxSidebar.Designer.cs">
-      <DependentUpon>AcrolinxSidebar.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Util\Changetracking\MarkupReducer.cs" />
-    <Compile Include="Util\FileUtil.cs" />
-    <Compile Include="Util\GraphicUtil.cs" />
-    <Compile Include="Util\Logging\Logger.cs" />
-    <Compile Include="Util\Message\Message.cs" />
-    <Compile Include="Util\Message\MessageType.cs" />
-    <Compile Include="Util\NetFrameworkVersionUtil.cs" />
-    <Compile Include="Util\RegistryUtil.cs" />
-    <EmbeddedResource Include="Properties\Config.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Config.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <SubType>Designer</SubType>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="AcrolinxSidebar.resx">
-      <DependentUpon>AcrolinxSidebar.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <None Include="App.config" />
-    <None Include="package-lock.json" />
-    <None Include="package.json" />
-    <None Include="packages.config">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Properties\Settings.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
-      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
-    </None>
-    <Compile Include="Properties\Settings.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Settings.settings</DependentUpon>
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-    </Compile>
-    <EmbeddedResource Include="startpage.zip" />
   </ItemGroup>
+	<ItemGroup>
+		<EmbeddedResource Include="startpage.zip" />
+	</ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="toolbox.bmp" />
   </ItemGroup>
@@ -267,26 +128,37 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
-  <ItemGroup />
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Target Name="RunNpmInstall" BeforeTargets="PrepareForBuild">
-    <Exec Command="npm install" />
-  </Target>
+  <ItemGroup>
+    <None Include="..\README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
+    <PackageReference Include="System.Data.DataSetExtensions" Version="4.5.0" />
+    <PackageReference Include="System.Management" Version="8.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.SystemWebAdapters" Version="1.3.2" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="System.Configuration.ConfigurationManager" Version="8.0.0" />
+    <PackageReference Include="Diff.Match.Patch" Version="3.0.1" />
+    <PackageReference Include="log4net" Version="2.0.17" />
+    <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.2478.35" />
+    <PackageReference Include="System.Resources.Extensions" Version="5.0.0" />
+  </ItemGroup>
+    
+	<Target Name="CreateStartPage" BeforeTargets="DispatchToInnerBuilds">
+        <Exec Command="npm install" />
+        <Exec Command="powershell Compress-Archive -Path $(MSBuildProjectDirectory)\node_modules\@acrolinx\sidebar-startpage\dist\dist-offline\ -DestinationPath $(MSBuildProjectDirectory)\startpage.zip -Force" />
+	</Target>
   <PropertyGroup>
-    <PreBuildEvent>powershell Compress-Archive -Path $(ProjectDir)\node_modules\@acrolinx\sidebar-startpage\dist\dist-offline\ -DestinationPath $(ProjectDir)\startpage.zip -Force</PreBuildEvent>
+	  <Title>Acrolinx.Sidebar</Title>
+    <PackageId>$(AssemblyName)</PackageId>
+    <Description>Acrolinx .NET SDK for Sidebar Integration</Description>
+    <Copyright>Copyright Acrolinx GmbH</Copyright>
+    <PackageProjectUrl>https://github.com/acrolinx/sidebar-sdk-dotnet</PackageProjectUrl>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <RepositoryUrl>https://github.com/acrolinx/sidebar-sdk-dotnet</RepositoryUrl>
+	  <LicenseUrl>https://github.com/acrolinx/sidebar-sdk-dotnet/blob/main/LICENSE</LicenseUrl>
   </PropertyGroup>
-  <Import Project="..\packages\Microsoft.Web.WebView2.1.0.2365.46\build\Microsoft.Web.WebView2.targets" Condition="Exists('..\packages\Microsoft.Web.WebView2.1.0.2365.46\build\Microsoft.Web.WebView2.targets')" />
-  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
-    <PropertyGroup>
-      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
-    </PropertyGroup>
-    <Error Condition="!Exists('..\packages\Microsoft.Web.WebView2.1.0.2365.46\build\Microsoft.Web.WebView2.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Web.WebView2.1.0.2365.46\build\Microsoft.Web.WebView2.targets'))" />
-  </Target>
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
 </Project>

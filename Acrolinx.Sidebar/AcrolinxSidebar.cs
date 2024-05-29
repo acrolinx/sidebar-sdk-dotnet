@@ -457,7 +457,7 @@ namespace Acrolinx.Sdk.Sidebar
             ReplaceRanges?.Invoke(this, new MatchesWithReplacementEventArgs(checkId, matches));
         }
 
-        internal void FireChecked(string checkId, Range range)
+        internal void FireChecked(string checkId, Documents.Range range)
         {
             Contract.Requires(checkId != null);
             Contract.Requires(range != null);

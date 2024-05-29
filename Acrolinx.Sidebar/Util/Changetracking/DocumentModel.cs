@@ -123,7 +123,7 @@ namespace Acrolinx.Sdk.Sidebar.Util.Changetracking
                 }
             }
 
-            return new Range(start, start + originalRange.Length);
+            return new Documents.Range(start, start + originalRange.Length);
         }
     }
 }

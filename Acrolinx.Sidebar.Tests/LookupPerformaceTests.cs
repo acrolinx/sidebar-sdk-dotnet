@@ -7,6 +7,7 @@ using System;
 using System.Diagnostics;
 using System.IO;
 using System.Reflection;
+using Range = Acrolinx.Sdk.Sidebar.Documents.Range;
 
 namespace Acrolinx.Sdk.Sidebar.Tests
 {

@@ -7,6 +7,7 @@ using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Xml;
+using Range = Acrolinx.Sdk.Sidebar.Documents.Range;
 
 namespace Acrolinx.Sdk.Sidebar
 {

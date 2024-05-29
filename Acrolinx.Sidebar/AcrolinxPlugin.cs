@@ -11,6 +11,7 @@ using System.Diagnostics;
 using Newtonsoft.Json;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
+using Range = Acrolinx.Sdk.Sidebar.Documents.Range;
 
 namespace Acrolinx.Sdk.Sidebar
 {

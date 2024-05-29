@@ -1,11 +1,10 @@
-﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34728.123
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Acrolinx.Sidebar", "Acrolinx.Sidebar\Acrolinx.Sidebar.csproj", "{9AF2B333-9701-4D7F-AF9A-E05E929712C9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Acrolinx.Sidebar", "Acrolinx.Sidebar\Acrolinx.Sidebar.csproj", "{9AF2B333-9701-4D7F-AF9A-E05E929712C9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Acrolinx.Sidebar.Tests", "Acrolinx.Sidebar.Tests\Acrolinx.Sidebar.Tests.csproj", "{28000138-A85C-4C4B-A544-BDF8CD7D0FD4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Acrolinx.Sidebar.Tests", "Acrolinx.Sidebar.Tests\Acrolinx.Sidebar.Tests.csproj", "{28000138-A85C-4C4B-A544-BDF8CD7D0FD4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -24,5 +23,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {CAA35DC8-A941-43DA-9A5C-65E091B3E512}
 	EndGlobalSection
 EndGlobal

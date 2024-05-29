@@ -33,16 +33,16 @@ jobs:
         run: mkdir download
 
       - name: download sonar
-        run: powershell Invoke-WebRequest -Uri "https://github.com/SonarSource/sonar-scanner-msbuild/releases/download/5.13.0.66756/sonar-scanner-msbuild-5.13.0.66756-net46.zip" -OutFile ".\download\sonarmsbuild.zip"
+        run: powershell Invoke-WebRequest -Uri "https://github.com/SonarSource/sonar-scanner-msbuild/releases/download/6.2.0.85879/sonar-scanner-6.2.0.85879-net-framework.zip" -OutFile ".\download\sonarmsbuild.zip"
 
       - name: extract sonar
         run: powershell Expand-Archive .\download\sonarmsbuild.zip .\sonar-msbuild\
 
       # Install the .NET Core workload
-      - name: Install .NET 6.0.x
+      - name: Install .NET 8.0.x
         uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: 6.0.x
+          dotnet-version: 8.0.x
 
       - name: Nuget restore
         uses: nuget/setup-nuget@v2
@@ -60,10 +60,10 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
-      - name: begin sonar
-        env:
-          SONAR_TOKEN: ${{ secrets.SONARCLOUD_TOKEN }}
-        run: sonar-msbuild\SonarScanner.MSBuild.exe begin /o:"acrolinx" /k:"acrolinx_sidebar-sdk-dotnet" /d:sonar.token=$env:SONAR_TOKEN /d:sonar.host.url="https://sonarcloud.io" /d:sonar.exclusions=Acrolinx.Sidebar.Tests\testFiles /d:sonar.cs.vscoveragexml.reportsPaths=Acrolinx.Sidebar\bin\Release\testResult.xmlcoverage.xml
+      #- name: begin sonar
+      #  env:
+      #    SONAR_TOKEN: ${{ secrets.SONARCLOUD_TOKEN }}
+      #  run: sonar-msbuild\SonarScanner.MSBuild.exe begin /o:"acrolinx" /k:"acrolinx_sidebar-sdk-dotnet" /d:sonar.token=$env:SONAR_TOKEN /d:sonar.host.url="https://sonarcloud.io" /d:sonar.exclusions=Acrolinx.Sidebar.Tests\testFiles /d:sonar.cs.vscoveragexml.reportsPaths=Acrolinx.Sidebar\bin\Release\testResult.xmlcoverage.xml
 
       # Restore the application to populate the obj folder with RuntimeIdentifiers
 
@@ -79,12 +79,12 @@ jobs:
       - name: VS Console Tests
         run: |
           $VSTest = "$(vswhere -property installationPath)\Common7\IDE\CommonExtensions\Microsoft\TestWindow\vstest.console.exe"
-          & $VSTest "Acrolinx.Sidebar.Tests\bin\Release\Acrolinx.Sidebar.Tests.dll" /settings:vstests.runsettings /Enablecodecoverage /Logger:"junit;LogFileName=TestResult.xml"
+          & $VSTest "Acrolinx.Sidebar.Tests\bin\Release\net8.0-windows\Acrolinx.Sidebar.Tests.dll" /settings:vstests.runsettings /Enablecodecoverage /Logger:"junit;LogFileName=TestResult.xml"
 
-      - name: end sonar
-        env:
-          SONAR_TOKEN: ${{ secrets.SONARCLOUD_TOKEN }}
-        run: sonar-msbuild\SonarScanner.MSBuild.exe end /d:sonar.token=$env:SONAR_TOKEN
+      #- name: end sonar
+      #  env:
+      #    SONAR_TOKEN: ${{ secrets.SONARCLOUD_TOKEN }}
+      #  run: sonar-msbuild\SonarScanner.MSBuild.exe end /d:sonar.token=$env:SONAR_TOKEN
 
       - name: Code signing
         env:
@@ -109,10 +109,12 @@ jobs:
       
       # Creating nuget package
       - name: Create nuget package
-        run: nuget pack ".\Acrolinx.Sidebar\Acrolinx.Sidebar.csproj" -properties Configuration=Release -symbols
+        if: ${{ (github.ref == 'refs/heads/main') || (startsWith(github.ref, 'refs/tags/')) }}
+        run: dotnet pack ".\Acrolinx.Sidebar\Acrolinx.Sidebar.csproj" -c Release /p:Version=$version
 
       # Change source of nuget package to Github, to publish on Github registry
       - name: Add nuget source to github (replacement for nexus)
+        if: ${{ (github.ref == 'refs/heads/main') || (startsWith(github.ref, 'refs/tags/')) }}
         run: nuget source Add -Name "GitHub" -Source "https://nuget.pkg.github.com/acrolinx/index.json" -UserName ${{ github.actor }} -Password ${{ secrets.GITHUB_TOKEN }}
 
       # Push package to Github registry.
@@ -120,17 +122,17 @@ jobs:
         shell: powershell
         if: ${{ (github.ref == 'refs/heads/main') || (startsWith(github.ref, 'refs/tags/')) }}
         run: |
-          $NugetPackage  = Get-ChildItem .\*.nupkg -Exclude *.symbols.nupkg -name
+          $NugetPackage  = Get-ChildItem .\Acrolinx.Sidebar\bin\Release\*.nupkg -Exclude *.symbols.nupkg -name
           Write-Host "Pushing to Github registry.. NuGet package name is : " $NugetPackage
-          nuget push $NugetPackage -source "GitHub" -ApiKey ${{ secrets.GITHUB_TOKEN }} 
+          nuget push .\Acrolinx.Sidebar\bin\Release\$NugetPackage -source "GitHub" -ApiKey ${{ secrets.GITHUB_TOKEN }} 
 
       # Push package to Nuget.org Only for tags(v*)
       - name: Push nuget package to Nuget.org
         if: startsWith(github.ref, 'refs/tags/')
         run: |
-          $NugetPackage = Get-ChildItem .\*.nupkg -Exclude *.symbols.nupkg -name
+          $NugetPackage = Get-ChildItem .\Acrolinx.Sidebar\bin\Release\*.nupkg -Exclude *.symbols.nupkg -name
           Write-Host "Pushing to Nuget.org. NuGet package name is : " $NugetPackage
-          nuget push $NugetPackage ${{ secrets.NUGET_API_KEY }} -Source nuget.org -Timeout 600
+          nuget push .\Acrolinx.Sidebar\bin\Release\$NugetPackage ${{ secrets.NUGET_API_KEY }} -Source nuget.org -Timeout 600
 
       # Create a release on GitHub. Only for tags(v*)
       - name: Create a release in Github
