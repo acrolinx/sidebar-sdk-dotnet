@@ -118,7 +118,7 @@ jobs:
       # Push package to Github registry.
       - name: Push nuget package to github
         shell: powershell
-        if: ${{ (github.ref == 'refs/heads/main') || (startsWith(github.ref, 'refs/tags/')) }}
+        # if: ${{ (github.ref == 'refs/heads/main') || (startsWith(github.ref, 'refs/tags/')) }}
         run: |
           $NugetPackage  = Get-ChildItem .\Acrolinx.Sidebar\bin\Release\*.nupkg -Exclude *.symbols.nupkg -name
           Write-Host "Pushing to Github registry.. NuGet package name is : " $NugetPackage
