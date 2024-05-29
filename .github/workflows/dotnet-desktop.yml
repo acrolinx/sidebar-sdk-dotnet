@@ -60,10 +60,10 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
-      #- name: begin sonar
-      #  env:
-      #    SONAR_TOKEN: ${{ secrets.SONARCLOUD_TOKEN }}
-      #  run: sonar-msbuild\SonarScanner.MSBuild.exe begin /o:"acrolinx" /k:"acrolinx_sidebar-sdk-dotnet" /d:sonar.token=$env:SONAR_TOKEN /d:sonar.host.url="https://sonarcloud.io" /d:sonar.exclusions=Acrolinx.Sidebar.Tests\testFiles /d:sonar.cs.vscoveragexml.reportsPaths=Acrolinx.Sidebar\bin\Release\testResult.xmlcoverage.xml
+      - name: begin sonar
+        env:
+          SONAR_TOKEN: ${{ secrets.SONARCLOUD_TOKEN }}
+        run: sonar-msbuild\SonarScanner.MSBuild.exe begin /o:"acrolinx" /k:"acrolinx_sidebar-sdk-dotnet" /d:sonar.token=$env:SONAR_TOKEN /d:sonar.host.url="https://sonarcloud.io" /d:sonar.exclusions=Acrolinx.Sidebar.Tests\testFiles /d:sonar.cs.vscoveragexml.reportsPaths=Acrolinx.Sidebar\bin\Release\testResult.xmlcoverage.xml
 
       # Restore the application to populate the obj folder with RuntimeIdentifiers
 
@@ -81,10 +81,10 @@ jobs:
           $VSTest = "$(vswhere -property installationPath)\Common7\IDE\CommonExtensions\Microsoft\TestWindow\vstest.console.exe"
           & $VSTest "Acrolinx.Sidebar.Tests\bin\Release\net8.0-windows\Acrolinx.Sidebar.Tests.dll" /settings:vstests.runsettings /Enablecodecoverage /Logger:"junit;LogFileName=TestResult.xml"
 
-      #- name: end sonar
-      #  env:
-      #    SONAR_TOKEN: ${{ secrets.SONARCLOUD_TOKEN }}
-      #  run: sonar-msbuild\SonarScanner.MSBuild.exe end /d:sonar.token=$env:SONAR_TOKEN
+      - name: end sonar
+        env:
+          SONAR_TOKEN: ${{ secrets.SONARCLOUD_TOKEN }}
+        run: sonar-msbuild\SonarScanner.MSBuild.exe end /d:sonar.token=$env:SONAR_TOKEN
 
       - name: Code signing
         env:
@@ -109,12 +109,13 @@ jobs:
       
       # Creating nuget package
       - name: Create nuget package
-        if: ${{ (github.ref == 'refs/heads/main') || (startsWith(github.ref, 'refs/tags/')) }}
-        run: dotnet pack ".\Acrolinx.Sidebar\Acrolinx.Sidebar.csproj" -c Release /p:Version=$version
+        run: |
+          $version = git describe --abbrev=0 --tags
+          $version = $version.substring(1) + "." + $env:BUILD_NUMBER
+          dotnet pack ".\Acrolinx.Sidebar\Acrolinx.Sidebar.csproj" -c Release /p:Version=$version
 
       # Change source of nuget package to Github, to publish on Github registry
       - name: Add nuget source to github (replacement for nexus)
-        if: ${{ (github.ref == 'refs/heads/main') || (startsWith(github.ref, 'refs/tags/')) }}
         run: nuget source Add -Name "GitHub" -Source "https://nuget.pkg.github.com/acrolinx/index.json" -UserName ${{ github.actor }} -Password ${{ secrets.GITHUB_TOKEN }}
 
       # Push package to Github registry.
