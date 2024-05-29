@@ -109,7 +109,7 @@ jobs:
       
       # Creating nuget package
       - name: Create nuget package
-        run: nuget pack ".\Acrolinx.Sidebar\Acrolinx.Sidebar.csproj" -properties Configuration=Release -symbols
+        run: dotnet pack ".\Acrolinx.Sidebar\Acrolinx.Sidebar.csproj" -c Release
 
       # Change source of nuget package to Github, to publish on Github registry
       - name: Add nuget source to github (replacement for nexus)
@@ -120,7 +120,7 @@ jobs:
         shell: powershell
         if: ${{ (github.ref == 'refs/heads/main') || (startsWith(github.ref, 'refs/tags/')) }}
         run: |
-          $NugetPackage  = Get-ChildItem .\*.nupkg -Exclude *.symbols.nupkg -name
+          $NugetPackage  = Get-ChildItem .\Acrolinx.Sidebar\bin\Release\*.nupkg -Exclude *.symbols.nupkg -name
           Write-Host "Pushing to Github registry.. NuGet package name is : " $NugetPackage
           nuget push $NugetPackage -source "GitHub" -ApiKey ${{ secrets.GITHUB_TOKEN }} 
 
@@ -128,7 +128,7 @@ jobs:
       - name: Push nuget package to Nuget.org
         if: startsWith(github.ref, 'refs/tags/')
         run: |
-          $NugetPackage = Get-ChildItem .\*.nupkg -Exclude *.symbols.nupkg -name
+          $NugetPackage = Get-ChildItem .\Acrolinx.Sidebar\bin\Release\*.nupkg -Exclude *.symbols.nupkg -name
           Write-Host "Pushing to Nuget.org. NuGet package name is : " $NugetPackage
           nuget push $NugetPackage ${{ secrets.NUGET_API_KEY }} -Source nuget.org -Timeout 600
 
