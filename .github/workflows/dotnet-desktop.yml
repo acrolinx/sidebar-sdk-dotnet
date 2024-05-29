@@ -110,7 +110,10 @@ jobs:
       # Creating nuget package
       - name: Create nuget package
         if: ${{ (github.ref == 'refs/heads/main') || (startsWith(github.ref, 'refs/tags/')) }}
-        run: dotnet pack ".\Acrolinx.Sidebar\Acrolinx.Sidebar.csproj" -c Release /p:Version=$version
+        run: |
+          $version = git describe --abbrev=0 --tags
+          $version = $version.substring(1) + "." + $env:BUILD_NUMBER
+          dotnet pack ".\Acrolinx.Sidebar\Acrolinx.Sidebar.csproj" -c Release /p:Version=$version
 
       # Change source of nuget package to Github, to publish on Github registry
       - name: Add nuget source to github (replacement for nexus)
