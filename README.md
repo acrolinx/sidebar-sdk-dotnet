@@ -51,7 +51,7 @@ Download and install "Evergreen Standalone Installer" from [Microsoft](https://d
 
 ## Build Locally
 
-1. Make sure that you have installed Microsoft Visual Studio with C# support version 2015 or later.
+1. Make sure that you have installed Microsoft Visual Studio with C# support version 2022 or later.
 2. Since the Acrolinx Sidebar performs static code analysis to improve quality,
    you also have to install [Code Contracts for .NET](https://visualstudiogallery.msdn.microsoft.com/1ec7db13-3363-46c9-851f-1ce455f66970).
 3. Open the solution file [`Acrolinx.Sidebar.Net.sln`](Acrolinx.Sidebar.Net.sln) with Visual Studio.
