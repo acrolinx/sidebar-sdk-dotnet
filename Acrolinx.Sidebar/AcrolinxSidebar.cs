@@ -92,8 +92,20 @@ namespace Acrolinx.Sdk.Sidebar
         {
         }
 
+        private void handleBindings()
+        {
+            // https://github.com/dotnet/runtime/issues/39078 - This is not fixed for .NET Framework
+            if (System.Runtime.InteropServices.RuntimeInformation.FrameworkDescription.StartsWith(".NET Framework"))
+            {
+                AssemblyUtil.RedirectAssembly("System.Resources.Extensions", new Version("8.0.0.0"), "cc7b13ffcd2ddd51");
+                AssemblyUtil.RedirectAssembly("System.Runtime.CompilerServices.Unsafe", new Version("6.0.0.0"), "b03f5f7f11d50a3a");
+            }
+            
+        }
+
         public AcrolinxSidebar(IAcrolinxStorage acroStorage)
         {
+            handleBindings();
             Storage = (acroStorage != null) ? acroStorage : RegistryAcrolinxStorage.Instance;
 
             InitParameters = new JObject();
