@@ -5,6 +5,8 @@ This is a library for integrating the [Acrolinx](https://www.acrolinx.com/) Side
 You can use the [Acrolinx Sidebar .NET SDK NuGet package](https://www.nuget.org/packages/Acrolinx.Sidebar/)
 to integrate Acrolinx in your .NET application.
 
+It supports both .NET (8.0.0 and above) and .NET Framework (4.7.2 and above).
+
 ## Live Demo
 
 [Acrolinx Sidebar Web Live Demo](https://acrolinx.github.io/acrolinx-sidebar-demo/samples/index.html)
