@@ -7,7 +7,7 @@
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <UseWindowsForms>true</UseWindowsForms>
     <ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>
-	  <GenerateResourceUsePreserializedResources>false</GenerateResourceUsePreserializedResources>
+    <GenerateResourceUsePreserializedResources>false</GenerateResourceUsePreserializedResources>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <RunCodeAnalysis>false</RunCodeAnalysis>
@@ -113,9 +113,9 @@
       <SubType>UserControl</SubType>
     </Compile>
   </ItemGroup>
-	<ItemGroup>
-		<EmbeddedResource Include="startpage.zip" />
-	</ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="startpage.zip" />
+  </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="toolbox.bmp" />
   </ItemGroup>
@@ -146,19 +146,24 @@
     <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.2478.35" />
     <PackageReference Include="System.Resources.Extensions" Version="5.0.0" />
   </ItemGroup>
-    
-	<Target Name="CreateStartPage" BeforeTargets="DispatchToInnerBuilds">
-        <Exec Command="npm install" />
-        <Exec Command="powershell Compress-Archive -Path $(MSBuildProjectDirectory)\node_modules\@acrolinx\sidebar-startpage\dist\dist-offline\ -DestinationPath $(MSBuildProjectDirectory)\startpage.zip -Force" />
-	</Target>
+  <ItemGroup>
+    <Reference Include="log4net, Version=2.0.17.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a">
+      <HintPath>..\packages\log4net.2.0.17\lib\net45\log4net.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+  </ItemGroup>
+  <Target Name="CreateStartPage" BeforeTargets="DispatchToInnerBuilds">
+    <Exec Command="npm install" />
+    <Exec Command="powershell Compress-Archive -Path $(MSBuildProjectDirectory)\node_modules\@acrolinx\sidebar-startpage\dist\dist-offline\ -DestinationPath $(MSBuildProjectDirectory)\startpage.zip -Force" />
+  </Target>
   <PropertyGroup>
-	  <Title>Acrolinx.Sidebar</Title>
+    <Title>Acrolinx.Sidebar</Title>
     <PackageId>$(AssemblyName)</PackageId>
     <Description>Acrolinx .NET SDK for Sidebar Integration</Description>
     <Copyright>Copyright Acrolinx GmbH</Copyright>
     <PackageProjectUrl>https://github.com/acrolinx/sidebar-sdk-dotnet</PackageProjectUrl>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <RepositoryUrl>https://github.com/acrolinx/sidebar-sdk-dotnet</RepositoryUrl>
-	  <LicenseUrl>https://github.com/acrolinx/sidebar-sdk-dotnet/blob/main/LICENSE</LicenseUrl>
+    <LicenseUrl>https://github.com/acrolinx/sidebar-sdk-dotnet/blob/main/LICENSE</LicenseUrl>
   </PropertyGroup>
 </Project>
