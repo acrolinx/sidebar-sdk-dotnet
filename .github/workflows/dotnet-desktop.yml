@@ -10,11 +10,6 @@ on:
   schedule:
     - cron: "0 2 * * *"
   workflow_dispatch:
-    inputs:
-      reason:
-        description: "Trigger Comment (Optional)"
-        required: false
-        default: "Manual Workflow Run"
 
 jobs:
   build:
@@ -38,7 +33,6 @@ jobs:
       - name: extract sonar
         run: powershell Expand-Archive .\download\sonarmsbuild.zip .\sonar-msbuild\
 
-      # Install the .NET Core workload
       - name: Install .NET 8.0.x
         uses: actions/setup-dotnet@v4
         with:
@@ -46,9 +40,9 @@ jobs:
 
       - name: Nuget restore
         uses: nuget/setup-nuget@v2
+
       - run: nuget restore $env:Solution_Name
 
-      # Add  MSBuild to the PATH: https://github.com/microsoft/setup-msbuild
       - name: Setup MSBuild.exe
         uses: microsoft/setup-msbuild@v2
         env:
@@ -64,8 +58,6 @@ jobs:
         env:
           SONAR_TOKEN: ${{ secrets.SONARCLOUD_TOKEN }}
         run: sonar-msbuild\SonarScanner.MSBuild.exe begin /o:"acrolinx" /k:"acrolinx_sidebar-sdk-dotnet" /d:sonar.token=$env:SONAR_TOKEN /d:sonar.host.url="https://sonarcloud.io" /d:sonar.exclusions=Acrolinx.Sidebar.Tests\testFiles /d:sonar.cs.vscoveragexml.reportsPaths=Acrolinx.Sidebar\bin\Release\testResult.xmlcoverage.xml
-
-      # Restore the application to populate the obj folder with RuntimeIdentifiers
 
       - name: Restore the application
         run: msbuild $env:Solution_Name /t:Restore /p:Configuration=Release
@@ -103,23 +95,19 @@ jobs:
           del .\Certificate
           del AcrolinxCertificate.pfx
 
-      # Update .nuspec (Nuget Specification) with version number
-      - name: Patch version in nuget spec
+      - name: Patch version number in nuget specification
         run:  ((Get-Content -path .\Acrolinx.Sidebar\Acrolinx.Sidebar.nuspec -Raw) -replace '\$version\$',"`$version`$.$env:BUILD_NUMBER") | Set-Content -Path .\Acrolinx.Sidebar\Acrolinx.Sidebar.nuspec
-      
-      # Creating nuget package
+
       - name: Create nuget package
         run: |
           $version = git describe --abbrev=0 --tags
           $version = $version.substring(1) + "." + $env:BUILD_NUMBER
           dotnet pack ".\Acrolinx.Sidebar\Acrolinx.Sidebar.csproj" -c Release /p:Version=$version
 
-      # Change source of nuget package to Github, to publish on Github registry
-      - name: Add nuget source to github (replacement for nexus)
+      - name: Add nuget source to Github to publish on Github registry
         run: nuget source Add -Name "GitHub" -Source "https://nuget.pkg.github.com/acrolinx/index.json" -UserName ${{ github.actor }} -Password ${{ secrets.GITHUB_TOKEN }}
 
-      # Push package to Github registry.
-      - name: Push nuget package to github
+      - name: Push nuget package to Github registry
         shell: powershell
         if: ${{ (github.ref == 'refs/heads/main') || (startsWith(github.ref, 'refs/tags/')) }}
         run: |
@@ -127,16 +115,14 @@ jobs:
           Write-Host "Pushing to Github registry.. NuGet package name is : " $NugetPackage
           nuget push .\Acrolinx.Sidebar\bin\Release\$NugetPackage -source "GitHub" -ApiKey ${{ secrets.GITHUB_TOKEN }} 
 
-      # Push package to Nuget.org Only for tags(v*)
-      - name: Push nuget package to Nuget.org
+      - name: Push nuget package to Nuget.org (only for tags)
         if: startsWith(github.ref, 'refs/tags/')
         run: |
           $NugetPackage = Get-ChildItem .\Acrolinx.Sidebar\bin\Release\*.nupkg -Exclude *.symbols.nupkg -name
           Write-Host "Pushing to Nuget.org. NuGet package name is : " $NugetPackage
           nuget push .\Acrolinx.Sidebar\bin\Release\$NugetPackage ${{ secrets.NUGET_API_KEY }} -Source nuget.org -Timeout 600
 
-      # Create a release on GitHub. Only for tags(v*)
-      - name: Create a release in Github
+      - name: Create a release in GitHub (only for tags)
         uses: softprops/action-gh-release@v2
         if: startsWith(github.ref, 'refs/tags/')
         with:
@@ -144,14 +130,13 @@ jobs:
             *.nupkg
             Acrolinx.Sidebar/bin/Release/
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}    
-      
-      # Restore nuspec
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Restore nuget spec
         run:  ((Get-Content -path .\Acrolinx.Sidebar\Acrolinx.Sidebar.nuspec -Raw) -replace ('\$version\$-'+$env:BUILD_NUMBER), "`$version`$") | Set-Content -Path .\Acrolinx.Sidebar\Acrolinx.Sidebar.nuspec
 
-      # Archive build artifacts
-      - uses: actions/upload-artifact@master
+      - name: Archive build artifacts
+        uses: actions/upload-artifact@master
         with:
           name: build-artifact
           path: |
