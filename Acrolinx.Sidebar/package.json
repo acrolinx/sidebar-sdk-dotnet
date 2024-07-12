@@ -2,6 +2,9 @@
   "version": "1.0.0",
   "name": "dot-net-sidebar-sdk",
   "private": true,
+  "engines": {
+    "node": ">=20"
+  },
   "devDependencies": {
     "@acrolinx/sidebar-startpage": "^3.4.1"
   }
