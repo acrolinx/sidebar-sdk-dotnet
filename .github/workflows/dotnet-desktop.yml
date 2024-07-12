@@ -102,7 +102,7 @@ jobs:
         run: |
           $version = git describe --abbrev=0 --tags
           $version = $version.substring(1) + "." + $env:BUILD_NUMBER
-          dotnet pack ".\Acrolinx.Sidebar\Acrolinx.Sidebar.csproj" -c Release /p:Version=$version
+          dotnet pack --no-build ".\Acrolinx.Sidebar\Acrolinx.Sidebar.csproj" -c Release /p:Version=$version
 
       - name: Add nuget source to Github to publish on Github registry
         run: nuget source Add -Name "GitHub" -Source "https://nuget.pkg.github.com/acrolinx/index.json" -UserName ${{ github.actor }} -Password ${{ secrets.GITHUB_TOKEN }}
