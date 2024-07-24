@@ -28,7 +28,7 @@ jobs:
         run: mkdir download
 
       - name: download sonar
-        run: powershell Invoke-WebRequest -Uri "https://github.com/SonarSource/sonar-scanner-msbuild/releases/download/6.2.0.85879/sonar-scanner-6.2.0.85879-net-framework.zip" -OutFile ".\download\sonarmsbuild.zip"
+        run: powershell Invoke-WebRequest -Uri "https://github.com/SonarSource/sonar-scanner-msbuild/releases/download/7.1.0.95705/sonar-scanner-7.1.0.95705-net-framework.zip" -OutFile ".\download\sonarmsbuild.zip"
 
       - name: extract sonar
         run: powershell Expand-Archive .\download\sonarmsbuild.zip .\sonar-msbuild\
@@ -47,12 +47,6 @@ jobs:
         uses: microsoft/setup-msbuild@v2
         env:
           ACTIONS_ALLOW_UNSECURE_COMMANDS: true
-
-      - name: Setup Java - required by sonar
-        uses: actions/setup-java@v4
-        with:
-          java-version: '21'
-          distribution: 'temurin'
 
       - name: begin sonar
         env:
