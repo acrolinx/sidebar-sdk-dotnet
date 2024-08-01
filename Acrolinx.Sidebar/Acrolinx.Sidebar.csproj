@@ -151,6 +151,18 @@
       <HintPath>..\packages\log4net.2.0.17\lib\net45\log4net.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Microsoft.Web.WebView2.Core, Version=1.0.2592.51, Culture=neutral, PublicKeyToken=2a8ab48044d2601e">
+      <HintPath>..\packages\Microsoft.Web.WebView2.1.0.2592.51\lib\net462\Microsoft.Web.WebView2.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Web.WebView2.WinForms, Version=1.0.2592.51, Culture=neutral, PublicKeyToken=2a8ab48044d2601e">
+      <HintPath>..\packages\Microsoft.Web.WebView2.1.0.2592.51\lib\net462\Microsoft.Web.WebView2.WinForms.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Web.WebView2.Wpf, Version=1.0.2592.51, Culture=neutral, PublicKeyToken=2a8ab48044d2601e">
+      <HintPath>..\packages\Microsoft.Web.WebView2.1.0.2592.51\lib\net462\Microsoft.Web.WebView2.Wpf.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
   </ItemGroup>
   <Target Name="CreateStartPage" BeforeTargets="DispatchToInnerBuilds">
     <Exec Command="npm install" />
@@ -166,4 +178,11 @@
     <RepositoryUrl>https://github.com/acrolinx/sidebar-sdk-dotnet</RepositoryUrl>
     <LicenseUrl>https://github.com/acrolinx/sidebar-sdk-dotnet/blob/main/LICENSE</LicenseUrl>
   </PropertyGroup>
+  <Import Project="../packages/Microsoft.Web.WebView2.1.0.2592.51/build/Microsoft.Web.WebView2.targets" Condition="Exists('../packages/Microsoft.Web.WebView2.1.0.2592.51/build/Microsoft.Web.WebView2.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105.The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('../packages/Microsoft.Web.WebView2.1.0.2592.51/build/Microsoft.Web.WebView2.targets')" Text="$([System.String]::Format('$(ErrorText)', '../packages/Microsoft.Web.WebView2.1.0.2592.51/build/Microsoft.Web.WebView2.targets'))" />
+  </Target>
 </Project>
