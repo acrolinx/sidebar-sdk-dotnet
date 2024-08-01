@@ -21,3 +21,10 @@ updates:
     reviewers:
       - abhijeetnarvekar
       - mscc-sascha
+  - package-ecosystem: "npm"
+    directory: "/Acrolinx.Sidebar/"
+    schedule:
+      interval: "daily"
+    reviewers:
+      - abhijeetnarvekar
+      - mscc-sascha
