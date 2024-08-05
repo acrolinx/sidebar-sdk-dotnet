@@ -1,5 +1,4 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <Import Project="../packages/JunitXml.TestLogger.4.0.254/build/netstandard1.5/JUnitXml.TestLogger.props" Condition="Exists('../packages/JunitXml.TestLogger.4.0.254/build/netstandard1.5/JUnitXml.TestLogger.props')" />
   <PropertyGroup>
     <TargetFramework>net8.0-windows</TargetFramework>
     <OutputType>Library</OutputType>
@@ -106,10 +105,4 @@
       </ItemGroup>
     </When>
   </Choose>
-  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
-    <PropertyGroup>
-      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105.The missing file is {0}.</ErrorText>
-    </PropertyGroup>
-    <Error Condition="!Exists('../packages/JunitXml.TestLogger.4.0.254/build/netstandard1.5/JUnitXml.TestLogger.props')" Text="$([System.String]::Format('$(ErrorText)', '../packages/JunitXml.TestLogger.4.0.254/build/netstandard1.5/JUnitXml.TestLogger.props'))" />
-  </Target>
 </Project>
