@@ -146,6 +146,12 @@
     <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.2592.51" />
     <PackageReference Include="System.Resources.Extensions" Version="8.0.0" />
   </ItemGroup>
+  <ItemGroup>
+    <Reference Include="FSharp.Core, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+      <HintPath>..\packages\FSharp.Core.8.0.400\lib\netstandard2.0\FSharp.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+  </ItemGroup>
   <Target Name="CreateStartPage" BeforeTargets="DispatchToInnerBuilds">
     <Exec Command="npm install" />
     <Exec Command="powershell Compress-Archive -Path $(MSBuildProjectDirectory)\node_modules\@acrolinx\sidebar-startpage\dist\dist-offline\ -DestinationPath $(MSBuildProjectDirectory)\startpage.zip -Force" />
