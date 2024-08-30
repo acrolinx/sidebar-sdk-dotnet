@@ -8,14 +8,7 @@ updates:
       - abhijeetnarvekar
       - mscc-sascha
   - package-ecosystem: "nuget"
-    directory: "/Acrolinx.Sidebar/"
-    schedule:
-      interval: "daily"
-    reviewers:
-      - abhijeetnarvekar
-      - mscc-sascha
-  - package-ecosystem: "nuget"
-    directory: "/Acrolinx.Sidebar.Tests/"
+    directory: "/"
     schedule:
       interval: "daily"
     reviewers:
