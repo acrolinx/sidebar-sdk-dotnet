@@ -141,7 +141,13 @@ namespace Acrolinx.Sdk.Sidebar
                 return false;
             }
 
-            System.Diagnostics.Process.Start(url);
+            var process = new Process() {
+                StartInfo = new ProcessStartInfo() {
+                    FileName = url,
+                    UseShellExecute = true
+                }
+            };
+            process.Start();
 
             return true;
         }
@@ -274,7 +280,13 @@ namespace Acrolinx.Sdk.Sidebar
         {
             try
             {
-                Process proc = Process.Start(Path.GetDirectoryName(Logger.Directory));
+                var process = new Process() {
+                    StartInfo = new ProcessStartInfo() {
+                        FileName = Path.GetDirectoryName(Logger.Directory),
+                        UseShellExecute = true
+                    }
+                };
+                process.Start();
             }
             catch (Exception exce)
             {
