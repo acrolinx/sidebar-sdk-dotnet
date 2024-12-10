@@ -36,7 +36,7 @@ jobs:
       - name: Install .NET
         uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: 8
+          dotnet-version: 9
 
       - name: Nuget restore
         uses: nuget/setup-nuget@v2
@@ -72,22 +72,46 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONARCLOUD_TOKEN }}
         run: sonar-msbuild\SonarScanner.MSBuild.exe end /d:sonar.token=$env:SONAR_TOKEN
 
-      - name: Code signing
+      - name: Setup Certificate 
+        run: | 
+          echo "${{secrets.SM_CLIENT_CERT_FILE_B64 }}" | base64 --decode > /d/Certificate_pkcs12.p12 
+          cat /d/Certificate_pkcs12.p12 
+        shell: bash   
+
+      - name: Set variables for code signing
+        id: variables 
+        if: ${{ (github.ref == 'refs/heads/main') || (startsWith(github.ref, 'refs/tags/')) }}
+        run: | 
+          echo "SM_HOST=${{ secrets.SM_HOST }}" >> "$GITHUB_ENV" 
+          echo "SM_API_KEY=${{ secrets.SM_API_KEY }}" >> "$GITHUB_ENV" 
+          echo "SM_CLIENT_CERT_FILE=D:\\Certificate_pkcs12.p12" >> "$GITHUB_ENV" 
+          echo "SM_CLIENT_CERT_PASSWORD=${{ secrets.SM_CLIENT_CERT_PASSWORD }}" >> "$GITHUB_ENV" 
+          echo "C:\Program Files (x86)\Windows Kits\10\App Certification Kit" >> $GITHUB_PATH 
+          echo "C:\Program Files (x86)\Microsoft SDKs\Windows\v10.0A\bin\NETFX 4.8 Tools" >> $GITHUB_PATH 
+          echo "C:\Program Files\DigiCert\DigiCert One Signing Manager Tools" >> $GITHUB_PATH 
+        shell: bash  
+
+      - name: Setup SSM KSP on windows latest 
+        if: ${{ (github.ref == 'refs/heads/main') || (startsWith(github.ref, 'refs/tags/')) }}
+        run: |
+          echo "Downloading the DigiCert Signing Manager Tools for Windows x64"
+          curl -X GET  https://one.digicert.com/signingmanager/api-ui/v1/releases/smtools-windows-x64.msi/download -H "x-api-key:%SM_API_KEY%" -o smtools-windows-x64.msi 
+          msiexec /i smtools-windows-x64.msi /quiet /qn 
+          smksp_registrar.exe list 
+          smctl.exe keypair ls 
+          C:\Windows\System32\certutil.exe -csp "DigiCert Signing Manager KSP" -key -user 
+          smksp_cert_sync.exe 
+        shell: cmd 
+      
+      - name: Signing using Signtool 
+        if: ${{ (github.ref == 'refs/heads/main') || (startsWith(github.ref, 'refs/tags/')) }}
         env:
-          CERTIFICATE: ${{ secrets.CERTIFICATE }}
-          CERTIFICATE_PASSWORD: ${{ secrets.CERTIFICATE_PASSWORD }}
           BINARY: "./Acrolinx.Sidebar/bin/Release/Acrolinx.Sidebar.dll"
-          SIGNTOOL: "C:/Program Files (x86)/Windows Kits/10/bin/10.0.17763.0/x86/signtool.exe"
-        shell: powershell
-        #if: ${{ (github.ref == 'refs/heads/main') || (startsWith(github.ref, 'refs/tags/')) }}
-        if: ${{ false }}
-        run : |
-          $ErrorActionPreference = 'stop'
-          $env:CERTIFICATE | Out-File -FilePath Certificate
-          certutil -decode Certificate AcrolinxCertificate.pfx
-          & $env:SIGNTOOL sign /f AcrolinxCertificate.pfx /p $env:CERTIFICATE_PASSWORD /tr http://timestamp.digicert.com /td sha256 /fd sha256 $env:BINARY
-          del Certificate
-          del AcrolinxCertificate.pfx
+          DIGICERT_CERTIFICATE_FINGERPRINT: ${{ secrets.DIGICERT_CERTIFICATE_FINGERPRINT }}
+        run: |
+          echo "Signing the binary %BINARY% using signtool.exe"
+          signtool.exe sign /tr http://timestamp.digicert.com /td SHA256 /fd SHA256 /sha1 %DIGICERT_CERTIFICATE_FINGERPRINT% %BINARY%
+          signtool.exe verify /v /pa %BINARY% 
 
       - name: Patch version number in nuget specification
         run:  ((Get-Content -path Acrolinx.Sidebar\Acrolinx.Sidebar.nuspec -Raw) -replace '\$version\$',"`$version`$.$env:BUILD_NUMBER") | Set-Content -Path Acrolinx.Sidebar\Acrolinx.Sidebar.nuspec
