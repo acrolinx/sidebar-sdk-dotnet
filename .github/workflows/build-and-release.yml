@@ -74,9 +74,9 @@ jobs:
 
       - name: Setup Certificate 
         run: | 
-          echo "${{secrets.SM_CLIENT_CERT_FILE_B64 }}" | base64 --decode > /d/Certificate_pkcs12.p12 
-          cat /d/Certificate_pkcs12.p12 
-        shell: bash   
+          echo "${{ secrets.SM_CLIENT_CERT_FILE_B64 }}" | base64 --decode > $RUNNER_TEMP\Certificate_pkcs12.p12
+          cat $RUNNER_TEMP\Certificate_pkcs12.p12
+        shell: bash 
 
       - name: Set variables for code signing
         id: variables 
@@ -84,7 +84,7 @@ jobs:
         run: | 
           echo "SM_HOST=${{ secrets.SM_HOST }}" >> "$GITHUB_ENV" 
           echo "SM_API_KEY=${{ secrets.SM_API_KEY }}" >> "$GITHUB_ENV" 
-          echo "SM_CLIENT_CERT_FILE=D:\\Certificate_pkcs12.p12" >> "$GITHUB_ENV" 
+          echo "SM_CLIENT_CERT_FILE=$RUNNER_TEMP\Certificate_pkcs12.p12" >> "$GITHUB_ENV" 
           echo "SM_CLIENT_CERT_PASSWORD=${{ secrets.SM_CLIENT_CERT_PASSWORD }}" >> "$GITHUB_ENV" 
           echo "C:\Program Files (x86)\Windows Kits\10\App Certification Kit" >> $GITHUB_PATH 
           echo "C:\Program Files (x86)\Microsoft SDKs\Windows\v10.0A\bin\NETFX 4.8 Tools" >> $GITHUB_PATH 
