@@ -76,7 +76,6 @@ jobs:
         # if: startsWith(github.ref, 'refs/tags/')
         run: | 
           echo "${{ secrets.SM_CLIENT_CERT_FILE_B64 }}" | base64 --decode > $RUNNER_TEMP\Certificate_pkcs12.p12
-          cat $RUNNER_TEMP\Certificate_pkcs12.p12
         shell: bash 
 
       - name: Set variables for code signing
@@ -107,13 +106,16 @@ jobs:
       - name: Signing using Signtool 
         # if: startsWith(github.ref, 'refs/tags/')
         env:
-          BINARY: "./Acrolinx.Sidebar/bin/Release/Acrolinx.Sidebar.dll"
+          BINARYDIR: "./Acrolinx.Sidebar/bin/Release"
           DIGICERT_CERTIFICATE_FINGERPRINT: ${{ secrets.DIGICERT_CERTIFICATE_FINGERPRINT }}
         run: |
-          echo "Signing the binary %BINARY% using signtool.exe"
-          signtool.exe sign /tr http://timestamp.digicert.com /td SHA256 /fd SHA256 /sha1 %DIGICERT_CERTIFICATE_FINGERPRINT% %BINARY%
-          signtool.exe verify /v /pa %BINARY%
-        shell: cmd
+          echo "Signing the binaries using signtool.exe"
+          for framework in net8.0-windows net9.0-windows net472; do (
+            echo "Signing $BINARYDIR/$framework/Acrolinx.Sidebar.dll"
+            signtool.exe sign /tr http://timestamp.digicert.com /td SHA256 /fd SHA256 /sha1 %DIGICERT_CERTIFICATE_FINGERPRINT% $BINARYDIR/$framework/Acrolinx.Sidebar.dll
+            signtool.exe verify /v /pa $BINARYDIR/$framework/Acrolinx.Sidebar.dll
+          ) done
+        shell: bash
 
       - name: Patch version number in nuget specification
         run:  ((Get-Content -path Acrolinx.Sidebar\Acrolinx.Sidebar.nuspec -Raw) -replace '\$version\$',"`$version`$.$env:BUILD_NUMBER") | Set-Content -Path Acrolinx.Sidebar\Acrolinx.Sidebar.nuspec
