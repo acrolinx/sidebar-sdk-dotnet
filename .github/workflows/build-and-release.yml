@@ -112,7 +112,8 @@ jobs:
         run: |
           echo "Signing the binary %BINARY% using signtool.exe"
           signtool.exe sign /tr http://timestamp.digicert.com /td SHA256 /fd SHA256 /sha1 %DIGICERT_CERTIFICATE_FINGERPRINT% %BINARY%
-          signtool.exe verify /v /pa %BINARY% 
+          signtool.exe verify /v /pa %BINARY%
+        shell: cmd
 
       - name: Patch version number in nuget specification
         run:  ((Get-Content -path Acrolinx.Sidebar\Acrolinx.Sidebar.nuspec -Raw) -replace '\$version\$',"`$version`$.$env:BUILD_NUMBER") | Set-Content -Path Acrolinx.Sidebar\Acrolinx.Sidebar.nuspec
