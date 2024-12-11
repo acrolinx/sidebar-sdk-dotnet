@@ -112,7 +112,7 @@ jobs:
           echo "Signing the binaries using signtool.exe"
           for framework in net8.0-windows net9.0-windows net472; do (
             echo "Signing $BINARYDIR/$framework/Acrolinx.Sidebar.dll"
-            signtool.exe sign /tr http://timestamp.digicert.com /td SHA256 /fd SHA256 /sha1 %DIGICERT_CERTIFICATE_FINGERPRINT% $BINARYDIR/$framework/Acrolinx.Sidebar.dll
+            signtool.exe sign /tr http://timestamp.digicert.com /td SHA256 /fd SHA256 /sha1 $DIGICERT_CERTIFICATE_FINGERPRINT $BINARYDIR/$framework/Acrolinx.Sidebar.dll
             signtool.exe verify /v /pa $BINARYDIR/$framework/Acrolinx.Sidebar.dll
           ) done
         shell: bash
