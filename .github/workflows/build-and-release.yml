@@ -93,6 +93,8 @@ jobs:
 
       - name: Setup SSM KSP on windows latest 
         # if: startsWith(github.ref, 'refs/tags/')
+        env:
+          DIGICERT_KEYPAIR_ALIAS: ${{ secrets.DIGICERT_KEYPAIR_ALIAS }}
         run: |
           echo "Downloading the DigiCert Signing Manager Tools for Windows x64"
           curl -X GET  https://one.digicert.com/signingmanager/api-ui/v1/releases/smtools-windows-x64.msi/download -H "x-api-key:%SM_API_KEY%" -o smtools-windows-x64.msi 
@@ -100,7 +102,7 @@ jobs:
           smksp_registrar.exe list 
           smctl.exe keypair ls 
           C:\Windows\System32\certutil.exe -csp "DigiCert Signing Manager KSP" -key -user 
-          smksp_cert_sync.exe 
+          smctl windows certsync --keypair-alias=%DIGICERT_KEYPAIR_ALIAS%
         shell: cmd 
       
       - name: Signing using Signtool 
