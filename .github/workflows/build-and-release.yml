@@ -101,10 +101,7 @@ jobs:
         run: |
           echo "Downloading the DigiCert Signing Manager Tools for Windows x64"
           curl -X GET  https://one.digicert.com/signingmanager/api-ui/v1/releases/smtools-windows-x64.msi/download -H "x-api-key:%SM_API_KEY%" -o smtools-windows-x64.msi 
-          msiexec /i smtools-windows-x64.msi /quiet /qn 
-          smksp_registrar.exe list
-          C:\Windows\System32\certutil.exe -csp "DigiCert Signing Manager KSP" -key -user 
-          echo "Syncing the certificate with the keypair alias"
+          msiexec /i smtools-windows-x64.msi /quiet /qn
           smctl windows certsync --keypair-alias=%DIGICERT_KEYPAIR_ALIAS% > nul 2>&1
         shell: cmd
 
