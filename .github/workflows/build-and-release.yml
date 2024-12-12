@@ -13,8 +13,7 @@ on:
 
 jobs:
   build:
-    runs-on:
-      windows-latest
+    runs-on: windows-latest
     env:
       Solution_Name: Acrolinx.Sidebar.Net.sln
       BUILD_NUMBER: ${{ github.run_number }}
@@ -36,7 +35,7 @@ jobs:
       - name: Install .NET
         uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: 8
+          dotnet-version: 9
 
       - name: Nuget restore
         uses: nuget/setup-nuget@v2
@@ -65,32 +64,63 @@ jobs:
       - name: VS Console Tests
         run: |
           $VSTest = "$(vswhere -property installationPath)\Common7\IDE\CommonExtensions\Microsoft\TestWindow\vstest.console.exe"
-          & $VSTest "Acrolinx.Sidebar.Tests\bin\Release\net8.0-windows\Acrolinx.Sidebar.Tests.dll" /settings:vstests.runsettings /Enablecodecoverage /Logger:"junit;LogFileName=TestResult.xml"
+          & $VSTest "Acrolinx.Sidebar.Tests\bin\Release\net9.0-windows\Acrolinx.Sidebar.Tests.dll" /settings:vstests.runsettings /Enablecodecoverage /Logger:"junit;LogFileName=TestResult.xml"
 
       - name: end sonar
         env:
           SONAR_TOKEN: ${{ secrets.SONARCLOUD_TOKEN }}
         run: sonar-msbuild\SonarScanner.MSBuild.exe end /d:sonar.token=$env:SONAR_TOKEN
 
-      - name: Code signing
+      - name: Set variables for code signing
+        id: variables
+        if: startsWith(github.ref, 'refs/tags/')
+        run: |
+          echo "SM_HOST=${{ secrets.SM_HOST }}" >> "$GITHUB_ENV" 
+          echo "SM_API_KEY=${{ secrets.SM_API_KEY }}" >> "$GITHUB_ENV" 
+          echo "SM_CLIENT_CERT_FILE=.\Certificate_pkcs12.p12" >> "$GITHUB_ENV" 
+          echo "SM_CLIENT_CERT_PASSWORD=${{ secrets.SM_CLIENT_CERT_PASSWORD }}" >> "$GITHUB_ENV" 
+          echo "C:\Program Files (x86)\Windows Kits\10\App Certification Kit" >> $GITHUB_PATH 
+          echo "C:\Program Files (x86)\Microsoft SDKs\Windows\v10.0A\bin\NETFX 4.8 Tools" >> $GITHUB_PATH 
+          echo "C:\Program Files\DigiCert\DigiCert One Signing Manager Tools" >> $GITHUB_PATH
+        shell: bash
+
+      - name: Setup Certificate
+        if: startsWith(github.ref, 'refs/tags/')
         env:
-          CERTIFICATE: ${{ secrets.CERTIFICATE }}
-          CERTIFICATE_PASSWORD: ${{ secrets.CERTIFICATE_PASSWORD }}
-          BINARY: "./Acrolinx.Sidebar/bin/Release/Acrolinx.Sidebar.dll"
-          SIGNTOOL: "C:/Program Files (x86)/Windows Kits/10/bin/10.0.17763.0/x86/signtool.exe"
-        shell: powershell
-        #if: ${{ (github.ref == 'refs/heads/main') || (startsWith(github.ref, 'refs/tags/')) }}
-        if: ${{ false }}
-        run : |
-          $ErrorActionPreference = 'stop'
-          $env:CERTIFICATE | Out-File -FilePath Certificate
-          certutil -decode Certificate AcrolinxCertificate.pfx
-          & $env:SIGNTOOL sign /f AcrolinxCertificate.pfx /p $env:CERTIFICATE_PASSWORD /tr http://timestamp.digicert.com /td sha256 /fd sha256 $env:BINARY
-          del Certificate
-          del AcrolinxCertificate.pfx
+          SM_CLIENT_CERT_FILE_B64: ${{ secrets.SM_CLIENT_CERT_FILE_B64 }}
+        run: |
+          $env:SM_CLIENT_CERT_FILE_B64 > input.b64
+          & "C:\Windows\System32\certutil.exe" -decode input.b64 $env:SM_CLIENT_CERT_FILE
+        shell: pwsh
+
+      - name: Setup SSM KSP on windows latest
+        if: startsWith(github.ref, 'refs/tags/')
+        env:
+          DIGICERT_KEYPAIR_ALIAS: ${{ secrets.DIGICERT_KEYPAIR_ALIAS }}
+        run: |
+          echo "Downloading the DigiCert Signing Manager Tools for Windows x64"
+          curl -X GET  https://one.digicert.com/signingmanager/api-ui/v1/releases/smtools-windows-x64.msi/download -H "x-api-key:%SM_API_KEY%" -o smtools-windows-x64.msi 
+          msiexec /i smtools-windows-x64.msi /quiet /qn
+          smctl windows certsync --keypair-alias=%DIGICERT_KEYPAIR_ALIAS% > nul 2>&1
+        shell: cmd
+
+      - name: Signing using Signtool
+        if: startsWith(github.ref, 'refs/tags/')
+        env:
+          BINARYDIR: "./Acrolinx.Sidebar/bin/Release"
+          DIGICERT_CERTIFICATE_FINGERPRINT: ${{ secrets.DIGICERT_CERTIFICATE_FINGERPRINT }}
+        run: |
+          Write-Host "Signing the binaries using signtool.exe"
+          $frameworks = @("net8.0-windows", "net9.0-windows", "net472")
+          foreach ($framework in $frameworks) {
+            Write-Host "Signing $env:BINARYDIR\$framework\Acrolinx.Sidebar.dll"
+            & signtool.exe sign /tr http://timestamp.digicert.com /td SHA256 /fd SHA256 /sha1 $env:DIGICERT_CERTIFICATE_FINGERPRINT "$env:BINARYDIR\$framework\Acrolinx.Sidebar.dll"
+            & signtool.exe verify /v /pa "$env:BINARYDIR\$framework\Acrolinx.Sidebar.dll"
+          }
+        shell: pwsh
 
       - name: Patch version number in nuget specification
-        run:  ((Get-Content -path Acrolinx.Sidebar\Acrolinx.Sidebar.nuspec -Raw) -replace '\$version\$',"`$version`$.$env:BUILD_NUMBER") | Set-Content -Path Acrolinx.Sidebar\Acrolinx.Sidebar.nuspec
+        run: ((Get-Content -path Acrolinx.Sidebar\Acrolinx.Sidebar.nuspec -Raw) -replace '\$version\$',"`$version`$.$env:BUILD_NUMBER") | Set-Content -Path Acrolinx.Sidebar\Acrolinx.Sidebar.nuspec
 
       - name: Create nuget package
         run: |
@@ -127,7 +157,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Restore nuget spec
-        run:  ((Get-Content -path Acrolinx.Sidebar\Acrolinx.Sidebar.nuspec -Raw) -replace ('\$version\$-'+$env:BUILD_NUMBER), "`$version`$") | Set-Content -Path Acrolinx.Sidebar\Acrolinx.Sidebar.nuspec
+        run: ((Get-Content -path Acrolinx.Sidebar\Acrolinx.Sidebar.nuspec -Raw) -replace ('\$version\$-'+$env:BUILD_NUMBER), "`$version`$") | Set-Content -Path Acrolinx.Sidebar\Acrolinx.Sidebar.nuspec
 
       - name: Archive build artifacts
         uses: actions/upload-artifact@v4

@@ -45,12 +45,15 @@ namespace Acrolinx.Sdk.Sidebar
         public event SidebarProcessEmbedCheckDataEventHandler ProcessEmbedCheckData;
         [Description("Called when the sidebar to open a web browser (sign in / Scorecard)"), Category("Sidebar")]
         public event SidebarOpenBrowserEventHandler OpenBrowser;
+
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public IAcrolinxStorage Storage
         {
             get;
             private set;
         }
 
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
         [Description("Turns check selection support on. In case request check has selections set to true, you have to specify the selected offsets in the check document."), Category("Sidebar")]
         public bool SupportCheckSelection
         {
@@ -69,6 +72,7 @@ namespace Acrolinx.Sdk.Sidebar
             }
         }
 
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public JObject Supported
         {
             get
@@ -82,6 +86,7 @@ namespace Acrolinx.Sdk.Sidebar
             }
         }
 
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public JObject InitParameters
         {
             get;
@@ -388,7 +393,6 @@ namespace Acrolinx.Sdk.Sidebar
             await Eval(code);
 
             return "id0-" + DateTime.Now.ToString();
-            
         }
         public async void CancelCheck()
         {
@@ -489,9 +493,9 @@ namespace Acrolinx.Sdk.Sidebar
         }
 
         private string GetInternalUrl()
-        { 
+        {
             return webView2.CoreWebView2.Source;
-        } 
+        }
 
         public async Task InvalidateRanges(String checkId, IReadOnlyList<Match> matches)
         {
@@ -577,7 +581,6 @@ namespace Acrolinx.Sdk.Sidebar
                 return;
             }
 
-            
 
             var html = await webView2.ExecuteScriptAsync("document.documentElement.outerHTML");
             bool startPageRevisionFound = html.Contains("sidebar-revision");
@@ -636,14 +639,15 @@ namespace Acrolinx.Sdk.Sidebar
                 return;
             }
 
-            try 
+            try
             {
                 if (Convert.ToInt32(value) > 0)
                 {
                     webView2.CoreWebView2.Settings.AreDefaultContextMenusEnabled = true;
                 }
             }
-            catch (Exception e) {
+            catch (Exception e)
+            {
                 Logger.AcroLog.Error("Unable to parser EnableContextMenu to integer." + e.Message);
             }
         }
@@ -670,4 +674,4 @@ namespace Acrolinx.Sdk.Sidebar
         }
 
     }
-}         
+}
