@@ -41,17 +41,15 @@ Before you start developing your own integration, you might benefit from looking
 
 ## Requirements
 
-This SDK uses Microsoft WebView 2 based on Edge Chromoium to render the Sidebar.
+This SDK leverages Microsoft WebView2, built on Microsoft Edge Chromium, to render the Sidebar. Starting with Windows 11, Microsoft includes the Evergreen WebView2 Runtime by default.
 
-The Evergreen WebView2 Runtime will be included as part of the Windows 11 operating system.
+For earlier versions of Windows, please install the WebView2 Evergreen Runtime manually.
 
-For prior operating systems - Please install WebView 2 evergreen runtime.
-
-Download and install "Evergreen Standalone Installer" from [Microsoft](https://developer.microsoft.com/en-us/microsoft-edge/webview2/)
+You can download and install the Evergreen Standalone [Installer](https://developer.microsoft.com/en-us/microsoft-edge/webview2/) from Microsoft's official site.
 
 ## Getting Started
 
-## Build Locally
+### Build Locally
 
 1. Make sure that you have installed Microsoft Visual Studio with C# support version 2022 or later.
 2. Since the Acrolinx Sidebar performs static code analysis to improve quality,
@@ -63,14 +61,14 @@ Visual Studio downloads the required dependencies and compiles the Acrolinx .NET
 
 *Note: The dependency download may fail on the first build. This problem can usually be solved by building a second time.*
 
-## Releasing
+### Releasing
 
 1. Increment version number in [AssemblyInfo.cs](https://github.com/acrolinx/sidebar-sdk-dotnet/blob/main/Acrolinx.Sidebar/Properties/AssemblyInfo.cs) file.
 2. Commit and push your changes to `main` branch
 3. Create a tag with the same version number.
 4. GitHub Action will run and publish the new version to nuget.org
 
-## Using the SDK
+### Using the SDK
 
 Have a look at the sample source code provided in the [Acrolinx Sidebar .NET Demo](https://github.com/acrolinx/acrolinx-sidebar-demo-dotnet).
 Use the [Acrolinx Sidebar .NET SDK NuGet package](https://www.nuget.org/packages/Acrolinx.Sidebar/).
