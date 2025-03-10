@@ -3,7 +3,7 @@
   "name": "dot-net-sidebar-sdk",
   "private": true,
   "engines": {
-    "node": ">=20"
+    "node": ">=22"
   },
   "devDependencies": {
     "@acrolinx/sidebar-startpage": "^4.0.2"
