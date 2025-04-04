@@ -27,7 +27,7 @@ jobs:
         run: mkdir download
 
       - name: download sonar
-        run: powershell Invoke-WebRequest -Uri "https://github.com/SonarSource/sonar-scanner-msbuild/releases/download/7.1.0.95705/sonar-scanner-7.1.0.95705-net-framework.zip" -OutFile ".\download\sonarmsbuild.zip"
+        run: powershell Invoke-WebRequest -Uri "https://github.com/SonarSource/sonar-scanner-msbuild/releases/download/10.1.1.111189/sonar-scanner-10.1.1.111189-net-framework.zip" -OutFile ".\download\sonarmsbuild.zip"
 
       - name: extract sonar
         run: powershell Expand-Archive download\sonarmsbuild.zip sonar-msbuild\
