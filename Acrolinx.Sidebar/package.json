@@ -6,6 +6,6 @@
     "node": ">=22"
   },
   "devDependencies": {
-    "@acrolinx/sidebar-startpage": "^4.0.2"
+    "@acrolinx/sidebar-startpage": "^4.0.3"
   }
 }
