@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>net8.0-windows;net9.0-windows;net472</TargetFrameworks>
     <OutputType>Library</OutputType>
@@ -142,14 +142,14 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
     <PackageReference Include="System.Data.DataSetExtensions" Version="4.5.0" />
-    <PackageReference Include="System.Management" Version="9.0.1" />
-    <PackageReference Include="Microsoft.AspNetCore.SystemWebAdapters" Version="1.4.0" />
+    <PackageReference Include="System.Management" Version="9.0.5" />
+    <PackageReference Include="Microsoft.AspNetCore.SystemWebAdapters" Version="2.0.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-    <PackageReference Include="System.Configuration.ConfigurationManager" Version="9.0.1" />
+    <PackageReference Include="System.Configuration.ConfigurationManager" Version="9.0.5" />
     <PackageReference Include="Diff.Match.Patch" Version="3.0.1" />
-    <PackageReference Include="log4net" Version="3.0.3" />
-    <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.2957.106" />
-    <PackageReference Include="System.Resources.Extensions" Version="9.0.1" />
+    <PackageReference Include="log4net" Version="3.1.0" />
+    <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.3296.44" />
+    <PackageReference Include="System.Resources.Extensions" Version="9.0.5" />
   </ItemGroup>
   <Target Name="CreateStartPage" BeforeTargets="DispatchToInnerBuilds">
     <Exec Command="npm install" />
