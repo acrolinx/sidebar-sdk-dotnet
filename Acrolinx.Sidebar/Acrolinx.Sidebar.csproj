@@ -148,7 +148,7 @@
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="9.0.8" />
     <PackageReference Include="Diff.Match.Patch" Version="3.0.1" />
     <PackageReference Include="log4net" Version="3.2.0" />
-    <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.3351.48" />
+    <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.3485.44" />
     <PackageReference Include="System.Resources.Extensions" Version="9.0.8" />
   </ItemGroup>
   <Target Name="CreateStartPage" BeforeTargets="DispatchToInnerBuilds">
