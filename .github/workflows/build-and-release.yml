@@ -160,7 +160,7 @@ jobs:
         run: ((Get-Content -path Acrolinx.Sidebar\Acrolinx.Sidebar.nuspec -Raw) -replace ('\$version\$-'+$env:BUILD_NUMBER), "`$version`$") | Set-Content -Path Acrolinx.Sidebar\Acrolinx.Sidebar.nuspec
 
       - name: Archive build artifacts
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         with:
           name: build-artifact
           path: |
