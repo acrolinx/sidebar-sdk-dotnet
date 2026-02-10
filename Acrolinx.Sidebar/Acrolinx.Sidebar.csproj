@@ -149,7 +149,7 @@
     <PackageReference Include="Diff.Match.Patch" Version="3.0.1" />
     <PackageReference Include="log4net" Version="3.2.0" />
     <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.3537.50" />
-    <PackageReference Include="System.Resources.Extensions" Version="10.0.2" />
+    <PackageReference Include="System.Resources.Extensions" Version="10.0.3" />
   </ItemGroup>
   <Target Name="CreateStartPage" BeforeTargets="DispatchToInnerBuilds">
     <Exec Command="npm install" />
