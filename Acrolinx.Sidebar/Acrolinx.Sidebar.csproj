@@ -145,7 +145,7 @@
     <PackageReference Include="System.Management" Version="10.0.3" />
     <PackageReference Include="Microsoft.AspNetCore.SystemWebAdapters" Version="2.1.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
-    <PackageReference Include="System.Configuration.ConfigurationManager" Version="9.0.10" />
+    <PackageReference Include="System.Configuration.ConfigurationManager" Version="10.0.3" />
     <PackageReference Include="Diff.Match.Patch" Version="3.0.1" />
     <PackageReference Include="log4net" Version="3.3.0" />
     <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.3537.50" />
