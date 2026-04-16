@@ -38,7 +38,7 @@ jobs:
           dotnet-version: 9
 
       - name: Nuget restore
-        uses: nuget/setup-nuget@v3
+        uses: nuget/setup-nuget@v4
 
       - run: nuget restore $env:Solution_Name
 
